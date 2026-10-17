@@ -409,7 +409,7 @@ body{line-height:1.6}
       <div id="bank"></div>
       <div class="head"><div><h3>En qué se va el dinero</h3><p class="sub">Salidas acumuladas del año por categoría</p></div></div>
       <div class="bars" id="bcat"></div>
-      <p class="note">Los importes salen de los apuntes del banco (TPV y comisiones netos). Solo se cuenta la cuenta Negocio; no se incluyen movimientos personales ni la nómina de la propietaria. El IVA e IRPF son los pagados en 2026. Octubre llega hasta el día 17.</p>
+      <p class="note">Los importes salen de los apuntes del banco (TPV y comisiones netos). Solo se cuenta la cuenta Negocio; no se incluyen movimientos personales. La nómina de la propietaria (2.000 € al mes) sí cuenta como gasto del negocio. El IVA e IRPF son los pagados en 2026. Octubre llega hasta el día 17.</p>
     </div>
 
   </section>
@@ -531,7 +531,6 @@ $('k4d').innerHTML='<span style="color:var(--gold)">Previsión del CGI con oct�
    ['r','','Factura','Cosbell: factura de la mercancía del 6 de octubre','Llegó adjunta al correo. Revisa importe y vencimiento, y pásala a la gestoría.','Correo · Proveedor'],
    ['r','','Facturas','Casmara: facturas de 2026','Las envió Noemi el 5 de octubre tras la llamada. Comprueba que están en la gestoría.','Correo · Proveedor'],
    ['r','','Alquiler','Recibo de octubre y subida del próximo','El propietario envió el recibo de octubre el 30 de septiembre y avisa de que el siguiente subirá por la tasa de basuras (TRUA) del local.','Correo · Alquiler'],
-   ['r','','Traspaso','Traspaso de 378 € el día 1 de cada mes','Desde septiembre (antes 272 €). No lo he podido identificar: dime si es del negocio y lo coloco.','Banco'],
    ['r','2027-01-20','20 ene','Impuestos del 4T de 2026','Modelos 111 y 115 el 20 de enero; 303 y 131 el 30 de enero.','Calendario fiscal'],
    ['e','2026-11-16','16 nov','Estefanía pide un día de asuntos propios','Solicitud por escrito del 24 de septiembre para el lunes 16 de noviembre. En el correo no consta tu respuesta. Ojo: coincide con la semana de vacaciones de Yanira (16–22 nov), así que ese día solo estarías tú.','Correo · Equipo'],
    ['e','','Vacaciones','Vacaciones de 2026: Yanira las completa, a Estefanía le quedan 7 días','Yanira (25 días desde el 2 de marzo) agota todas con la semana del 16 al 22 de noviembre y los cierres del 24 y 31 de diciembre. Estefanía cogerá en enero de 2027 (semana de Reyes) los 7 días que le quedan.','Equipo'],
@@ -564,7 +563,7 @@ $('k4d').innerHTML='<span style="color:var(--gold)">Previsión del CGI con oct�
 
 /* Banco */
 (function(){
-  const B={"ing":[10469,11169,13817,16132,14759,16257,14580,4411,17000,9417],"ops":[13088,8796,8521,9726,7951,10478,11829,5719,8976,4602],"sal":[0,0,0,0,0,0,0,0,0,40966],"exp":{"Otros gastos":4258,"Proveedores producto":34695,"Gestoría":1699,"Gastos fijos y software":7759,"Alquiler del local":9783,"Nóminas del equipo":16100,"Seguridad Social":10364,"Impuestos (IRPF/IVA)":5029},"tpv":124778,"ini":101964};
+  const B={"ing":[10469,11169,13817,16132,14759,16257,14580,4411,17000,9417],"ops":[13675,12383,11116,12321,10546,15072,15928,7992,9354,8981],"sal":[0,0,0,0,0,0,0,0,0,40966],"exp":{"Proveedores producto":34695,"Nómina propietaria":19000,"Nóminas del equipo":16100,"Seguridad Social":10364,"Alquiler del local":9783,"Gastos fijos y software":7759,"Préstamo del negocio":5759,"Impuestos (IRPF/IVA)":5029,"Otros gastos":4258,"Redes sociales (Alba)":2921,"Gestoría":1699},"tpv":124778,"ini":101964};
   const MB=M.slice(0,10),n=10;
   $('b1').textContent=eur(B.sal[9]);
   $('b1d').innerHTML='<span class="up">Cuenta del negocio</span>';
@@ -648,7 +647,7 @@ const BK={ini:101964,sal:40966,tpv:124778};
 
 /* Previsión de caja */
 (function(){
-  const ing=13500,ops=9500;
+  const ing=13500,ops=11800;
   const today=new Date(2026,9,17),end=[new Date(2026,9,31),new Date(2026,10,30),new Date(2026,11,31)];
   const frac=[14/31,1,1];
   let a=BK.sal;const A=[[BK.sal]];const lab=['Hoy','Fin oct','Fin nov','Fin dic'];
@@ -771,7 +770,7 @@ $('invList').innerHTML=[['30 oct','Skeyndor · VN/584407','984 € en 3 giros de
 /* ===== Tesorería ===== */
 (function(){
   const today=new Date(2026,9,17),lim=new Date(2026,10,16);
-  const P=[['2026-10-20','Impuestos del 3T',1697,0],['2026-10-30','Seguridad Social',1210,1],['2026-10-30','Skeyndor, giro 1 de 3',328,0],['2026-10-31','Nóminas del equipo',2040,1],['2026-11-01','Futuro Estética A 4266',165,0],['2026-11-01','Almacenaje Mybox',166,1],['2026-11-01','Luz',57,1],['2026-11-04','Flowww',62,0],['2026-11-05','Alquiler del local',981,1],['2026-11-05','Alarma',31,1],['2026-11-08','Teléfono',83,1],['2026-11-10','Gestoría',166,1]];
+  const P=[['2026-10-20','Impuestos del 3T',1697,0],['2026-10-30','Seguridad Social',1210,1],['2026-10-30','Skeyndor, giro 1 de 3',328,0],['2026-10-31','Nóminas del equipo',2040,1],['2026-11-01','Futuro Estética A 4266',165,0],['2026-11-01','Redes sociales (Alba)',378,1],['2026-11-01','Nómina Vicky (propietaria)',2000,1],['2026-11-01','Almacenaje Mybox',166,1],['2026-11-01','Luz',57,1],['2026-11-04','Flowww',62,0],['2026-11-05','Alquiler del local',981,1],['2026-11-05','Alarma',31,1],['2026-11-08','Teléfono',83,1],['2026-11-10','Gestoría',166,1]];
   const tot=sum(P.map(p=>p[2])),t30=sum(CAJ.slice(-20).map(c=>c.v));
   $('t1').textContent=eur(40965.67);$('t1d').innerHTML='<span class="up">Saldo contable al 17 oct</span>';
   $('t2').textContent=eur(tot);$('t2d').innerHTML='<span class="down">'+P.length+' pagos previstos</span>';
