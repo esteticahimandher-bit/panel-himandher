@@ -405,11 +405,11 @@ body{line-height:1.6}
         <div class="kpi c3"><span class="label">Gasto operativo</span><span class="val" id="b3"></span><span class="delta" id="b3d"></span></div>
         <div class="kpi c3"><span class="label">Ingresos menos gasto operativo</span><span class="val" id="b4"></span><span class="delta" id="b4d"></span></div>
       </div>
-      <div class="legend"><span><b style="background:var(--inc)"></b>Ingresos</span><span><b style="background:var(--exp)"></b>Gasto operativo</span><span>Línea: saldo a fin de mes</span></div>
+      <div class="legend"><span><b style="background:var(--inc)"></b>Ingresos</span><span><b style="background:var(--exp)"></b>Gasto operativo</span><span>Solo movimientos del negocio</span></div>
       <div id="bank"></div>
       <div class="head"><div><h3>En qué se va el dinero</h3><p class="sub">Salidas acumuladas del año por categoría</p></div></div>
       <div class="bars" id="bcat"></div>
-      <p class="note">Los importes salen de los apuntes del banco (TPV y comisiones netos). Solo se cuenta la cuenta Negocio; no se incluyen traspasos ni movimientos personales. El IVA e IRPF son los pagados en 2026. Octubre llega hasta el día 17.</p>
+      <p class="note">Los importes salen de los apuntes del banco (TPV y comisiones netos). Solo se cuenta la cuenta Negocio; no se incluyen movimientos personales ni la nómina de la propietaria. El IVA e IRPF son los pagados en 2026. Octubre llega hasta el día 17.</p>
     </div>
 
   </section>
@@ -564,10 +564,10 @@ $('k4d').innerHTML='<span style="color:var(--gold)">Previsión del CGI con oct�
 
 /* Banco */
 (function(){
-  const B={"ing": [10469, 11169, 13817, 16132, 14759, 18257, 19555, 5961, 17050, 11417], "ops": [12184, 10865, 9590, 11776, 10593, 14728, 12179, 7719, 6934, 7851], "sal": [73036, 45069, 47720, 44482, 48053, 33287, 35864, 30833, 38529, 40966], "exp": {"Otros gastos": 5702, "Proveedores producto": 34512, "Gestoría": 1699, "Gastos fijos y software": 7189, "Alquiler del local": 6867, "Nóminas": 33058, "Seguridad Social": 10364, "Impuestos (IRPF/IVA)": 5029}, "tpv": 124778, "ini": 101964};
+  const B={"ing":[10469,11169,13817,16132,14759,16257,14580,4411,17000,9417],"ops":[13088,8796,8521,9726,7951,10478,11829,5719,8976,4602],"sal":[0,0,0,0,0,0,0,0,0,40966],"exp":{"Otros gastos":4258,"Proveedores producto":34695,"Gestoría":1699,"Gastos fijos y software":7759,"Alquiler del local":9783,"Nóminas del equipo":16100,"Seguridad Social":10364,"Impuestos (IRPF/IVA)":5029},"tpv":124778,"ini":101964};
   const MB=M.slice(0,10),n=10;
   $('b1').textContent=eur(B.sal[9]);
-  $('b1d').innerHTML='<span class="down">Inicio de año '+eur(B.ini)+'</span>';
+  $('b1d').innerHTML='<span class="up">Cuenta del negocio</span>';
   $('b2').textContent=eur(B.tpv);
   $('b2d').innerHTML='<span class="up">Media '+eur(B.tpv/9.5)+' al mes</span>';
   const op=sum(B.ops);
@@ -577,7 +577,7 @@ $('k4d').innerHTML='<span style="color:var(--gold)">Previsión del CGI con oct�
   $('b4').textContent=eur(rt);
   $('b4d').innerHTML='<span class="'+(rt>=0?'up':'down')+'">Media '+eur(rt/9.5)+' al mes</span>';
   const W=720,H=270,pl=46,pr=10,pt=14,pb=28,max=60000,band=(W-pl-pr)/n,bw=band*0.3,y=v=>pt+(H-pt-pb)*(1-v/max);
-  let s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Ingresos, gastos y saldo del banco por mes">';
+  let s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Ingresos y gasto operativo del negocio por mes">';
   [0,20000,40000,60000].forEach(t=>{s+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+y(t)+'" y2="'+y(t)+'" stroke="var(--line)"/><text class="axis" x="'+(pl-8)+'" y="'+(y(t)+4)+'" text-anchor="end">'+(t/1000)+' mil</text>'});
   const cols=[['Ingresos',B.ing,'var(--inc)'],['Gasto operativo',B.ops,'var(--exp)']];
   for(let i=0;i<n;i++){
@@ -586,9 +586,6 @@ $('k4d').innerHTML='<span style="color:var(--gold)">Previsión del CGI con oct�
       s+='<rect data-tip="'+MB[i]+' · '+c[0]+': '+eur(v)+'" x="'+x+'" y="'+(H-pb-h)+'" width="'+bw+'" height="'+h+'" rx="3" fill="'+c[2]+'"/>'});
     s+='<text class="axis" x="'+(pl+i*band+band/2)+'" y="'+(H-8)+'" text-anchor="middle">'+MB[i]+'</text>';
   }
-  const pts=B.sal.map((v,i)=>[pl+i*band+band/2,y(v)]);
-  s+='<polyline fill="none" stroke="var(--accent)" stroke-width="2" points="'+pts.map(p=>p.join(',')).join(' ')+'"/>';
-  pts.forEach((p,i)=>{s+='<circle data-tip="Saldo a fin de '+MB[i]+': '+eur(B.sal[i])+'" cx="'+p[0]+'" cy="'+p[1]+'" r="4.5" fill="var(--accent)" stroke="var(--surface)" stroke-width="2"/>'});
   s+='</svg>';
   $('bank').innerHTML=s;bindTip($('bank'));
   const e=Object.entries(B.exp).sort((a,b)=>b[1]-a[1]),mx=e[0][1];
@@ -651,7 +648,7 @@ const BK={ini:101964,sal:40966,tpv:124778};
 
 /* Previsión de caja */
 (function(){
-  const ing=13900,ops=11051;
+  const ing=13500,ops=9500;
   const today=new Date(2026,9,17),end=[new Date(2026,9,31),new Date(2026,10,30),new Date(2026,11,31)];
   const frac=[14/31,1,1];
   let a=BK.sal;const A=[[BK.sal]];const lab=['Hoy','Fin oct','Fin nov','Fin dic'];
@@ -779,7 +776,7 @@ $('invList').innerHTML=[['30 oct','Skeyndor · VN/584407','984 € en 3 giros de
   $('t1').textContent=eur(40965.67);$('t1d').innerHTML='<span class="up">Saldo contable al 17 oct</span>';
   $('t2').textContent=eur(tot);$('t2d').innerHTML='<span class="down">'+P.length+' pagos previstos</span>';
   $('t3').textContent=eur(40965.67-tot);$('t3d').innerHTML='<span style="color:var(--muted)">Sin contar cobros nuevos</span>';
-  $('t4').textContent=eur(18705);$('t4d').innerHTML='<span class="up">Media de 2026: 13.900 € al mes</span>';
+  $('t4').textContent=eur(18705);$('t4d').innerHTML='<span class="up">Media de 2026: 13.500 € al mes</span>';
   $('tPay').innerHTML=P.map(p=>{const d=new Date(p[0]+'T12:00:00'),n=Math.round((d-today)/864e5);return '<li><span class="pill">'+d.getDate()+' '+M[d.getMonth()].toLowerCase()+'</span><span>'+p[1]+' <b>'+(p[3]?'≈ ':'')+eur(p[2])+'</b><small>en '+n+' días</small></span></li>'}).join('');
   $('tLoan').innerHTML=[['Cancelado','Préstamo de 322 € al mes','Cancelado el 30 de julio con un pago de 3.505 €']].map(a=>'<li><span class="pill">'+a[0]+'</span><span>'+a[1]+'<small>'+a[2]+'</small></span></li>').join('');
   $('tMov').innerHTML=[['17 oct','Cobros con tarjeta',704.84],['16 oct','Cobros con tarjeta',534.98],['16 oct','Cosméticos y belleza (proveedor)',-395.73],['15 oct','Cobros con tarjeta',2413.18],['15 oct','Skeyndor',-560.17],['14 oct','Cobros con tarjeta',751.73],['12 oct','Cosméticos y belleza (proveedor)',-314.60],['12 oct','Gestoría',-165.89],['10 oct','Cobros con tarjeta',452.58],['9 oct','Skeyndor',-550.55],['8 oct','Vodafone',-82.87],['5 oct','Alquiler del local',-981.03]].map(a=>'<li><span class="pill">'+a[0]+'</span><span>'+a[1]+' <b style="color:'+(a[2]>0?'var(--good)':'var(--crit)')+'">'+(a[2]>0?'+':'−')+eur(Math.abs(a[2]))+'</b></span></li>').join('');
