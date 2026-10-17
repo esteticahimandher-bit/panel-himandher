@@ -173,6 +173,11 @@ body{line-height:1.6}
 .bn-w td.ok{color:var(--good);font-weight:700}.bn-w td.no{color:var(--crit)}
 .bn-w tr.fut td{color:var(--muted)}
 .bnmsg{white-space:pre-wrap;font-family:var(--font-body);font-size:14px;background:var(--accent-soft);border-radius:12px;padding:14px;margin:0}
+.hoval{font-family:var(--font-num);font-size:30px;font-weight:700;line-height:1.1}
+.ho-t{border-collapse:collapse;width:100%;min-width:420px;font-size:13px;font-variant-numeric:tabular-nums}
+.ho-t th,.ho-t td{padding:7px 8px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+.ho-t th:nth-child(-n+3),.ho-t td:nth-child(-n+3){text-align:left}
+.ho-t th{font-size:12px;color:var(--muted);font-weight:600}
 </style>
 
 <div class="wrap">
@@ -225,7 +230,9 @@ body{line-height:1.6}
       <ul class="agenda" id="agenda"></ul>
     </div>
 
-    <div class="card c7" data-tab="equipo">
+    <div class="card c12" data-tab="equipo">
+      <div class="chips" id="eqSub" role="group" aria-label="Sección de equipo"><button type="button" class="chip on" data-s="main">Equipo y horarios</button><button type="button" class="chip" data-s="horas">Bolsa de horas</button></div>
+      <div id="eqMain" style="display:flex;flex-direction:column;gap:14px">
       <div class="head"><div><h2>Equipo</h2><p class="sub">Coste mensual y ventas de producto por empleada</p></div><span class="badge real">Real</span></div>
       <div class="empsel"></div>
       <div class="team" id="team"></div>
@@ -233,6 +240,14 @@ body{line-height:1.6}
       <div class="head" style="margin-top:4px"><div><h3>Horarios de la semana</h3></div><span class="badge real">Real · flowww</span></div>
       <div class="sched"><table id="sched"></table></div>
       <p class="note">Franjas en las que cada una atiende según la agenda de flowww. El centro abre de 10 a 20 h de lunes a viernes.</p>
+      </div>
+      <div id="eqHoras" style="display:none;flex-direction:column;gap:14px">
+        <div class="head"><div><h2>Bolsa de horas</h2><p class="sub">Horas que les debo y horas que me deben</p></div><span class="badge ex">Pendiente de cargar</span></div>
+        <div class="empsel"></div>
+        <div class="team" id="hoTeam"></div>
+        <div class="tablewrap" id="hoTable"></div>
+        <p class="note" id="hoNote"></p>
+      </div>
     </div>
 
     <div class="card c6" data-tab="facturacion">
@@ -756,6 +771,27 @@ $('vacBars').innerHTML=[['Estefanía',7,'7 de 30 días naturales'],['Yanira',0,'
   const L=LOW.map(l=>[l[0],l[1],l[2],l[3],l[3]-Math.max(l[2],0)]).sort((a,b)=>b[4]-a[4]);
   $('sLow').innerHTML=L.map(l=>'<li><span class="pill" style="'+(l[2]<=0?'background:var(--crit-soft);color:var(--crit)':'')+'">'+(l[2]<=0?'Agotado':l[2]+' uds')+'</span><span>'+l[1]+'<small>'+l[0]+' · mínimo '+l[3]+' · faltan '+l[4]+'</small></span></li>').join('');
   $('sNote').textContent='Se muestran 29 de las 57 referencias bajo mínimo, las de mayor faltante. Hay 3 con stock negativo (mascarillas Casmara −34, Fr. Haut Sun Touch −1, gel limpiador termal Skeyndor −1): conviene regularizarlas en flowww. 98 referencias no tienen precio medio, así que el valor total es mayor.';
+})();
+
+/* ===== Bolsa de horas ===== */
+(function(){
+  /* Saldo en horas por empleada. Positivo = horas que les debo; negativo = horas que me deben.
+     Formato de cada movimiento: ['2026-10-17','Concepto',horas]. Se rellena con los datos que pase Vicky. */
+  const H={'Estefanía':{ini:null,mov:[]},'Yanira':{ini:null,mov:[]}};
+  const fh=h=>(h>0?'+':h<0?'−':'')+Math.abs(Math.round(h*100)/100).toLocaleString('es-ES')+' h';
+  const names=Object.keys(H),loaded=names.some(n=>H[n].ini!==null||H[n].mov.length);
+  $('hoTeam').innerHTML=names.map(n=>{
+    const d=H[n],has=d.ini!==null||d.mov.length,bal=(d.ini||0)+sum(d.mov.map(m=>m[2]));
+    const txt=!has?'Sin datos':bal>0?'Les debo '+fh(bal).slice(1):bal<0?'Me deben '+fh(bal).slice(1):'Al día';
+    return '<div class="person" data-emp="'+n+'"><h3>'+n+'</h3><span class="hoval" style="color:var(--'+(!has?'muted':bal>0?'warn':bal<0?'crit':'good')+')">'+(has?fh(bal):'—')+'</span><span class="note">'+txt+'</span></div>'}).join('');
+  let rows=[];names.forEach(n=>{let acc=H[n].ini||0;if(H[n].ini!==null)rows.push(['Saldo inicial',n,'',H[n].ini,acc]);H[n].mov.slice().sort((a,b)=>a[0]<b[0]?-1:1).forEach(m=>{acc+=m[2];rows.push([m[0],n,m[1],m[2],acc])})});
+  $('hoTable').innerHTML=rows.length?'<table class="ho-t"><thead><tr><th>Fecha</th><th>Empleada</th><th>Concepto</th><th>Horas</th><th>Saldo</th></tr></thead><tbody>'+rows.map(r=>'<tr data-emp="'+r[1]+'"><td>'+(r[0].length===10?r[0].slice(8)+'/'+r[0].slice(5,7):r[0])+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td>'+fh(r[3])+'</td><td><b>'+fh(r[4])+'</b></td></tr>').join('')+'</tbody></table>':'<p class="note">Todavía no hay horas cargadas. Pásame el saldo de cada una y los movimientos (horas extra, formaciones, horas recuperadas, días libres a cuenta) y los añado aquí.</p>';
+  $('hoNote').textContent='Positivo: horas que les debes. Negativo: horas que te deben.'+(loaded?'':' Cuando cargue los datos se calculará el saldo de cada una y el histórico de movimientos.');
+  const bs=[...document.querySelectorAll('#eqSub button')];
+  function sub(x){$('eqMain').style.display=x==='main'?'flex':'none';$('eqHoras').style.display=x==='horas'?'flex':'none';bs.forEach(b=>b.classList.toggle('on',b.dataset.s===x));try{localStorage.setItem('hh-sub',x)}catch(e){}}
+  bs.forEach(b=>b.addEventListener('click',()=>sub(b.dataset.s)));
+  let x='main';try{x=localStorage.getItem('hh-sub')||'main'}catch(e){}
+  sub(x==='horas'?'horas':'main');
 })();
 
 /* ===== Horarios reales y selector de empleada ===== */
