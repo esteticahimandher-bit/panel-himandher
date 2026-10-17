@@ -1,0 +1,709 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="color-scheme" content="light dark"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#035772"><link rel="apple-touch-icon" href="icons/icon-192.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Him and Her"><style>html{-webkit-text-size-adjust:100%;margin:0;padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0)}body{margin:0}</style><title>Panel Him and Her</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@400;500;600&family=Barlow:wght@500;600;700&display=swap">
+<style>
+/* Layout: franja de marca con el logo, resumen en 4 cifras, cashflow ancho y tarjetas por tema. Paleta y tipografías tomadas de esteticahimandher.es. */
+:root{
+  --alert:#C62828;
+  --bg:#F6F9F5; --surface:#FFFFFF; --ink:#16201F; --ink2:#46524F; --muted:#6C7976; --line:#DFE7E0;
+  --accent:#035772; --accent-soft:#E3EFF2; --gold:#95681D; --gold-soft:#F4EBD8; --stroke:#F0E39A;
+  --inc:#035772; --exp:#B99355;
+  --good:#1B7F5C; --good-soft:#E2F3EC; --crit:#B3362F; --crit-soft:#FBE7E5; --warn:#8A5F00; --warn-soft:#FFF1CF;
+  --font-display:'Playfair Display',Georgia,serif;
+  --font-num:'Barlow','Arial Narrow','Roboto Condensed',Arial,sans-serif;
+  --font-body:'Poppins','Segoe UI',system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#101719; --surface:#182224; --ink:#EEF3EC; --ink2:#BFCBC6; --muted:#93A29D; --line:#2A3739;
+  --accent:#6CC3DE; --accent-soft:#1B2F36; --gold:#D9B26A; --gold-soft:#2B2517; --stroke:#4B4322;
+  --inc:#6CC3DE; --exp:#C9A45F;
+  --good:#4CC59A; --good-soft:#143026; --crit:#F0847D; --crit-soft:#3A1E1D; --warn:#E3B34A; --warn-soft:#352A0E; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#101719; --surface:#182224; --ink:#EEF3EC; --ink2:#BFCBC6; --muted:#93A29D; --line:#2A3739;
+  --accent:#6CC3DE; --accent-soft:#1B2F36; --gold:#D9B26A; --gold-soft:#2B2517; --stroke:#4B4322;
+  --inc:#6CC3DE; --exp:#C9A45F;
+  --good:#4CC59A; --good-soft:#143026; --crit:#F0847D; --crit-soft:#3A1E1D; --warn:#E3B34A; --warn-soft:#352A0E; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:16px;line-height:1.5;
+  padding-block:20px 40px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+h1,h2,h3{font-family:var(--font-display);margin:0;text-wrap:balance;letter-spacing:-.01em}
+h1{font-size:clamp(26px,4vw,38px);line-height:1.1}
+h2{font-size:19px}
+h3{font-size:16px}
+.top{display:flex;flex-wrap:wrap;gap:12px 24px;justify-content:space-between;align-items:flex-end}
+.top p{margin:4px 0 0;color:var(--ink2)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-size:13px;font-weight:700;padding:4px 10px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink2);display:inline-flex;gap:6px;align-items:center}
+.chip i{width:9px;height:9px;border-radius:50%;display:inline-block}
+.chip.real i{background:var(--good)} .chip.ex i{background:var(--warn)} .chip.prev i{background:var(--accent)}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(12,minmax(0,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;min-width:0;display:flex;flex-direction:column;gap:14px}
+.c3{grid-column:span 3}.c4{grid-column:span 4}.c5{grid-column:span 5}.c6{grid-column:span 6}.c7{grid-column:span 7}.c8{grid-column:span 8}.c12{grid-column:span 12}
+@media (max-width:980px){.c3{grid-column:span 6}.c4,.c5,.c6,.c7,.c8{grid-column:span 12}}
+@media (max-width:560px){.c3{grid-column:span 12}}
+.head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap}
+.sub{color:var(--muted);font-size:14px;margin:2px 0 0}
+.badge{font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;white-space:nowrap}
+.badge.ex{background:var(--warn-soft);color:var(--warn)}
+.badge.real{background:var(--good-soft);color:var(--good)}
+.badge.prev{background:var(--accent-soft);color:var(--accent)}
+.kpi .label{font-size:14px;color:var(--ink2);font-weight:700}
+.kpi .val{font-family:var(--font-display);font-size:clamp(28px,3.4vw,36px);font-weight:800;line-height:1.1;font-variant-numeric:tabular-nums}
+.kpi .delta{font-size:14px;display:inline-flex;align-items:center;gap:4px;font-weight:700}
+.up{color:var(--good)}.down{color:var(--crit)}
+.kpi{gap:6px}
+svg{max-width:100%;height:auto;display:block}
+.axis{fill:var(--muted);font-size:11px;font-family:var(--font-body)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:14px;color:var(--ink2)}
+.legend span{display:inline-flex;gap:6px;align-items:center}
+.legend b{width:12px;height:12px;border-radius:3px;display:inline-block}
+.strip{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:4px}
+.strip div{text-align:center;font-size:12px;border-radius:8px;padding:6px 0;font-variant-numeric:tabular-nums;line-height:1.25}
+.strip .pos{background:var(--good-soft);color:var(--good)}
+.strip .neg{background:var(--crit-soft);color:var(--crit)}
+.strip small{display:block;font-weight:700;color:var(--ink2)}
+.strip .pr{opacity:.6;border:1px dashed currentColor}
+@media (max-width:640px){.strip{grid-template-columns:repeat(6,minmax(0,1fr))}}
+.bars{display:flex;flex-direction:column;gap:10px}
+.bar{display:grid;grid-template-columns:minmax(90px,150px) 1fr auto;gap:10px;align-items:center;font-size:14px}
+.bar .track{height:12px;background:var(--accent-soft);border-radius:6px;overflow:hidden}
+.bar .fill{height:100%;background:var(--accent);border-radius:0 6px 6px 0}
+.bar .num{font-variant-numeric:tabular-nums;font-weight:700}
+.agenda{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.agenda li{display:grid;grid-template-columns:54px 1fr auto;gap:10px;align-items:center;padding:8px 10px;border:1px solid var(--line);border-radius:10px;font-size:14px}
+.agenda time{font-weight:700;font-variant-numeric:tabular-nums}
+.pill{font-size:12px;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--accent-soft);color:var(--accent)}
+.pill.c2{background:var(--good-soft);color:var(--good)}
+.team{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.person{border:1px solid var(--line);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.person dl{margin:0;display:grid;grid-template-columns:1fr auto;gap:2px 10px;font-size:14px}
+.person dt{color:var(--ink2)} .person dd{margin:0;font-weight:700;text-align:right;font-variant-numeric:tabular-nums}
+.sched{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:420px}
+th,td{padding:6px 8px;text-align:center;border-bottom:1px solid var(--line)}
+th:first-child,td:first-child{text-align:left}
+td .blk{display:inline-block;padding:2px 8px;border-radius:6px;background:var(--accent-soft);color:var(--accent);font-weight:700;font-size:12px}
+td .off{color:var(--muted)}
+.progress{height:16px;background:var(--accent-soft);border-radius:8px;overflow:hidden;position:relative}
+.progress>span{display:block;height:100%;background:var(--accent);border-radius:0 8px 8px 0}
+.list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.list li{display:grid;grid-template-columns:auto 1fr;gap:10px;font-size:14px;align-items:start}
+.ico{width:22px;height:22px;border-radius:50%;display:inline-grid;place-items:center;font-size:12px;font-weight:800}
+.ico.w{background:var(--warn-soft);color:var(--warn)} .ico.c{background:var(--crit-soft);color:var(--crit)} .ico.i{background:var(--accent-soft);color:var(--accent)}
+.list small{color:var(--muted);display:block}
+#tip{position:fixed;z-index:20;pointer-events:none;background:var(--ink);color:var(--bg);padding:6px 10px;border-radius:8px;font-size:13px;opacity:0;transition:opacity .1s;max-width:240px}
+.note{font-size:13px;color:var(--muted);margin:0}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+
+.brand{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.paper{background:#F6F9F5;border:1px solid #DFE7E0;border-radius:14px;padding:6px 14px;display:grid;place-items:center}
+.logo{height:76px;width:auto;display:block}
+.mark{background:linear-gradient(transparent 58%,var(--stroke) 58%);padding:0 6px;margin-left:-6px;border-radius:2px}
+h2{background:linear-gradient(transparent 62%,var(--stroke) 62%);align-self:flex-start;padding:0 4px;margin-left:-4px;display:inline;font-weight:600}
+h1,h2,h3,.kpi .val{font-weight:600}
+.kpi .val{font-weight:700}
+.badge.prev,.chip.prev i{background:var(--gold-soft);color:var(--gold)}
+.chip.prev i{background:var(--gold)}
+.pill{background:var(--accent-soft);color:var(--accent)}
+.ico.i{background:var(--accent-soft);color:var(--accent)}
+.legend{font-size:13px}
+.card{box-shadow:0 1px 0 rgba(0,0,0,.02)}
+body{line-height:1.6}
+[hidden]{display:none!important}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 8px;position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);scrollbar-width:thin}
+.tabs button{font:inherit;font-weight:600;font-size:14px;padding:9px 16px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink2);cursor:pointer;white-space:nowrap;min-height:40px}
+.tabs button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.tabs button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+@media (max-width:760px){.c3,.c4,.c5,.c6,.c7,.c8{grid-column:span 12}}
+.kpi .val,.bar .num,.person dd,.agenda time,.axis,.strip div,.pill,.list b{font-family:var(--font-num);font-variant-numeric:lining-nums tabular-nums;font-feature-settings:"lnum" 1,"tnum" 1}
+.kpi .val{font-weight:700;letter-spacing:.01em;font-size:clamp(30px,3.6vw,40px)}
+.bar .num,.person dd{font-weight:600;font-size:15px}
+.axis{font-size:12px;font-weight:500}
+.chip.empb{font:inherit;font-weight:600;cursor:pointer;min-height:36px}.chip.empb.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.be-now{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:4px 0 14px}
+.be-now div{background:var(--accent-soft);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:2px}
+.be-now small{font-size:12px;color:var(--muted)} .be-now b{font-family:var(--font-num);font-size:24px;font-weight:700}
+.be-row{display:grid;grid-template-columns:44px 1fr minmax(120px,auto);gap:10px;align-items:center;font-size:14px;padding:5px 0}
+.be-row .track{position:relative;height:12px;background:var(--accent-soft);border-radius:6px;overflow:hidden}
+.be-row .fill{height:100%;background:var(--accent);border-radius:0 6px 6px 0}
+.be-row .fill.ok{background:var(--good)} .be-row.pr .fill{opacity:.45}
+.be-row .num{text-align:right;font-weight:600;font-variant-numeric:tabular-nums;font-size:13px}
+.be-row .num.ok{color:var(--good)} .be-row .num.no{color:var(--crit)}
+@media (max-width:560px){
+ .kpi{display:flex;flex-direction:column;gap:4px}
+ .c3{grid-column:span 6}
+ .kpi .val{font-size:26px}.kpi .label{font-size:13px}.kpi .delta{font-size:12px}
+ .grid{gap:12px}.card{padding:14px;gap:12px}
+ .logo{height:48px}.brand{gap:10px}.paper{padding:8px 12px}
+ h1{font-size:26px}
+ svg .axis,.axis{font-size:15px}
+ .be-row{grid-template-columns:34px 1fr minmax(104px,auto);gap:8px}
+}
+.tabs button.alert{background:var(--alert);border-color:var(--alert);color:#fff}
+.tabs button.alert.on{box-shadow:0 0 0 3px var(--crit-soft)}
+.tabs button .cnt{display:inline-block;min-width:20px;padding:0 6px;margin-left:6px;border-radius:999px;background:#fff;color:var(--alert);font-size:12px;line-height:20px;text-align:center}
+.avbanner{flex-direction:row;align-items:center;gap:10px;background:var(--alert);border-color:var(--alert);color:#fff;text-decoration:none;font-weight:600;padding:12px 16px}
+.avbanner b{background:#fff;color:var(--alert);border-radius:999px;padding:0 9px;font-family:var(--font-num)}
+.avg{display:flex;flex-direction:column;gap:6px}
+.avg h3{font-size:16px;display:flex;align-items:center;gap:8px;margin-top:6px}
+.avg h3 i{width:10px;height:10px;border-radius:50%;display:inline-block}
+.avg li{border-left:3px solid var(--gc,var(--line));padding-left:10px}
+.avg small b{font-weight:600}
+.avg .pill{min-width:92px;text-align:center;flex:none;white-space:nowrap}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <div class="paper"><img class="logo" src="data:image/png;base64,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" alt="Him and Her, Victoria Pérez"></div>
+      <div>
+        <h1><span class="mark">Panel de control</span></h1>
+        <p id="fecha"></p>
+      </div>
+    </div>
+    <div class="chips" aria-label="Origen de los datos">
+      <span class="chip real"><i></i>Dato real · flowww, banco, Drive y CGI</span>
+      <span class="chip prev"><i></i>Previsión oct–dic</span>
+    </div>
+  </header>
+  <nav class="tabs" id="tabs" aria-label="Áreas del panel"><button type="button" data-t="resumen" aria-selected="false">Resumen</button><button type="button" data-t="tesoreria" aria-selected="false">Tesorería</button><button type="button" data-t="facturacion" aria-selected="false">Facturación</button><button type="button" data-t="agenda" aria-selected="false">Agenda</button><button type="button" data-t="equipo" aria-selected="false">Equipo</button><button type="button" data-t="stock" aria-selected="false">Stock</button><button type="button" data-t="banco" aria-selected="false">Banco</button><button type="button" data-t="prevision" aria-selected="false">Previsión</button><button type="button" data-t="impuestos" aria-selected="false">Impuestos</button><button type="button" data-t="gastos" aria-selected="false">Gastos fijos</button><button type="button" data-t="proveedores" aria-selected="false">Proveedores</button><button type="button" data-t="vacaciones" aria-selected="false">Vacaciones</button><button type="button" data-t="avisos" aria-selected="false">Avisos</button></nav>
+
+  <section class="grid" aria-label="Resumen" data-tab="resumen">
+    <a class="card c12 avbanner" id="avBanner" href="#avisos" hidden></a>
+    <div class="card kpi c3"><span class="label">Facturado en octubre</span><span class="val" id="k1"></span><span class="delta" id="k1d"></span></div>
+    <div class="card kpi c3"><span class="label">Saldo en el banco</span><span class="val" id="k2"></span><span class="delta" id="k2d"></span></div>
+    <div class="card kpi c3"><span class="label">Facturado en 2026</span><span class="val" id="k3"></span><span class="delta" id="k3d"></span></div>
+    <div class="card kpi c3"><span class="label">Cierre previsto 2026 (CGI)</span><span class="val" id="k4"></span><span class="delta" id="k4d"></span></div>
+  </section>
+
+  <section class="grid">
+    <div class="card c12" data-tab="resumen" id="beCard">
+      <div class="head"><div><h2>Punto de equilibrio</h2><p class="sub">Lo que hay que facturar cada mes para cubrir los gastos</p></div><span class="badge real">Real · CGI y flowww</span></div>
+      <div id="beNow"></div>
+      <div id="beRows"></div>
+      <p class="note" id="beNote"></p>
+    </div>
+
+    <div class="card c8" data-tab="resumen">
+      <div class="head"><div><h2>Cashflow mensual</h2><p class="sub">Ingresos y gastos con IVA, mes a mes</p></div><span class="badge real">Real ene–sep</span></div>
+      <div class="legend"><span><b style="background:var(--inc)"></b>Ingresos</span><span><b style="background:var(--exp)"></b>Gastos</span><span>Barras claras con borde discontinuo: previsión</span></div>
+      <div id="cash"></div>
+      <div><p class="sub" style="margin-bottom:6px">Balance de cada mes</p><div class="strip" id="strip"></div></div>
+    </div>
+
+    <div class="card c4" data-tab="resumen">
+      <div class="head"><div><h2>Facturación día a día</h2><p class="sub">Últimos 14 días con caja</p></div><span class="badge real">Real · flowww</span></div>
+      <div id="daily"></div>
+      <p class="note">Cajas del día de flowww, con IVA incluido.</p>
+    </div>
+
+    <div class="card c5" data-tab="resumen">
+      <div class="head"><div><h2>Próxima agenda</h2><p class="sub">Lunes 19 de octubre · hoy no se abre</p></div><span class="badge real">Real · flowww</span></div>
+      <ul class="agenda" id="agenda"></ul>
+    </div>
+
+    <div class="card c7" data-tab="equipo">
+      <div class="head"><div><h2>Equipo</h2><p class="sub">Coste mensual y ventas de producto por empleada</p></div><span class="badge real">Real</span></div>
+      <div class="empsel"></div>
+      <div class="team" id="team"></div>
+      <p class="note">Coste de empresa de las nóminas de septiembre (Estefanía y Yanira): 2.886 € en total.</p>
+      <div class="head" style="margin-top:4px"><div><h3>Horarios de la semana</h3></div><span class="badge real">Real · flowww</span></div>
+      <div class="sched"><table id="sched"></table></div>
+      <p class="note">Franjas en las que cada una atiende según la agenda de flowww. El centro abre de 10 a 20 h de lunes a viernes.</p>
+    </div>
+
+    <div class="card c6" data-tab="facturacion">
+      <div class="head"><div><h2>Ingresos por familia</h2><p class="sub">Acumulado enero a septiembre</p></div><span class="badge real">Real</span></div>
+      <div class="bars" id="mix"></div>
+    </div>
+
+    <div class="card c6" data-tab="proveedores">
+      <div class="head"><div><h2>Compras a proveedores y stock</h2><p class="sub">Compras acumuladas enero a septiembre</p></div><span class="badge real">Real</span></div>
+      <div class="bars" id="prov"></div>
+      <p class="note">No hay inventario actual en Drive: el archivo "Control de Stock" es de 2023 y no corresponde al centro. Las existencias y alertas de reposición vendrán de flowww.</p>
+    </div>
+
+    <div class="card c6" data-tab="facturacion">
+      <div class="head"><div><h2>Objetivo de comisiones</h2><p class="sub">Facturación de servicios 2026 frente al tramo del 5 %</p></div><span class="badge real">Real</span></div>
+      <div id="obj"></div>
+    </div>
+
+    <div class="card c12" data-tab="avisos" id="avCard">
+      <div class="head"><div><h2>Avisos pendientes</h2><p class="sub" id="avSub"></p></div><span class="badge" id="avBadge" style="background:var(--alert);color:#fff"></span></div>
+      <div id="avBody"></div>
+      <p class="note">Se revisan el correo del negocio, la cuenta Negocio, flowww y el CGI. Los temas personales no se muestran. Es una lectura automática: ante la duda, abre el correo original.</p>
+    </div>
+
+
+    <div class="card c12" data-tab="facturacion" style="order:-1">
+      <div class="head"><div><h2>Facturación día a día</h2><p class="sub">Lo cobrado en caja cada día · últimos 40 días con caja</p></div><span class="badge real">Real · flowww</span></div>
+      <div class="grid" style="gap:12px">
+        <div class="kpi c3"><span class="label">Hoy / último día</span><span class="val" id="f1"></span><span class="delta" id="f1d"></span></div>
+        <div class="kpi c3"><span class="label">Octubre hasta hoy</span><span class="val" id="f2"></span><span class="delta" id="f2d"></span></div>
+        <div class="kpi c3"><span class="label">Media por día de caja</span><span class="val" id="f3"></span><span class="delta" id="f3d"></span></div>
+        <div class="kpi c3"><span class="label">Mejor día de 2026</span><span class="val" id="f4"></span><span class="delta" id="f4d"></span></div>
+      </div>
+      <div id="dailyBig"></div>
+      <div class="head" style="margin-top:4px"><div><h3>Por meses</h3><p class="sub">Total facturado, días de caja y media diaria</p></div></div>
+      <div class="bars" id="monthsF"></div>
+      <p class="note">Datos de las cajas del día de flowww (importe facturado, IVA incluido). Los sábados y festivos sin caja no aparecen. Agosto tuvo pocos días abiertos.</p>
+    </div>
+
+    <div class="card c12" data-tab="agenda">
+      <div class="head"><div><h2>Agenda del próximo día</h2><p class="sub" id="agSub"></p></div><span class="badge real">Real · flowww</span></div>
+      <div class="empsel"></div>
+      <div class="team" id="agTeam"></div>
+      <ul class="agenda" id="agenda2"></ul>
+      <p class="note">Las horas se han leído de la posición de cada cita en la agenda de flowww. Solo se muestra el nombre de pila de cada clienta. Hoy es sábado y el centro no abre.</p>
+    </div>
+
+    <div class="card c12" data-tab="prevision">
+      <div class="head"><div><h2>Previsión de caja hasta fin de año</h2><p class="sub">Saldo de la cuenta Negocio según la media de 2026</p></div><span class="badge prev">Estimación</span></div>
+            <div id="prevChart"></div>
+      <div class="head"><div><h3>Próximos pagos conocidos</h3><p class="sub">Los que ya constan en facturas y hábitos de cargo</p></div></div>
+      <ul class="list" id="prevList"></ul>
+      <p class="note" id="prevNote"></p>
+    </div>
+
+    <div class="card c12" data-tab="impuestos">
+      <div class="head"><div><h2>Calendario fiscal</h2><p class="sub">Modelos trimestrales de autónoma</p></div><span class="badge real">Drive + banco</span></div>
+      <ul class="list" id="taxList"></ul>
+      <div class="head"><div><h3>Lo que ha salido del banco por impuestos en 2026</h3></div></div>
+      <div class="bars" id="taxPaid"></div>
+      <p class="note">Las fechas son las generales de la Agencia Tributaria; confírmalas con la gestoría. En Drive hay borradores de los modelos 111, 115, 131 y 303 del 3T 2026 (7 oct), pero no sé si ya están presentados.</p>
+    </div>
+
+    <div class="card c12" data-tab="gastos">
+      <div class="head"><div><h2>Gastos fijos</h2><p class="sub">Cargos que se repiten cada mes en la cuenta Negocio</p></div><span class="badge real">Real · banco</span></div>
+      <div class="bars" id="fixBars"></div>
+      <ul class="list" id="fixList"></ul>
+      <p class="note">Importes medios de 2026 y día habitual de cargo. No aparece ningún cargo de alquiler en esta cuenta: ¿se paga desde otra?</p>
+    </div>
+
+    <div class="card c6" data-tab="proveedores">
+      <div class="head"><div><h2>Facturas de proveedores por pagar</h2><p class="sub">Leídas de Drive</p></div><span class="badge real">Real · Drive</span></div>
+      <ul class="list" id="invList"></ul>
+      <p class="note">Solo he leído tres facturas recientes. Quedan más documentos de proveedores en Drive (Casmara, Fr. Haut, Rituals) por revisar.</p>
+    </div>
+
+    <div class="card c12" data-tab="vacaciones">
+      <div class="head"><div><h2>Vacaciones del equipo</h2><p class="sub">Partes de vacaciones guardados en Drive</p></div><span class="badge real">Real · Drive</span></div>
+      <div class="bars" id="vacBars"></div>
+      <p class="note">Las vacaciones se cuentan en días naturales. Solo hay un parte firmado en Drive (Estefanía, 7 días en septiembre); de las demás no hay partes subidos. Sube los partes y los añado.</p>
+    </div>
+
+    <div class="card c12" data-tab="tesoreria">
+      <div class="head"><div><h2>Tesorería</h2><p class="sub">Cuenta Negocio · datos del banco a 17 de octubre</p></div><span class="badge real">Real · CaixaBank</span></div>
+      <div class="grid" style="gap:12px">
+        <div class="kpi c3"><span class="label">Saldo actual</span><span class="val" id="t1"></span><span class="delta" id="t1d"></span></div>
+        <div class="kpi c3"><span class="label">Pagos en los próximos 30 días</span><span class="val" id="t2"></span><span class="delta" id="t2d"></span></div>
+        <div class="kpi c3"><span class="label">Saldo tras esos pagos</span><span class="val" id="t3"></span><span class="delta" id="t3d"></span></div>
+        <div class="kpi c3"><span class="label">Cobros TPV últimos 30 días</span><span class="val" id="t4"></span><span class="delta" id="t4d"></span></div>
+      </div>
+    </div>
+    <div class="card c6" data-tab="tesoreria">
+      <div class="head"><div><h2>Pagos pendientes</h2><p class="sub">Próximos 30 días, por fecha</p></div><span class="badge prev">Previsto</span></div>
+      <ul class="list" id="tPay"></ul>
+      <p class="note">Mezcla importes de facturas y recibos reales con otros estimados por el mes anterior (marcados con ≈).</p>
+    </div>
+    <div class="card c6" data-tab="tesoreria">
+      <div class="head"><div><h2>Préstamos del negocio</h2><p class="sub">Lo que consta en la cuenta Negocio</p></div><span class="badge real">Real · CaixaBank</span></div>
+      <ul class="list" id="tLoan"></ul>
+      <p class="note">No consta ningún préstamo activo en la cuenta Negocio.</p>
+    </div>
+    <div class="card c12" data-tab="tesoreria">
+      <div class="head"><div><h2>Últimos movimientos</h2><p class="sub">Cuenta Negocio, del 5 al 17 de octubre</p></div></div>
+      <ul class="list" id="tMov"></ul>
+      <p class="note">Los cobros con tarjeta se muestran ya sin comisión. Los movimientos con personas concretas no se detallan.</p>
+    </div>
+
+    <div class="card c12" data-tab="stock">
+      <div class="head"><div><h2>Stock de producto</h2><p class="sub">Control de stock de flowww</p></div><span class="badge real">Real · flowww</span></div>
+      <div class="grid" style="gap:12px">
+        <div class="kpi c3"><span class="label">Referencias</span><span class="val" id="s1"></span><span class="delta" id="s1d"></span></div>
+        <div class="kpi c3"><span class="label">En mínimos o agotadas</span><span class="val" id="s2"></span><span class="delta" id="s2d"></span></div>
+        <div class="kpi c3"><span class="label">Unidades en stock</span><span class="val" id="s3"></span><span class="delta" id="s3d"></span></div>
+        <div class="kpi c3"><span class="label">Valor aproximado</span><span class="val" id="s4"></span><span class="delta" id="s4d"></span></div>
+      </div>
+      <div class="head"><div><h3>Por marca</h3></div></div>
+      <div class="bars" id="sFam"></div>
+      <div class="head"><div><h3>A reponer</h3><p class="sub">Lo que falta para llegar al mínimo, de más a menos</p></div></div>
+      <ul class="list" id="sLow"></ul>
+      <p class="note" id="sNote"></p>
+    </div>
+
+    <div class="card c12" id="banco" data-tab="banco">
+      <div class="head"><div><h2>Contabilidad del banco</h2><p class="sub">Cuenta Negocio · 1 ene – 17 oct 2026 · solo lectura</p></div><span class="badge real">Real · CaixaBank</span></div>
+      <div class="grid" style="gap:12px">
+        <div class="kpi c3"><span class="label">Saldo hoy</span><span class="val" id="b1"></span><span class="delta" id="b1d"></span></div>
+        <div class="kpi c3"><span class="label">Cobros con tarjeta (TPV)</span><span class="val" id="b2"></span><span class="delta" id="b2d"></span></div>
+        <div class="kpi c3"><span class="label">Gasto operativo</span><span class="val" id="b3"></span><span class="delta" id="b3d"></span></div>
+        <div class="kpi c3"><span class="label">Ingresos menos gasto operativo</span><span class="val" id="b4"></span><span class="delta" id="b4d"></span></div>
+      </div>
+      <div class="legend"><span><b style="background:var(--inc)"></b>Ingresos</span><span><b style="background:var(--exp)"></b>Gasto operativo</span><span>Línea: saldo a fin de mes</span></div>
+      <div id="bank"></div>
+      <div class="head"><div><h3>En qué se va el dinero</h3><p class="sub">Salidas acumuladas del año por categoría</p></div></div>
+      <div class="bars" id="bcat"></div>
+      <p class="note">Los importes salen de los apuntes del banco (TPV y comisiones netos). Solo se cuenta la cuenta Negocio; no se incluyen traspasos ni movimientos personales. El IVA e IRPF son los pagados en 2026. Octubre llega hasta el día 17.</p>
+    </div>
+
+  </section>
+</div>
+<div id="tip" role="tooltip"></div>
+
+<script>
+const M=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+const ING=[11901,11443,17265,15562,15779,17661,15966,4400,18183,17500,17500,17500];
+const GAS=[14998,12210,12756,12552,11297,12356,14791,7680,9942,12501,10779,10792];
+const REAL=9;
+const FAM={'Facial':[4176,6629,9221,6728,7104,7997,6107,2142,9122],'Ventas de productos':[3435,2857,3902,4898,2490,4081,4209,594,2526],'Corporal':[1655,910,2205,1849,5059,3098,3473,391,3458],'Limpiezas':[1020,655,422,785,783,824,932,622,1557],'Depilación':[255,59,411,285,390,747,613,382,465],'IPL':[634,155,844,408,188,92,33,38,604],'Tarjeta regalo':[630,146,70,352,162,382,155,0,232],'Uñas':[97,33,137,257,229,329,444,232,220],'Pestañas':[0,0,53,0,118,111,0,0,0]};
+const PROV={'Skeyndor':[2503,3148,2368,1164,1535,1298,2089,1612,1838],'Fr. Haut':[2232,927,621,1389,915,1447,2066,271,0],'Casmara':[278,278,470,192,191,342,215,215,157],'Nueva Visión':[542,271,293,49,0,101,0,0,96],'Cnd':[0,0,0,0,0,194,0,0,0],'Futuro Estética':[0,0,0,0,121,62,0,0,0]};
+const OPER=[8467,8586,13363,10664,14033,13580,11757,3807,15657,13500,13500,13500];
+const OBJ5=[46896,53678,36330,46948];
+const sum=a=>a.reduce((s,v)=>s+v,0);
+const eur=n=>Math.round(n).toLocaleString('es-ES',{useGrouping:'always'})+' €';
+const $=id=>document.getElementById(id);
+const tip=$('tip');
+function bindTip(root){root.querySelectorAll('[data-tip]').forEach(el=>{
+  el.addEventListener('mousemove',e=>{tip.textContent=el.dataset.tip;tip.style.opacity=1;tip.style.left=Math.min(e.clientX+12,innerWidth-250)+'px';tip.style.top=(e.clientY+14)+'px'});
+  el.addEventListener('mouseleave',()=>{tip.style.opacity=0});
+});}
+
+$('fecha').textContent='Sábado 17 de octubre de 2026 · flowww y banco al día · CGI hasta septiembre';
+
+/* KPIs */
+const ytdI=sum(ING.slice(0,REAL)), ytdG=sum(GAS.slice(0,REAL)), ytdB=ytdI-ytdG;
+$('k1').textContent=eur(ING[8]);
+$('k1d').innerHTML='<span class="up">▲ Mejor mes del año</span>';
+$('k2').textContent=eur(ytdB);
+$('k2d').innerHTML='<span class="up">▲ '+eur(ytdI)+' de ingresos</span>';
+$('k3').textContent=eur(ytdG);
+$('k3d').innerHTML='<span class="down">Media '+eur(ytdG/REAL)+' al mes</span>';
+const yearB=sum(ING)-sum(GAS);
+$('k4').textContent=eur(yearB);
+$('k4d').innerHTML='<span style="color:var(--gold)">Previsión del CGI con oct–dic estimados</span>';
+
+/* Cashflow */
+(function(){
+  const W=720,H=290,pl=46,pr=10,pt=14,pb=28,max=20000,band=(W-pl-pr)/12,bw=band*0.36;
+  const y=v=>pt+(H-pt-pb)*(1-v/max);
+  let s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Ingresos y gastos por mes">';
+  [0,5000,10000,15000,20000].forEach(t=>{s+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+y(t)+'" y2="'+y(t)+'" stroke="var(--line)" stroke-width="1"/><text class="axis" x="'+(pl-8)+'" y="'+(y(t)+4)+'" text-anchor="end">'+(t/1000)+' mil</text>'});
+  const xd=pl+REAL*band;
+  s+='<line x1="'+xd+'" x2="'+xd+'" y1="'+pt+'" y2="'+(H-pb)+'" stroke="var(--gold)" stroke-width="1" stroke-dasharray="4 4"/><text class="axis" x="'+(xd+6)+'" y="'+(pt+10)+'" style="fill:var(--gold)">previsión</text>';
+  for(let i=0;i<12;i++){
+    const p=i>=REAL, x0=pl+i*band+band*0.12;
+    [[ING[i],'var(--inc)','Ingresos'],[GAS[i],'var(--exp)','Gastos']].forEach((d,k)=>{
+      const x=x0+k*(bw+3), h=(H-pb)-y(d[0]);
+      s+='<rect data-tip="'+M[i]+' · '+d[2]+': '+eur(d[0])+(p?' (previsión)':'')+'" x="'+x+'" y="'+y(d[0])+'" width="'+bw+'" height="'+h+'" rx="3" fill="'+d[1]+'" fill-opacity="'+(p?.35:1)+'"'+(p?' stroke="'+d[1]+'" stroke-dasharray="3 3"':'')+'/>';
+    });
+    s+='<text class="axis" x="'+(pl+i*band+band/2)+'" y="'+(H-8)+'" text-anchor="middle">'+M[i]+'</text>';
+  }
+  s+='</svg>';
+  $('cash').innerHTML=s;bindTip($('cash'));
+  $('strip').innerHTML=ING.map((v,i)=>{const b=v-GAS[i];return '<div class="'+(b>=0?'pos':'neg')+(i>=REAL?' pr':'')+'"><small>'+M[i]+'</small>'+(b>=0?'▲ ':'▼ ')+Math.round(b/100)/10+' mil</div>'}).join('');
+})();
+
+
+
+/* Equipo */
+(function(){
+  const spark=(arr,label)=>{const W=160,H=40,m=Math.max(...arr)||1;
+    const pts=arr.map((v,i)=>[6+i*(W-12)/(arr.length-1),H-6-(H-12)*v/m]);
+    return '<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+label+'"><polyline fill="none" stroke="var(--accent)" stroke-width="2" points="'+pts.map(p=>p.join(',')).join(' ')+'"/><circle cx="'+pts[pts.length-1][0]+'" cy="'+pts[pts.length-1][1]+'" r="4" fill="var(--accent)" stroke="var(--surface)" stroke-width="2"/></svg>'};
+  const E=[
+    {n:'Estefanía',sueldo:1324,com:240,vp:[855,899,1151,910,1063,1494,1109],nota:'ene–jul'},
+    {n:'Yanira',sueldo:1561,com:152,vp:[56,454,412,486,662],nota:'mar–jul'}];
+  $('team').innerHTML=E.map(e=>'<div class="person"><h3>'+e.n+'</h3><dl><dt>Sueldo al mes</dt><dd>'+eur(e.sueldo)+'</dd><dt>Comisión de septiembre</dt><dd>'+eur(e.com)+'</dd><dt>Producto vendido en julio</dt><dd>'+eur(e.vp[e.vp.length-1])+'</dd></dl>'+spark(e.vp,'Ventas de producto de '+e.n)+'<span class="note">Ventas de producto, '+e.nota+'</span></div>').join('')
+   +'<div class="person"><h3>Vicky</h3><span class="note">Tercera profesional del centro. Cofres vendidos oct–dic 2025: 14.</span></div>';
+  const days=['Lun','Mar','Mié','Jue','Vie','Sáb'];
+  const rows=[['Vicky',['9–17','9–17','9–17','9–17','9–15','—']],['Estefanía',['10–18','10–18','—','10–18','10–18','10–14']],['Yanira',['—','10–18','10–18','10–18','—','10–14']]];
+  $('sched').innerHTML='<thead><tr><th>Equipo</th>'+days.map(d=>'<th>'+d+'</th>').join('')+'</tr></thead><tbody>'+rows.map(r=>'<tr><td>'+r[0]+'</td>'+r[1].map(c=>'<td>'+(c==='—'?'<span class="off">libre</span>':'<span class="blk">'+c+'</span>')+'</td>').join('')+'</tr>').join('')+'</tbody>';
+})();
+
+/* Mix de familias */
+(function(){
+  const t=Object.entries(FAM).map(([k,v])=>[k,sum(v)]).sort((a,b)=>b[1]-a[1]);const m=t[0][1];
+  $('mix').innerHTML=t.map(r=>'<div class="bar" data-tip="'+r[0]+': '+eur(r[1])+'"><span>'+r[0]+'</span><div class="track"><div class="fill" style="width:'+(r[1]/m*100)+'%"></div></div><span class="num">'+eur(r[1])+'</span></div>').join('');
+  bindTip($('mix'));
+})();
+
+/* Proveedores */
+(function(){
+  const t=Object.entries(PROV).map(([k,v])=>[k,sum(v)]).sort((a,b)=>b[1]-a[1]);const m=t[0][1];
+  const cab=632*3+1196*3+623*3;
+  t.push(['Producto de cabina',cab]);t.sort((a,b)=>b[1]-a[1]);
+  $('prov').innerHTML=t.map(r=>'<div class="bar"><span>'+r[0]+'</span><div class="track"><div class="fill" style="width:'+(r[1]/t[0][1]*100)+'%"></div></div><span class="num">'+eur(r[1])+'</span></div>').join('');
+})();
+
+/* Objetivo */
+(function(){
+  const q=[sum(OPER.slice(0,3)),sum(OPER.slice(3,6)),sum(OPER.slice(6,9))];
+  const real=sum(q), objYtd=sum(OBJ5.slice(0,3)), objYear=sum(OBJ5), prevYear=sum(OPER);
+  const pct=real/objYtd*100;
+  $('obj').innerHTML='<div class="bar" style="grid-template-columns:1fr auto"><span><b>'+eur(real)+'</b> facturados en servicios de enero a septiembre</span><span class="num">'+Math.round(pct)+' % del objetivo a fecha</span></div>'
+   +'<div class="progress" role="img" aria-label="'+Math.round(pct)+' por ciento del objetivo a fecha"><span style="width:'+Math.min(pct,100)+'%"></span></div>'
+   +'<div class="team" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr))">'+q.map((v,i)=>'<div class="person"><h3>Trimestre '+(i+1)+'</h3><dl><dt>Real</dt><dd>'+eur(v)+'</dd><dt>Objetivo 5 %</dt><dd>'+eur(OBJ5[i])+'</dd></dl><span class="pill" style="align-self:flex-start;'+(v>=OBJ5[i]?'':'background:var(--crit-soft);color:var(--crit)')+'">'+(v>=OBJ5[i]?'Alcanzado':'Faltan '+eur(OBJ5[i]-v))+'</span></div>').join('')+'</div>'
+   +'<p class="note">Con la previsión actual de '+eur(prevYear)+' para todo el año, el tramo del 5 % ('+eur(objYear)+') queda a '+eur(objYear-prevYear)+'.</p>';
+})();
+
+/* Avisos (revisión de correo, banco, flowww y CGI) */
+(function(){
+  const TODAY=new Date(2026,9,17),REV='17 oct 2026, 12:00';
+  const days=d=>Math.round((new Date(d+'T00:00:00')-TODAY)/864e5);
+  const G={u:['Urgente · esta semana','var(--alert)'],p:['Próximos 30 días','var(--warn)'],r:['Por revisar','var(--accent)'],e:['Equipo','var(--gold)'],i:['Informativo','var(--muted)']};
+  /* [grupo, fecha ISO o '', etiqueta, título, detalle, origen] */
+  const A=[
+   ['u','2026-10-20','20 oct','Cargo de impuestos del 3T: 1.697 €','Modelo 111: 194,39 € · 115: 548,22 € · 131: 471,70 € · 303 (IVA): 483,12 €. Estrella corrigió el IVA, que en su primer correo ponía 415,64 €. Domiciliado en la cuenta Negocio; el saldo de 40.966 € lo cubre.','Correo · Gestoría'],
+   ['u','2026-10-23','23 oct · 12:30','Entrevista con candidata a esteticista (Mar Torres)','Confirmada por las dos partes. Puesto de 40 horas, lunes a viernes de 11 a 20 h, en el centro (Canillas 4).','Correo · Equipo'],
+   ['u','','Octubre','Faltan 3.545 € para cubrir los gastos de octubre','Llevas 8.956 € facturados hasta el 15 de 12.501 € de equilibrio. Quedan 10 días de apertura: unos 355 € al día.','Flowww · CGI'],
+   ['p','2026-10-30','30 oct','Seguridad Social: 1.210 €','Cargo mensual habitual.','Banco'],
+   ['p','2026-10-30','30 oct','Skeyndor, giro 1 de 3: 328,05 €','Factura VN/584407, de 984,15 € en tres giros (30 oct, 30 nov y 30 dic).','Drive · Banco'],
+   ['p','2026-10-31','31 oct','Nóminas del equipo: ≈ 2.040 €','Estefanía y Yanira (coste de empresa de septiembre: 2.886 €).','Banco'],
+   ['p','2026-11-01','1 nov','Futuro Estética, factura A 4266: 164,97 €','Vence a unos 30 días.','Drive'],
+   ['p','2026-11-05','5 nov','Alquiler del local: 981 €','Cargo del día 5. Coincide con la renta menos la retención del modelo 115. Octubre ya está pagado.','Banco'],
+   ['r','','Factura','Cosbell: factura de la mercancía del 6 de octubre','Llegó adjunta al correo. Revisa importe y vencimiento, y pásala a la gestoría.','Correo · Proveedor'],
+   ['r','','Facturas','Casmara: facturas de 2026','Las envió Noemi el 5 de octubre tras la llamada. Comprueba que están en la gestoría.','Correo · Proveedor'],
+   ['r','','Alquiler','Recibo de octubre y subida del próximo','El propietario envió el recibo de octubre el 30 de septiembre y avisa de que el siguiente subirá por la tasa de basuras (TRUA) del local.','Correo · Alquiler'],
+   ['r','','Traspaso','Traspaso de 378 € el día 1 de cada mes','Desde septiembre (antes 272 €). No lo he podido identificar: dime si es del negocio y lo coloco.','Banco'],
+   ['r','2027-01-20','20 ene','Impuestos del 4T de 2026','Modelos 111 y 115 el 20 de enero; 303 y 131 el 30 de enero.','Calendario fiscal'],
+   ['e','2026-11-16','16 nov','Estefanía pide un día de asuntos propios','Solicitud por escrito del 24 de septiembre para el lunes 16 de noviembre. En el correo no consta tu respuesta.','Correo · Equipo'],
+   ['e','','Reunión','Reunión con el equipo sobre vacaciones','Quieres proponer cerrar tres semanas en agosto. La gestoría (13 oct) dice que se fijan de común acuerdo: si las trabajadoras aceptan, no hay problema. El calendario debe fijarse a primeros de año y comunicarse con dos meses de antelación.','Correo · Gestoría'],
+   ['e','','Formación','La formación corre por cuenta de la empresa','Según el convenio (gestoría, 9 oct): si cuesta algo lo paga el centro, y es obligatoria si se hace dentro de la jornada.','Correo · Gestoría'],
+   ['i','','Festivos','Festivos 2027 de la Comunidad de Madrid','La gestoría (laboral) envió el calendario el 6 de octubre.','Correo · Gestoría'],
+   ['i','','Datos','Primer trimestre en el cuadro de comisiones','Muestra 8.467 € como facturación real y es solo enero: el trimestre real suma 30.416 €.','CGI'],
+   ['i','','Datos','Totales distintos entre hojas del CGI','181.405 € en Ingresos y 180.661 € en Balance (744 € de diferencia).','CGI'],
+   ['i','','Datos','VENTAS NUEVAS llega hasta el 29 de julio','Agosto y septiembre están sin rellenar en las hojas de Estefanía y Yanira.','Drive'],
+   ['i','','Datos','Octubre a diciembre del CGI son estimaciones','Son cifras redondas, no cobros reales.','CGI']
+  ];
+  const order=['u','p','r','e','i'];
+  $('avBody').className='avg';
+  $('avBody').innerHTML=order.map(g=>{
+    const rows=A.filter(a=>a[0]===g);if(!rows.length)return'';
+    return '<h3><i style="background:'+G[g][1]+'"></i>'+G[g][0]+' <span class="pill">'+rows.length+'</span></h3><ul class="list" style="--gc:'+G[g][1]+'">'+rows.map(a=>{
+      const n=a[1]?days(a[1]):null;
+      const when=n===null?'':(n<0?' · pasado':n===0?' · hoy':' · en '+n+' días');
+      return '<li style="--gc:'+G[g][1]+'"><span class="pill">'+a[2]+'</span><span>'+a[3]+'<small>'+a[4]+' <b>'+a[5]+when+'</b></small></span></li>'}).join('')+'</ul>';
+  }).join('');
+  const urg=A.filter(a=>a[0]==='u'||a[0]==='p').length;
+  $('avSub').textContent='Revisado el '+REV+' · correo, banco y flowww';
+  $('avBadge').textContent=urg+' que requieren acción';
+  const btn=document.querySelector('#tabs button[data-t="avisos"]');
+  btn.classList.add('alert');btn.parentNode.insertBefore(btn,btn.parentNode.children[1]);btn.innerHTML='Avisos <span class="cnt">'+urg+'</span>';
+  const bn=$('avBanner');bn.hidden=false;
+  bn.innerHTML='<b>'+urg+'</b><span>Avisos pendientes: '+A.filter(a=>a[0]==='u').length+' urgentes esta semana</span>';
+  bn.addEventListener('click',e=>{e.preventDefault();btn.click();window.scrollTo({top:0})});
+})();
+
+/* Banco */
+(function(){
+  const B={"ing": [10469, 11169, 13817, 16132, 14759, 18257, 19555, 5961, 17050, 11417], "ops": [12184, 10865, 9590, 11776, 10593, 14728, 12179, 7719, 6934, 7851], "sal": [73036, 45069, 47720, 44482, 48053, 33287, 35864, 30833, 38529, 40966], "exp": {"Otros gastos": 5702, "Proveedores producto": 34512, "Gestoría": 1699, "Gastos fijos y software": 7189, "Alquiler del local": 6867, "Nóminas": 33058, "Seguridad Social": 10364, "Impuestos (IRPF/IVA)": 5029}, "tpv": 124778, "ini": 101964};
+  const MB=M.slice(0,10),n=10;
+  $('b1').textContent=eur(B.sal[9]);
+  $('b1d').innerHTML='<span class="down">Inicio de año '+eur(B.ini)+'</span>';
+  $('b2').textContent=eur(B.tpv);
+  $('b2d').innerHTML='<span class="up">Media '+eur(B.tpv/9.5)+' al mes</span>';
+  const op=sum(B.ops);
+  $('b3').textContent=eur(op);
+  $('b3d').innerHTML='<span class="down">Media '+eur(op/9.5)+' al mes</span>';
+  const rt=sum(B.ing)-op;
+  $('b4').textContent=eur(rt);
+  $('b4d').innerHTML='<span class="'+(rt>=0?'up':'down')+'">Media '+eur(rt/9.5)+' al mes</span>';
+  const W=720,H=270,pl=46,pr=10,pt=14,pb=28,max=60000,band=(W-pl-pr)/n,bw=band*0.3,y=v=>pt+(H-pt-pb)*(1-v/max);
+  let s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Ingresos, gastos y saldo del banco por mes">';
+  [0,20000,40000,60000].forEach(t=>{s+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+y(t)+'" y2="'+y(t)+'" stroke="var(--line)"/><text class="axis" x="'+(pl-8)+'" y="'+(y(t)+4)+'" text-anchor="end">'+(t/1000)+' mil</text>'});
+  const cols=[['Ingresos',B.ing,'var(--inc)'],['Gasto operativo',B.ops,'var(--exp)']];
+  for(let i=0;i<n;i++){
+    const x0=pl+i*band+band*0.14;
+    cols.forEach((c,k)=>{const v=c[1][i],x=x0+k*(bw+2),h=(H-pb)-y(Math.min(v,max));
+      s+='<rect data-tip="'+MB[i]+' · '+c[0]+': '+eur(v)+'" x="'+x+'" y="'+(H-pb-h)+'" width="'+bw+'" height="'+h+'" rx="3" fill="'+c[2]+'"/>'});
+    s+='<text class="axis" x="'+(pl+i*band+band/2)+'" y="'+(H-8)+'" text-anchor="middle">'+MB[i]+'</text>';
+  }
+  const pts=B.sal.map((v,i)=>[pl+i*band+band/2,y(v)]);
+  s+='<polyline fill="none" stroke="var(--accent)" stroke-width="2" points="'+pts.map(p=>p.join(',')).join(' ')+'"/>';
+  pts.forEach((p,i)=>{s+='<circle data-tip="Saldo a fin de '+MB[i]+': '+eur(B.sal[i])+'" cx="'+p[0]+'" cy="'+p[1]+'" r="4.5" fill="var(--accent)" stroke="var(--surface)" stroke-width="2"/>'});
+  s+='</svg>';
+  $('bank').innerHTML=s;bindTip($('bank'));
+  const e=Object.entries(B.exp).sort((a,b)=>b[1]-a[1]),mx=e[0][1];
+  $('bcat').innerHTML=e.map(([k,v])=>'<div class="bar" data-tip="'+k+': '+eur(v)+'"><span>'+k+'</span><div class="track"><div class="fill" style="width:'+(v/mx*100)+'%"></div></div><span class="num">'+eur(v)+'</span></div>').join('');
+  bindTip($('bcat'));
+})();
+
+/* ===== Datos reales flowww y banco ===== */
+const CAJ='05/01|1032;07/01|83.95;08/01|446;09/01|519.39;12/01|231.25;13/01|992.95;14/01|993.35;15/01|1182.85;16/01|1044.95;19/01|589;20/01|199.72;21/01|512.1;22/01|210.63;23/01|613.57;26/01|769.82;27/01|458.6;28/01|619.2;29/01|81.1;30/01|674.95;02/02|433.9;03/02|573.71;04/02|501.9;05/02|649.9;06/02|670.5;09/02|315;10/02|490.3;11/02|532.6;12/02|405.5;13/02|202.95;16/02|640;17/02|1084.75;18/02|583.67;19/02|405.85;20/02|1191.5;23/02|266;24/02|494.8;25/02|956.95;26/02|240.1;27/02|804;02/03|447.05;03/03|681.4;04/03|955.65;05/03|1325.65;06/03|516.75;09/03|311.3;10/03|855.55;11/03|1568.6;12/03|486.91;13/03|621.05;16/03|459.55;17/03|404.95;18/03|869.15;19/03|544.2;20/03|714.9;23/03|1836.8;25/03|477.01;26/03|474.5;27/03|1338.15;30/03|507.95;31/03|1869.25;06/04|749;07/04|284.25;08/04|1035.25;09/04|1367.55;10/04|1086.5;13/04|506.6;14/04|432.65;15/04|2088.96;16/04|1170.15;17/04|444.75;20/04|389.85;21/04|920.5;22/04|700.65;23/04|25;24/04|940.35;27/04|895.9;28/04|462.4;29/04|1657.08;30/04|405.5;04/05|722.15;05/05|25;06/05|780.9;07/05|396.55;08/05|1368.05;11/05|393.24;12/05|1706.55;13/05|1142.8;14/05|147.95;18/05|1785.5;19/05|539.65;20/05|1877;21/05|1271.65;22/05|231.95;25/05|298.6;26/05|779.5;27/05|1261.75;28/05|590.9;29/05|459.4;01/06|1688.57;02/06|607.5;03/06|1039.45;04/06|763.4;05/06|931.7;08/06|370.75;09/06|1389.4;10/06|794.8;11/06|240.75;12/06|652.35;15/06|1011.4;16/06|2090.65;17/06|1341.65;18/06|420.45;19/06|824.95;22/06|168.45;23/06|1006.9;24/06|594.33;25/06|321.65;26/06|387.9;29/06|399.65;30/06|615.2;01/07|1185;02/07|1672.1;03/07|1017.5;06/07|514.35;07/07|1913.1;08/07|312.1;09/07|303.19;10/07|602.05;13/07|514.95;14/07|124;15/07|2398.36;16/07|189.4;17/07|701.75;20/07|43;21/07|555.6;22/07|624.35;23/07|272.1;24/07|246.7;27/07|487.35;28/07|238.95;29/07|890.65;30/07|688.2;31/07|471.6;03/08|152;04/08|909.79;05/08|430.5;06/08|127;07/08|90.8;10/08|350;11/08|716.35;12/08|106.8;13/08|1027.05;14/08|74;31/08|411.6;01/09|438;02/09|524.3;03/09|219;04/09|1500.2;07/09|538.3;08/09|889.25;09/09|1413.4;10/09|730.3;11/09|223;14/09|875.15;15/09|222;16/09|467.85;17/09|450.5;18/09|1603.85;21/09|845.6;22/09|269.75;23/09|2297.89;24/09|1754.6;25/09|818.95;28/09|397.9;29/09|1014;30/09|689.08;01/10|924.05;02/10|407.95;05/10|798.85;06/10|522;07/10|1431.45;08/10|358.5;09/10|523.95;13/10|754;14/10|2520.7;15/10|714.07'.split(';').map(s=>{const[a,b]=s.split('|');return{d:a,m:+a.slice(3)-1,v:+b}});
+const fdate=d=>{const[x,m]=d.split('/');return +x+' '+M[+m-1].toLowerCase()};
+const BK={ini:101964,sal:40966,tpv:124778};
+
+/* KPIs reales */
+(function(){
+  const oct=CAJ.filter(c=>c.m===9),totOct=sum(oct.map(c=>c.v)),tot=sum(CAJ.map(c=>c.v));
+  $('k1').textContent=eur(totOct);
+  $('k1d').innerHTML='<span class="up">'+oct.length+' días con caja, hasta el '+fdate(CAJ[CAJ.length-1].d)+'</span>';
+  $('k2').textContent=eur(BK.sal);
+  $('k2d').innerHTML='<span class="down">Cuenta Negocio · empezó el año en '+eur(BK.ini)+'</span>';
+  $('k3').textContent=eur(tot);
+  $('k3d').innerHTML='<span class="up">Facturado en 2026 · '+CAJ.length+' días de caja</span>';
+})();
+
+/* Facturación día a día */
+(function(){
+  const last=CAJ.slice(-40),W=720,H=230,pl=44,pr=8,pt=12,pb=30,max=2800,bw=(W-pl-pr)/last.length;
+  const y=v=>pt+(H-pt-pb)*(1-v/max);
+  let s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Facturación diaria de los últimos 40 días con caja">';
+  [0,1000,2000].forEach(t=>{s+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+y(t)+'" y2="'+y(t)+'" stroke="var(--line)"/><text class="axis" x="'+(pl-8)+'" y="'+(y(t)+4)+'" text-anchor="end">'+(t/1000)+' mil</text>'});
+  last.forEach((c,i)=>{const h=(H-pb)-y(c.v);s+='<rect data-tip="'+fdate(c.d)+': '+eur(c.v)+'" x="'+(pl+i*bw+1.5)+'" y="'+y(c.v)+'" width="'+(bw-3)+'" height="'+Math.max(h,1)+'" rx="3" fill="var(--accent)"/>';
+    if(i%5===0)s+='<text class="axis" x="'+(pl+i*bw+bw/2)+'" y="'+(H-10)+'" text-anchor="middle">'+fdate(c.d)+'</text>'});
+  s+='</svg>';$('dailyBig').innerHTML=s;bindTip($('dailyBig'));
+  const L=CAJ[CAJ.length-1],oct=CAJ.filter(c=>c.m===9),best=CAJ.reduce((a,b)=>b.v>a.v?b:a);
+  $('f1').textContent=eur(L.v);$('f1d').innerHTML='<span class="up">Caja del '+fdate(L.d)+'</span>';
+  $('f2').textContent=eur(sum(oct.map(c=>c.v)));$('f2d').innerHTML='<span class="up">'+oct.length+' días con caja</span>';
+  const avg=sum(CAJ.map(c=>c.v))/CAJ.length;$('f3').textContent=eur(avg);$('f3d').innerHTML='<span style="color:var(--muted)">Media de todo 2026</span>';
+  $('f4').textContent=eur(best.v);$('f4d').innerHTML='<span class="up">'+fdate(best.d)+'</span>';
+  const mm=M.slice(0,10).map((n,i)=>{const r=CAJ.filter(c=>c.m===i);return[n,sum(r.map(c=>c.v)),r.length]});const mx=Math.max(...mm.map(r=>r[1]));
+  $('monthsF').innerHTML=mm.map(r=>'<div class="bar" style="grid-template-columns:50px 1fr auto" data-tip="'+r[0]+': '+eur(r[1])+' en '+r[2]+' días"><span>'+r[0]+'</span><div class="track"><div class="fill" style="width:'+(r[1]/mx*100)+'%"></div></div><span class="num">'+eur(r[1])+' <small style="color:var(--muted);font-weight:400">· '+r[2]+' d · '+eur(r[1]/r[2])+'/d</small></span></div>').join('');bindTip($('monthsF'));
+  /* mini en Resumen */
+  const d=CAJ.slice(-14),w=300,h=150,l=8,r=8,t=14,b=22,m2=2800,bw2=(w-l-r)/d.length;
+  let q='<svg viewBox="0 0 '+w+' '+h+'" role="img" aria-label="Facturación de los últimos 14 días con caja">';
+  [0,1400,2800].forEach(v=>{const yy=t+(h-t-b)*(1-v/m2);q+='<line x1="'+l+'" x2="'+(w-r)+'" y1="'+yy+'" y2="'+yy+'" stroke="var(--line)"/>'});
+  d.forEach((c,i)=>{const hh=(h-t-b)*c.v/m2;q+='<rect data-tip="'+fdate(c.d)+': '+eur(c.v)+'" x="'+(l+i*bw2+2)+'" y="'+(h-b-hh)+'" width="'+(bw2-4)+'" height="'+Math.max(hh,1)+'" rx="3" fill="var(--accent)"/>'});
+  q+='<text class="axis" x="'+l+'" y="'+(h-6)+'">'+fdate(d[0].d)+'</text><text class="axis" x="'+(w-r)+'" y="'+(h-6)+'" text-anchor="end">'+fdate(d[d.length-1].d)+'</text></svg>';
+  $('daily').innerHTML=q;bindTip($('daily'));
+})();
+
+/* Agenda real del lunes 19 */
+(function(){
+  const A=[['Estefanía','11:00','Patricia · Masaje circulatorio 50 min'],['Estefanía','12:00','Nuria · Longevity 75 min'],['Estefanía','13:30','Rocío · Exosomas corporal'],['Yanira','14:00','Piedad · Exosomas corporal'],['Yanira','15:00','Laura · Exosomas corporal'],['Yanira','16:00','Belén · Win facial 40 min'],['Vicky','16:00','Cristina · Longevity 75 min'],['Yanira','17:00','Victoria · Tratamiento de cuello'],['Yanira','18:00','Soco · Hyaluronic plus Fr. Haut'],['Vicky','18:00','Carlos · Limpieza junior'],['Vicky','19:00','Victoria · Longevity 75 min'],['Yanira','19:00','Iván · Eternal']];
+  A.sort((a,b)=>a[1].localeCompare(b[1]));
+  $('agSub').textContent='Lunes 19 de octubre · '+A.length+' citas';
+  const by={};A.forEach(a=>by[a[0]]=(by[a[0]]||0)+1);
+  $('agTeam').innerHTML=Object.entries(by).map(([n,c])=>'<div class="person"><h3>'+n+'</h3><dl><dt>Citas</dt><dd>'+c+'</dd></dl></div>').join('');
+  const li=A.map(a=>'<li><time>'+a[1]+'</time><span>'+a[2]+'<br><small style="color:var(--muted)">'+a[0]+'</small></span></li>').join('');
+  $('agenda2').innerHTML=li;
+  $('agenda').innerHTML=li;
+})();
+
+/* Previsión de caja */
+(function(){
+  const ing=13900,ops=11051;
+  const today=new Date(2026,9,17),end=[new Date(2026,9,31),new Date(2026,10,30),new Date(2026,11,31)];
+  const frac=[14/31,1,1];
+  let a=BK.sal;const A=[[BK.sal]];const lab=['Hoy','Fin oct','Fin nov','Fin dic'];
+  frac.forEach(f=>{a+=f*(ing-ops);A.push([a])});
+  const W=720,H=250,pl=48,pr=24,pt=14,pb=30,mn=0,mx=60000,y=v=>pt+(H-pt-pb)*(1-(v-mn)/(mx-mn)),x=i=>pl+i*(W-pl-pr)/3;
+  let s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Previsión del saldo del banco hasta fin de año">';
+  [0,20000,40000,60000].forEach(t=>{s+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+y(t)+'" y2="'+y(t)+'" stroke="var(--line)"/><text class="axis" x="'+(pl-8)+'" y="'+(y(t)+4)+'" text-anchor="end">'+(t/1000)+' mil</text>'});
+  [[0,'var(--inc)']].forEach(([k,c])=>{s+='<polyline fill="none" stroke="'+c+'" stroke-width="2.5" stroke-dasharray="'+(k?'5 4':'0')+'" points="'+A.map((p,i)=>x(i)+','+y(p[k])).join(' ')+'"/>';
+    A.forEach((p,i)=>{s+='<circle data-tip="'+lab[i]+': '+eur(p[k])+(i?' (previsión)':'')+'" cx="'+x(i)+'" cy="'+y(p[k])+'" r="5" fill="'+c+'" stroke="var(--surface)" stroke-width="2"/>'})});
+  lab.forEach((l,i)=>{s+='<text class="axis" x="'+x(i)+'" y="'+(H-8)+'" text-anchor="middle">'+l+'</text>'});
+  s+='</svg>';$('prevChart').innerHTML=s;bindTip($('prevChart'));
+  const P=[['2026-10-20','Impuestos del 3T (modelos 111, 115, 131 y 303)','1.697 €','importe confirmado por la gestoría'],['2026-10-30','Seguridad Social','≈ 1.210 €','cargo mensual habitual'],['2026-10-30','Skeyndor, giro 1 de 3','328 €','factura VN/584407'],['2026-10-31','Nóminas del equipo','≈ 2.040 €','Estefanía y Yanira'],['2026-11-01','Futuro Estética, factura A 4266','165 €','vence a 30 días'],['2026-11-30','Skeyndor, giro 2 de 3','328 €','factura VN/584407'],['2026-12-30','Skeyndor, giro 3 de 3','328 €','factura VN/584407']];
+  $('prevList').innerHTML=P.map(p=>{const d=new Date(p[0]+'T12:00:00'),n=Math.round((d-today)/864e5);return '<li><span class="pill">'+d.getDate()+' '+M[d.getMonth()].toLowerCase()+'</span><span>'+p[1]+' <b>'+p[2]+'</b><small>'+p[3]+' · en '+n+' días</small></span></li>'}).join('');
+  $('prevNote').textContent='Supuestos: ingresos de '+eur(ing)+' al mes (media de cobros 2026) y gasto operativo de '+eur(ops)+' (incluye el alquiler del local). Solo cuenta Negocio: no incluye retiradas ni traspasos personales. Es una estimación, no un dato.';
+})();
+
+/* Calendario fiscal */
+(function(){
+  const T=[['2026-10-20','3T 2026 · Modelos 111, 115, 303 y 131','Retenciones, alquiler, IVA y pago fraccionado de IRPF'],['2027-01-20','4T 2026 · Modelos 111 y 115','Retenciones y alquiler'],['2027-01-30','4T 2026 · Modelos 303 y 131','IVA y pago fraccionado de IRPF']];
+  const now=new Date(2026,9,17);
+  $('taxList').innerHTML=T.map(t=>{const d=new Date(t[0]+'T12:00:00'),n=Math.round((d-now)/864e5);return '<li><span class="pill" style="'+(n<=5?'background:var(--crit-soft);color:var(--crit)':'')+'">'+d.getDate()+' '+M[d.getMonth()].toLowerCase()+'</span><span>'+t[1]+'<small>'+t[2]+' · '+(n<=0?'vence hoy':'faltan '+n+' días')+'</small></span></li>'}).join('');
+  const P=[['Enero (4T 2025)',1506],['Abril (1T 2026)',1683],['Julio (2T 2026)',1840]],mx=1840;
+  $('taxPaid').innerHTML=P.map(r=>'<div class="bar"><span>'+r[0]+'</span><div class="track"><div class="fill" style="width:'+(r[1]/mx*100)+'%"></div></div><span class="num">'+eur(r[1])+'</span></div>').join('');
+})();
+
+/* Punto de equilibrio */
+(function(){
+  const cd={};CAJ.forEach(c=>{cd[c.m]=(cd[c.m]||0)+c.v});
+  const OC=9, fact=i=>i<REAL?ING[i]:(i===OC?cd[OC]:ING[i]);
+  const be=GAS, rows=[];
+  for(let i=0;i<12;i++){
+    const f=fact(i),g=be[i],pct=Math.min(100,f/g*100),dif=f-g,pr=i>REAL;
+    rows.push('<div class="be-row'+(pr?' pr':'')+'"><b>'+M[i]+'</b><div class="track" title="Punto de equilibrio '+eur(g)+'"><div class="fill'+(dif>=0?' ok':'')+'" style="width:'+pct+'%"></div></div><span class="num '+(pr?'':(dif>=0?'ok':'no'))+'">'+(pr?'previsto ':'')+eur(f)+' / '+eur(g)+'<br>'+(dif>=0?'cubierto +'+eur(dif):'faltan '+eur(-dif))+'</span></div>');
+  }
+  $('beRows').innerHTML=rows.join('');
+  const f=cd[OC],g=be[OC],falta=Math.max(0,g-f);
+  let dias=0;for(let d=19;d<=31;d++){const w=new Date(2026,9,d).getDay();if(w>=1&&w<=5)dias++}
+  $('beNow').className='be-now';
+  $('beNow').innerHTML='<div><small>Equilibrio de octubre</small><b>'+eur(g)+'</b></div><div><small>Facturado hasta hoy</small><b>'+eur(f)+'</b></div><div><small>'+(falta?'Falta para cubrirlo':'Ya cubierto')+'</small><b style="color:var(--'+(falta?'crit':'good')+')">'+(falta?eur(falta):'+'+eur(f-g))+'</b></div><div><small>Por día de apertura ('+dias+' días)</small><b>'+(falta?eur(falta/dias):'—')+'</b></div>';
+  const ok=ING.slice(0,REAL).filter((v,i)=>v>=GAS[i]).length;
+  $('beNote').textContent='Equilibrio = gastos del mes según el CGI (con IVA, incluye nóminas, proveedores y cuotas; sin retiradas personales). Ene–sep: facturación del CGI; octubre: cajas de flowww hasta el 15 (el 17 no hay caja); nov–dic: previsión. Meses cubiertos hasta septiembre: '+ok+' de '+REAL+'. Enero, febrero y agosto (vacaciones) quedaron por debajo. Los días que quedan de octubre se cuentan de lunes a viernes.';
+})();
+/* Gastos fijos */
+(function(){
+  const G=[['Seguridad Social',1210,30],['Alquiler del local',981,5],['Nóminas del equipo',2042,30],['Gestoría',166,10],['Almacenaje Mybox',166,1],['Teléfono',83,8],['Flowww',62,4],['Luz',57,1],['Alarma',31,5]];
+  const mx=Math.max(...G.map(g=>g[1])),tot=sum(G.map(g=>g[1]));
+  $('fixBars').innerHTML=G.map(g=>'<div class="bar"><span>'+g[0]+'</span><div class="track"><div class="fill" style="width:'+(g[1]/mx*100)+'%"></div></div><span class="num">'+eur(g[1])+'</span></div>').join('');
+  const now=new Date(2026,9,17);
+  $('fixList').innerHTML='<li><span class="pill">Total</span><span><b>'+eur(tot)+' al mes</b><small>Suma de los cargos de arriba</small></span></li>'+G.slice(3).map(g=>{let d=new Date(2026,9,g[2]);if(d<now)d=new Date(2026,10,g[2]);return '<li><span class="pill">'+d.getDate()+' '+M[d.getMonth()].toLowerCase()+'</span><span>'+g[0]+'<small>Próximo cargo previsto</small></span></li>'}).join('');
+})();
+
+/* Facturas por pagar */
+$('invList').innerHTML=[['30 oct','Skeyndor · VN/584407','984 € en 3 giros de 328 € (30 oct, 30 nov, 30 dic)'],['1 nov','Futuro Estética · A 4266','165 € a 30 días (cera, bandas)'],['Pagada','Nueva Visión · NV2613497','96 €, cobrada el 4 sep']].map(a=>'<li><span class="pill">'+a[0]+'</span><span>'+a[1]+'<small>'+a[2]+'</small></span></li>').join('');
+
+/* Vacaciones */
+$('vacBars').innerHTML=[['Estefanía',7,'7 de 30 días naturales'],['Yanira',0,'sin parte en Drive'],['Vicky',0,'sin parte en Drive']].map(v=>'<div class="bar"><span>'+v[0]+'</span><div class="track"><div class="fill" style="width:'+(v[1]/30*100)+'%"></div></div><span class="num">'+v[2]+'</span></div>').join('');
+
+
+/* ===== Tesorería ===== */
+(function(){
+  const today=new Date(2026,9,17),lim=new Date(2026,10,16);
+  const P=[['2026-10-20','Impuestos del 3T',1697,0],['2026-10-30','Seguridad Social',1210,1],['2026-10-30','Skeyndor, giro 1 de 3',328,0],['2026-10-31','Nóminas del equipo',2040,1],['2026-11-01','Futuro Estética A 4266',165,0],['2026-11-01','Almacenaje Mybox',166,1],['2026-11-01','Luz',57,1],['2026-11-04','Flowww',62,0],['2026-11-05','Alquiler del local',981,1],['2026-11-05','Alarma',31,1],['2026-11-08','Teléfono',83,1],['2026-11-10','Gestoría',166,1]];
+  const tot=sum(P.map(p=>p[2])),t30=sum(CAJ.slice(-20).map(c=>c.v));
+  $('t1').textContent=eur(40965.67);$('t1d').innerHTML='<span class="up">Saldo contable al 17 oct</span>';
+  $('t2').textContent=eur(tot);$('t2d').innerHTML='<span class="down">'+P.length+' pagos previstos</span>';
+  $('t3').textContent=eur(40965.67-tot);$('t3d').innerHTML='<span style="color:var(--muted)">Sin contar cobros nuevos</span>';
+  $('t4').textContent=eur(18705);$('t4d').innerHTML='<span class="up">Media de 2026: 13.900 € al mes</span>';
+  $('tPay').innerHTML=P.map(p=>{const d=new Date(p[0]+'T12:00:00'),n=Math.round((d-today)/864e5);return '<li><span class="pill">'+d.getDate()+' '+M[d.getMonth()].toLowerCase()+'</span><span>'+p[1]+' <b>'+(p[3]?'≈ ':'')+eur(p[2])+'</b><small>en '+n+' días</small></span></li>'}).join('');
+  $('tLoan').innerHTML=[['Cancelado','Préstamo de 322 € al mes','Cancelado el 30 de julio con un pago de 3.505 €']].map(a=>'<li><span class="pill">'+a[0]+'</span><span>'+a[1]+'<small>'+a[2]+'</small></span></li>').join('');
+  $('tMov').innerHTML=[['17 oct','Cobros con tarjeta',704.84],['16 oct','Cobros con tarjeta',534.98],['16 oct','Cosméticos y belleza (proveedor)',-395.73],['15 oct','Cobros con tarjeta',2413.18],['15 oct','Skeyndor',-560.17],['14 oct','Cobros con tarjeta',751.73],['12 oct','Cosméticos y belleza (proveedor)',-314.60],['12 oct','Gestoría',-165.89],['10 oct','Cobros con tarjeta',452.58],['9 oct','Skeyndor',-550.55],['8 oct','Vodafone',-82.87],['5 oct','Alquiler del local',-981.03]].map(a=>'<li><span class="pill">'+a[0]+'</span><span>'+a[1]+' <b style="color:'+(a[2]>0?'var(--good)':'var(--crit)')+'">'+(a[2]>0?'+':'−')+eur(Math.abs(a[2]))+'</b></span></li>').join('');
+})();
+
+/* ===== Stock ===== */
+(function(){
+  const FAMS=[['Skeyndor',96,219,2258,29,22],['Casmara',47,45,372,25,23],['Fr. Haut',27,31,0,2,2],['Cnd, Evo y otras',6,0,0,1,1]];
+  const LOW=[['Casmara','Mascarillas imanes',-34,1],['Casmara','Anti blemish foam cleanser',0,2],['Casmara','Body Sculptor Cream 200 ml',0,2],['Casmara','Clarifying Cream SPF50',0,2],['Casmara','Firming Fresh Serum 24H',0,2],['Casmara','Intensive repair after sun',0,2],['Casmara','Oxygenating hidratante',0,2],['Casmara','Q10 Caps',0,2],['Casmara','Sensation Hydro Vital C',0,2],['Casmara','Shine stop antiaging',0,2],['Skeyndor','Crema Ultra Hidratante 24h',0,2],['Skeyndor','Eternal sleeping oil',0,2],['Skeyndor','Gel Frío Piernas Ligeras',0,2],['Skeyndor','Mattifying Pore Refiner',0,2],['Skeyndor','Resurfacing Peel Cream',0,2],['Skeyndor','Timeless Prodigy The Cream',0,1],['Skeyndor','Timeless Prodigy The Serum',0,1],['Skeyndor','Timeless Prodigy contorno ojos',0,1],['Skeyndor','Cofre crema Timeless Prodigy',0,1],['Skeyndor','CC Cream 02',0,1],['Skeyndor','DD Cream 02',0,1],['Skeyndor','Scrub exfoliante 50 ml',0,1],['Skeyndor','Gel anti-impurezas Clear Balance',0,1],['Skeyndor','Redensifying Filling Concentrate',0,1],['Casmara','Rgnerin Serum 50 ml',0,1],['Casmara','Rgnerin Nutri Cream',0,1],['Casmara','Clarifying Serum',0,1],['Fr. Haut','Contorno ojos y labios H+',0,1],['Nueva Visión','Concentrado star vital antiedad',0,1]];
+  const nLow=57,refs=176;
+  $('s1').textContent=refs;$('s1d').innerHTML='<span style="color:var(--muted)">Skeyndor, Casmara, Fr. Haut y más</span>';
+  $('s2').textContent=nLow;$('s2d').innerHTML='<span class="down">'+Math.round(nLow/refs*100)+' % de las referencias</span>';
+  $('s3').textContent=295;$('s3d').innerHTML='<span style="color:var(--muted)">Sin contar negativos</span>';
+  $('s4').textContent=eur(2630);$('s4d').innerHTML='<span style="color:var(--warn)">Solo 78 refs con precio</span>';
+  const mx=Math.max(...FAMS.map(f=>f[1]));
+  $('sFam').innerHTML=FAMS.map(f=>'<div class="bar" data-tip="'+f[0]+': '+f[1]+' referencias, '+f[2]+' unidades, '+f[4]+' en mínimos"><span>'+f[0]+'</span><div class="track"><div class="fill" style="width:'+(f[1]/mx*100)+'%"></div></div><span class="num">'+f[1]+' refs · '+f[2]+' uds · '+f[4]+' bajo mín.</span></div>').join('');bindTip($('sFam'));
+  const L=LOW.map(l=>[l[0],l[1],l[2],l[3],l[3]-Math.max(l[2],0)]).sort((a,b)=>b[4]-a[4]);
+  $('sLow').innerHTML=L.map(l=>'<li><span class="pill" style="'+(l[2]<=0?'background:var(--crit-soft);color:var(--crit)':'')+'">'+(l[2]<=0?'Agotado':l[2]+' uds')+'</span><span>'+l[1]+'<small>'+l[0]+' · mínimo '+l[3]+' · faltan '+l[4]+'</small></span></li>').join('');
+  $('sNote').textContent='Se muestran 29 de las 57 referencias bajo mínimo, las de mayor faltante. Hay 3 con stock negativo (mascarillas Casmara −34, Fr. Haut Sun Touch −1, gel limpiador termal Skeyndor −1): conviene regularizarlas en flowww. 98 referencias no tienen precio medio, así que el valor total es mayor.';
+})();
+
+/* ===== Horarios reales y selector de empleada ===== */
+(function(){
+  const days=['Lun','Mar','Mié','Jue','Vie','Sáb'];
+  const rows=[['Vicky',['15–20','10–15','10–14 · 16–20','15–20','10–14','—'],27],['Estefanía',['10–15','15–20','10–15','10–15','15–20','—'],25],['Yanira',['14–20','14–20','14–20','14–20','14–20','—'],30]];
+  $('sched').innerHTML='<thead><tr><th>Equipo</th>'+days.map(d=>'<th>'+d+'</th>').join('')+'<th>Horas</th></tr></thead><tbody>'+rows.map(r=>'<tr data-emp="'+r[0]+'"><td>'+r[0]+'</td>'+r[1].map(c=>'<td>'+(c==='—'?'<span class="off">libre</span>':'<span class="blk">'+c+'</span>')+'</td>').join('')+'<td><b>'+r[2]+' h</b></td></tr>').join('')+'</tbody>';
+  document.querySelectorAll('#team .person').forEach(p=>{p.dataset.emp=p.querySelector('h3').textContent});
+  document.querySelectorAll('#agenda2 li,#agenda li').forEach(li=>{const s=li.querySelector('small');if(s)li.dataset.emp=s.textContent});
+  document.querySelectorAll('#agTeam .person').forEach(p=>{p.dataset.emp=p.querySelector('h3').textContent});
+  const sel=['Todas','Vicky','Estefanía','Yanira'];
+  const html='<div class="chips" role="group" aria-label="Empleada" style="margin-bottom:6px">'+sel.map((n,i)=>'<button type="button" class="chip empb'+(i?'':' on')+'" data-e="'+n+'">'+n+'</button>').join('')+'</div>';
+  document.querySelectorAll('.empsel').forEach(e=>{e.innerHTML=html});
+  function apply(e){document.querySelectorAll('[data-emp]').forEach(x=>{x.hidden=!(e==='Todas'||x.dataset.emp===e)});document.querySelectorAll('.empb').forEach(b=>{const on=b.dataset.e===e;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on)});try{localStorage.setItem('hh-emp',e)}catch(x){}}
+  document.querySelectorAll('.empb').forEach(b=>b.addEventListener('click',()=>apply(b.dataset.e)));
+  let e='Todas';try{e=localStorage.getItem('hh-emp')||'Todas'}catch(x){}
+  apply(sel.includes(e)?e:'Todas');
+})();
+
+/* Botones de navegación */
+(function(){
+  const nav=$('tabs'),btns=[...nav.querySelectorAll('button')];
+  function show(t){
+    if(!btns.some(b=>b.dataset.t===t))t='resumen';
+    document.querySelectorAll('[data-tab]').forEach(e=>{e.hidden=e.dataset.tab!==t});
+    btns.forEach(b=>{const on=b.dataset.t===t;b.setAttribute('aria-selected',on);b.classList.toggle('on',on)});
+    try{history.replaceState(null,'','#'+t)}catch(e){}
+    try{localStorage.setItem('hh-tab',t)}catch(e){}
+  }
+  btns.forEach(b=>b.addEventListener('click',()=>{show(b.dataset.t);window.scrollTo({top:0})}));
+  let t=(location.hash||'').slice(1);
+  if(!t){try{t=localStorage.getItem('hh-tab')||''}catch(e){}}
+  show(t||'resumen');
+})();
+</script><script>if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));</script>
