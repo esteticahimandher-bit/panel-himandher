@@ -151,6 +151,28 @@ body{line-height:1.6}
 .avg li{border-left:3px solid var(--gc,var(--line));padding-left:10px}
 .avg small b{font-weight:600}
 .avg .pill{min-width:92px;text-align:center;flex:none;white-space:nowrap}
+.bn-top{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.bn-top div{background:var(--accent-soft);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:2px}
+.bn-top small{font-size:12px;color:var(--muted)} .bn-top b{font-family:var(--font-num);font-size:26px;font-weight:700}
+.bn-bar{position:relative;height:34px;margin:30px 8px 12px}
+.bn-bar .trk{position:absolute;inset:11px 0;background:var(--accent-soft);border-radius:6px;overflow:hidden}
+.bn-bar .fl{height:100%;background:var(--accent);border-radius:0 6px 6px 0}
+.bn-bar .tk{position:absolute;top:2px;bottom:2px;width:0;border-left:2px dashed var(--gold)}
+.bn-bar .tk span{position:absolute;top:-22px;left:-14px;width:28px;text-align:center;font-size:11px;font-weight:700;color:var(--gold);font-family:var(--font-num)}
+.bn-bar .tk em{position:absolute;bottom:-24px;left:-30px;width:60px;text-align:center;font-style:normal;font-size:11px;color:var(--muted)}
+.bn-bar .me{position:absolute;top:-4px;font-size:12px;font-weight:700;color:var(--accent);transform:translateX(-50%);white-space:nowrap;font-family:var(--font-num)}
+.bn-tier{display:grid;grid-template-columns:90px 1fr auto;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px}
+.bn-tier:last-child{border:0}
+.bn-tier small{display:block;color:var(--muted)}
+.bn-tier .st{font-weight:700;font-size:13px;text-align:right}
+.tablewrap{overflow-x:auto}
+.bn-w{border-collapse:collapse;width:100%;min-width:560px;font-size:13px;font-variant-numeric:tabular-nums}
+.bn-w th,.bn-w td{padding:7px 8px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+.bn-w th:first-child,.bn-w td:first-child{text-align:left}
+.bn-w th{font-size:12px;color:var(--muted);font-weight:600}
+.bn-w td.ok{color:var(--good);font-weight:700}.bn-w td.no{color:var(--crit)}
+.bn-w tr.fut td{color:var(--muted)}
+.bnmsg{white-space:pre-wrap;font-family:var(--font-body);font-size:14px;background:var(--accent-soft);border-radius:12px;padding:14px;margin:0}
 </style>
 
 <div class="wrap">
@@ -167,7 +189,7 @@ body{line-height:1.6}
       <span class="chip prev"><i></i>Previsión oct–dic</span>
     </div>
   </header>
-  <nav class="tabs" id="tabs" aria-label="Áreas del panel"><button type="button" data-t="resumen" aria-selected="false">Resumen</button><button type="button" data-t="tesoreria" aria-selected="false">Tesorería</button><button type="button" data-t="facturacion" aria-selected="false">Facturación</button><button type="button" data-t="agenda" aria-selected="false">Agenda</button><button type="button" data-t="equipo" aria-selected="false">Equipo</button><button type="button" data-t="stock" aria-selected="false">Stock</button><button type="button" data-t="banco" aria-selected="false">Banco</button><button type="button" data-t="prevision" aria-selected="false">Previsión</button><button type="button" data-t="impuestos" aria-selected="false">Impuestos</button><button type="button" data-t="gastos" aria-selected="false">Gastos fijos</button><button type="button" data-t="proveedores" aria-selected="false">Proveedores</button><button type="button" data-t="vacaciones" aria-selected="false">Vacaciones</button><button type="button" data-t="avisos" aria-selected="false">Avisos</button></nav>
+  <nav class="tabs" id="tabs" aria-label="Áreas del panel"><button type="button" data-t="resumen" aria-selected="false">Resumen</button><button type="button" data-t="tesoreria" aria-selected="false">Tesorería</button><button type="button" data-t="facturacion" aria-selected="false">Facturación</button><button type="button" data-t="bonus" aria-selected="false">Bonus</button><button type="button" data-t="agenda" aria-selected="false">Agenda</button><button type="button" data-t="equipo" aria-selected="false">Equipo</button><button type="button" data-t="stock" aria-selected="false">Stock</button><button type="button" data-t="banco" aria-selected="false">Banco</button><button type="button" data-t="prevision" aria-selected="false">Previsión</button><button type="button" data-t="impuestos" aria-selected="false">Impuestos</button><button type="button" data-t="gastos" aria-selected="false">Gastos fijos</button><button type="button" data-t="proveedores" aria-selected="false">Proveedores</button><button type="button" data-t="vacaciones" aria-selected="false">Vacaciones</button><button type="button" data-t="avisos" aria-selected="false">Avisos</button></nav>
 
   <section class="grid" aria-label="Resumen" data-tab="resumen">
     <a class="card c12 avbanner" id="avBanner" href="#avisos" hidden></a>
@@ -227,6 +249,19 @@ body{line-height:1.6}
     <div class="card c6" data-tab="facturacion">
       <div class="head"><div><h2>Objetivo de comisiones</h2><p class="sub">Facturación de servicios 2026 frente al tramo del 5 %</p></div><span class="badge real">Real</span></div>
       <div id="obj"></div>
+    </div>
+
+    <div class="card c12" data-tab="bonus" id="bnCard">
+      <div class="head"><div><h2>Bonus de octubre por facturación</h2><p class="sub" id="bnSub"></p></div><span class="badge real">Real · flowww</span></div>
+      <div id="bnTop"></div>
+      <div id="bnBar"></div>
+      <div class="head"><div><h3>Escalones de la bolsa</h3><p class="sub">La bolsa se reparte a partes iguales entre Yanira y Estefanía y se abona en nómina</p></div></div>
+      <div id="bnTiers"></div>
+      <div class="head"><div><h3>Semana a semana</h3><p class="sub">Lo facturado cada semana frente al acumulado que hace falta para cada escalón</p></div></div>
+      <div class="tablewrap" id="bnWeeks"></div>
+      <div class="head"><div><h3>Mensaje para las chicas</h3><p class="sub">Listo para pegar en el grupo cada semana</p></div><button type="button" class="chip" id="bnCopy">Copiar mensaje</button></div>
+      <pre class="bnmsg" id="bnMsg"></pre>
+      <p class="note">Objetivo y escalones tomados del documento "Objetivo de octubre" de Drive. La facturación son las cajas del día de flowww (con IVA); confirma si el objetivo también cuenta con IVA. Hasta el 15 de octubre: la caja del 16 aún no consta en flowww, y el lunes 12 fue festivo.</p>
     </div>
 
     <div class="card c12" data-tab="avisos" id="avCard">
@@ -463,6 +498,7 @@ $('k4d').innerHTML='<span style="color:var(--gold)">Previsión del CGI con oct�
    ['p','2026-10-31','31 oct','Nóminas del equipo: ≈ 2.040 €','Estefanía y Yanira (coste de empresa de septiembre: 2.886 €).','Banco'],
    ['p','2026-11-01','1 nov','Futuro Estética, factura A 4266: 164,97 €','Vence a unos 30 días.','Drive'],
    ['p','2026-11-05','5 nov','Alquiler del local: 981 €','Cargo del día 5. Coincide con la renta menos la retención del modelo 115. Octubre ya está pagado.','Banco'],
+   ['r','','Bonus','Bonus de octubre: faltan 8.044 € para el primer escalón','Hay que llegar a 17.000 € (bolsa de 100 €): unos 804 € al día durante los 10 días que quedan. Vas 56 € por encima del ritmo previsto. Informa a las chicas cada semana desde la pestaña Bonus.','Flowww · Drive'],
    ['r','','Factura','Cosbell: factura de la mercancía del 6 de octubre','Llegó adjunta al correo. Revisa importe y vencimiento, y pásala a la gestoría.','Correo · Proveedor'],
    ['r','','Facturas','Casmara: facturas de 2026','Las envió Noemi el 5 de octubre tras la llamada. Comprueba que están en la gestoría.','Correo · Proveedor'],
    ['r','','Alquiler','Recibo de octubre y subida del próximo','El propietario envió el recibo de octubre el 30 de septiembre y avisa de que el siguiente subirá por la tasa de basuras (TRUA) del local.','Correo · Alquiler'],
@@ -628,6 +664,54 @@ const BK={ini:101964,sal:40966,tpv:124778};
   const ok=ING.slice(0,REAL).filter((v,i)=>v>=GAS[i]).length;
   $('beNote').textContent='Equilibrio = gastos del mes según el CGI (con IVA, incluye nóminas, proveedores y cuotas; sin retiradas personales). Ene–sep: facturación del CGI; octubre: cajas de flowww hasta el 15 (el 17 no hay caja); nov–dic: previsión. Meses cubiertos hasta septiembre: '+ok+' de '+REAL+'. Enero, febrero y agosto (vacaciones) quedaron por debajo. Los días que quedan de octubre se cuentan de lunes a viernes.';
 })();
+/* Bonus de octubre */
+(function(){
+  const T=[[17000,100],[18000,200],[19000,300],[20000,500]];
+  const W=[['Semana 1','1–2 oct',2,1,2,[1620,1710,1810,1900]],['Semana 2','5–9 oct',5,5,9,[5670,6000,6330,6670]],['Semana 3','13–16 oct',4,13,16,[8900,9430,9950,10480]],['Semana 4','19–23 oct',5,19,23,[12950,13710,14480,15240]],['Semana 5','26–30 oct',5,26,30,[17000,18000,19000,20000]]];
+  const oc=CAJ.filter(c=>c.m===9).map(c=>({d:+c.d.slice(0,2),v:c.v}));
+  const tot=sum(oc.map(c=>c.v)),last=Math.max(...oc.map(c=>c.d));
+  const DL=10,LD=15;/* días de apertura que quedan tras el 16 de octubre */
+  const avg=tot/oc.length,proj=tot+avg*DL;
+  const f=n=>eur(n);
+  let ach=-1;T.forEach((t,i)=>{if(tot>=t[0])ach=i});
+  const nxt=T[ach+1];
+  $('bnSub').textContent='Cajas de flowww hasta el '+LD+' de octubre · quedan '+DL+' días de apertura';
+  $('bnTop').className='bn-top';
+  $('bnTop').innerHTML='<div><small>Facturado en octubre</small><b>'+f(tot)+'</b></div>'
+   +'<div><small>'+(nxt?'Falta para '+f(nxt[0]):'Escalón máximo')+'</small><b style="color:var(--'+(nxt?'crit':'good')+')">'+(nxt?f(nxt[0]-tot):'¡Conseguido!')+'</b></div>'
+   +'<div><small>'+(nxt?'Necesario al día':'Bolsa')+'</small><b>'+(nxt?f((nxt[0]-tot)/DL):f(T[ach][1]))+'</b></div>'
+   +'<div><small>Ritmo actual al día</small><b>'+f(avg)+'</b></div>';
+  /* barra */
+  const MAX=20500,pc=v=>Math.min(100,v/MAX*100);
+  let b='<div class="trk"><div class="fl" style="width:'+pc(tot)+'%"></div></div>';
+  T.forEach(t=>{b+='<div class="tk" style="left:'+pc(t[0])+'%"><span>'+t[0]/1000+(t[0]===20000?'k':'')+'</span></div>'});
+  b+='<div class="me" style="left:'+Math.min(92,Math.max(8,pc(tot)))+'%">'+f(tot)+'</div>';
+  $('bnBar').className='bn-bar';$('bnBar').innerHTML=b;
+  /* escalones */
+  $('bnTiers').innerHTML=T.map((t,i)=>{
+    const falta=t[0]-tot,done=falta<=0,pd=falta/DL,reach=proj>=t[0];
+    return '<div class="bn-tier"><b>'+f(t[0])+(i===3?' o más':'')+'</b><span>Bolsa de <b>'+t[1]+' €</b><small>'+t[1]/2+' € para Yanira y '+t[1]/2+' € para Estefanía</small></span><span class="st" style="color:var(--'+(done?'good':reach?'warn':'crit')+')">'+(done?'Conseguido':'Faltan '+f(falta)+'<small>'+f(pd)+' al día</small>')+'</span></div>'}).join('');
+  /* semanas */
+  let cum=0;
+  const rows=W.map(w=>{
+    const days=oc.filter(c=>c.d>=w[3]&&c.d<=w[4]),has=days.length>0,part=has&&w[4]>last;
+    const sw=sum(days.map(c=>c.v));if(has)cum+=sw;
+    const cell=(t,i)=>{if(!has)return'<td>'+f(t)+'</td>';const ok=cum>=t;return '<td class="'+(ok?'ok':'no')+'">'+f(t)+'</td>'};
+    return '<tr class="'+(has?'':'fut')+'"><td><b>'+w[0]+'</b><br><small>'+w[1]+' · '+w[2]+' días'+(part?' (hasta el '+last+')':'')+'</small></td><td>'+(has?f(sw):'—')+'</td><td>'+(has?f(cum):'—')+'</td>'+w[5].map(cell).join('')+'</tr>'}).join('');
+  $('bnWeeks').innerHTML='<table class="bn-w"><thead><tr><th>Semana</th><th>Facturado</th><th>Acumulado</th><th>Para 17k</th><th>Para 18k</th><th>Para 19k</th><th>Para 20k</th></tr></thead><tbody>'+rows+'</tbody></table>';
+  /* mensaje */
+  const ahead=tot-8900;
+  const msg='Hola chicas, resumen de la semana del bonus de octubre:\n\n'
+   +'• Llevamos facturados '+f(tot)+' este mes (hasta el '+LD+' de octubre).\n'
+   +'• Para el primer escalón de 17.000 € (bolsa de 100 €) '+(tot>=17000?'ya lo hemos conseguido.':'faltan '+f(17000-tot)+', unos '+f((17000-tot)/DL)+' al día durante los '+DL+' días que quedan.')+'\n'
+   +'• '+(ahead>=0?'Vamos '+f(ahead)+' por encima':'Vamos '+f(-ahead)+' por debajo')+' del ritmo previsto para llegar a 17.000 €.\n'
+   +'• Si llegamos a 18.000 € la bolsa sube a 200 €; a 19.000 €, a 300 €; y a 20.000 € o más, a 500 €.\n\n'
+   +'Un bono o un producto de casa en cada cita marca la diferencia. ¡Vamos a por ello!';
+  $('bnMsg').textContent=msg;
+  $('bnCopy').addEventListener('click',()=>{const done=()=>{$('bnCopy').textContent='Copiado';setTimeout(()=>{$('bnCopy').textContent='Copiar mensaje'},1800)};
+    try{navigator.clipboard.writeText(msg).then(done,()=>{const r=document.createRange();r.selectNodeContents($('bnMsg'));const s=getSelection();s.removeAllRanges();s.addRange(r)})}catch(e){const r=document.createRange();r.selectNodeContents($('bnMsg'));const s=getSelection();s.removeAllRanges();s.addRange(r)}});
+})();
+
 /* Gastos fijos */
 (function(){
   const G=[['Seguridad Social',1210,30],['Alquiler del local',981,5],['Nóminas del equipo',2042,30],['Gestoría',166,10],['Almacenaje Mybox',166,1],['Teléfono',83,8],['Flowww',62,4],['Luz',57,1],['Alarma',31,5]];
