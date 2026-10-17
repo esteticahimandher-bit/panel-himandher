@@ -177,6 +177,8 @@ body{line-height:1.6}
 .ho-t{border-collapse:collapse;width:100%;min-width:420px;font-size:13px;font-variant-numeric:tabular-nums}
 .ho-t th,.ho-t td{padding:7px 8px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
 .ho-t th:nth-child(-n+3),.ho-t td:nth-child(-n+3){text-align:left}
+.ho-t td:nth-child(3){white-space:normal;min-width:150px}
+.ho-t{min-width:0!important}
 .ho-t th{font-size:12px;color:var(--muted);font-weight:600}
 </style>
 
@@ -242,7 +244,7 @@ body{line-height:1.6}
       <p class="note">Franjas en las que cada una atiende según la agenda de flowww. El centro abre de 10 a 20 h de lunes a viernes.</p>
       </div>
       <div id="eqHoras" style="display:none;flex-direction:column;gap:14px">
-        <div class="head"><div><h2>Bolsa de horas</h2><p class="sub">Horas que les debo y horas que me deben</p></div><span class="badge ex">Pendiente de cargar</span></div>
+        <div class="head"><div><h2>Bolsa de horas</h2><p class="sub">Horas que les debo y horas que me deben</p></div><span class="badge ex">Saldo anterior pendiente</span></div>
         <div class="empsel"></div>
         <div class="team" id="hoTeam"></div>
         <div class="tablewrap" id="hoTable"></div>
@@ -777,7 +779,7 @@ $('vacBars').innerHTML=[['Estefanía',7,'7 de 30 días naturales'],['Yanira',0,'
 (function(){
   /* Saldo en horas por empleada. Positivo = horas que les debo; negativo = horas que me deben.
      Formato de cada movimiento: ['2026-10-17','Concepto',horas]. Se rellena con los datos que pase Vicky. */
-  const H={'Estefanía':{ini:null,mov:[]},'Yanira':{ini:null,mov:[]}};
+  const H={'Estefanía':{ini:null,mov:[]},'Yanira':{ini:null,mov:[['2026-10-16','Cambio de horario: vino por la mañana y salió 1 h antes',-1]]}};
   const fh=h=>(h>0?'+':h<0?'−':'')+Math.abs(Math.round(h*100)/100).toLocaleString('es-ES')+' h';
   const names=Object.keys(H),loaded=names.some(n=>H[n].ini!==null||H[n].mov.length);
   $('hoTeam').innerHTML=names.map(n=>{
@@ -786,7 +788,7 @@ $('vacBars').innerHTML=[['Estefanía',7,'7 de 30 días naturales'],['Yanira',0,'
     return '<div class="person" data-emp="'+n+'"><h3>'+n+'</h3><span class="hoval" style="color:var(--'+(!has?'muted':bal>0?'warn':bal<0?'crit':'good')+')">'+(has?fh(bal):'—')+'</span><span class="note">'+txt+'</span></div>'}).join('');
   let rows=[];names.forEach(n=>{let acc=H[n].ini||0;if(H[n].ini!==null)rows.push(['Saldo inicial',n,'',H[n].ini,acc]);H[n].mov.slice().sort((a,b)=>a[0]<b[0]?-1:1).forEach(m=>{acc+=m[2];rows.push([m[0],n,m[1],m[2],acc])})});
   $('hoTable').innerHTML=rows.length?'<table class="ho-t"><thead><tr><th>Fecha</th><th>Empleada</th><th>Concepto</th><th>Horas</th><th>Saldo</th></tr></thead><tbody>'+rows.map(r=>'<tr data-emp="'+r[1]+'"><td>'+(r[0].length===10?r[0].slice(8)+'/'+r[0].slice(5,7):r[0])+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td>'+fh(r[3])+'</td><td><b>'+fh(r[4])+'</b></td></tr>').join('')+'</tbody></table>':'<p class="note">Todavía no hay horas cargadas. Pásame el saldo de cada una y los movimientos (horas extra, formaciones, horas recuperadas, días libres a cuenta) y los añado aquí.</p>';
-  $('hoNote').textContent='Positivo: horas que les debes. Negativo: horas que te deben.'+(loaded?'':' Cuando cargue los datos se calculará el saldo de cada una y el histórico de movimientos.');
+  $('hoNote').textContent='Positivo: horas que les debes. Negativo: horas que te deben.'+(loaded?' El saldo suma solo los movimientos cargados; falta el saldo de horas anterior al 16 de octubre.':' Cuando cargue los datos se calculará el saldo de cada una y el histórico de movimientos.');
   const bs=[...document.querySelectorAll('#eqSub button')];
   function sub(x){$('eqMain').style.display=x==='main'?'flex':'none';$('eqHoras').style.display=x==='horas'?'flex':'none';bs.forEach(b=>b.classList.toggle('on',b.dataset.s===x));try{localStorage.setItem('hh-sub',x)}catch(e){}}
   bs.forEach(b=>b.addEventListener('click',()=>sub(b.dataset.s)));
