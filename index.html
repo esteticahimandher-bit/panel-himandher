@@ -203,6 +203,12 @@ body{line-height:1.6}
 .play svg rect[data-tip]{transform-box:fill-box;transform-origin:50% 100%;animation:growy .7s cubic-bezier(.2,.7,.2,1) both;animation-delay:.2s}
 .upd{margin:2px 0 0;font-size:13px;font-weight:700;color:var(--accent)}
 @media (prefers-reduced-motion:reduce){.play>*,.play .fill,.play .vseg i,.play svg rect[data-tip]{animation:none!important}}
+.ctc{display:flex;flex-direction:column;gap:12px}
+.ctcc{border:1px solid var(--line);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:6px}
+.ctcc b{font-size:15px}.ctcc small{color:var(--muted);font-size:13px;line-height:1.4}
+.ctcb{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.callb{display:inline-flex;align-items:center;gap:6px;background:var(--accent);color:#fff;text-decoration:none;font-weight:700;font-size:14px;padding:9px 14px;border-radius:999px;min-height:40px}
+.callb.alt{background:var(--accent-soft);color:var(--accent)}
 </style>
 
 <div class="wrap">
@@ -291,6 +297,8 @@ body{line-height:1.6}
 
     <div class="card c12" data-tab="seguros">
       <div class="head"><div><h2>Seguros</h2><p class="sub">Pólizas del centro y seguros que se cobran en la cuenta Negocio</p></div><span class="badge real">Real · Gmail y banco</span></div>
+      <div class="head"><div><h3>Contactos</h3><p class="sub">Para llamar o escribir</p></div></div>
+      <div class="ctc" id="segCtc"></div>
       <div class="head"><div><h3>Del negocio</h3></div></div>
       <ul class="list" id="segNeg"></ul>
       <div class="head"><div><h3>Personales, cobrados en la cuenta Negocio</h3><p class="sub">No cuentan en los gastos del centro</p></div></div>
@@ -800,6 +808,12 @@ const BK={ini:101964,sal:40966,tpv:124778};
 
 /* Seguros */
 (function(){
+  const C=[
+   ['Correduría de seguros (Intersal y Sernuman)','Rosa · gestiona el seguro del local y los presupuestos','C/ Cristóbal Bordiú 35, planta 1ª, oficina 109 · 28003 Madrid','correduriadeseguros@sernuman.com',[['Llamar a la oficina','913295461'],['Llamar al móvil de Rosa','619640073']]],
+   ['CaixaBank · Fernando Garrudo','Gestor de Negocios · seguro de vida y baja','C/ Cartagena 127 · 28002 Madrid · oficina 02124','fgarrudo@caixabank.com',[['Llamar a la oficina','914404550'],['Llamar al móvil de Fernando','616791585']]]
+  ];
+  const fm=t=>t.replace(/(\d{3})(\d{2})(\d{2})(\d{2})/,'$1 $2 $3 $4').replace(/^(\d{3})(\d{3})(\d{3})$/,'$1 $2 $3');
+  $('segCtc').innerHTML=C.map(c=>'<div class="ctcc"><b>'+c[0]+'</b><small>'+c[1]+'<br>'+c[2]+'<br>'+c[3]+'</small><div class="ctcb">'+c[4].map((t,i)=>'<a class="callb'+(i?' alt':'')+'" href="tel:+34'+t[1]+'">&#9742; '+t[0]+' · '+fm(t[1])+'</a>').join('')+'</div></div>').join('');
   const li=(p,t,d)=>'<li><span class="pill" style="min-width:104px;text-align:center;white-space:nowrap;flex:none">'+p+'</span><span>'+t+'<small>'+d+'</small></span></li>';
   $('segNeg').innerHTML=[
    ['591,78 €','Seguro del local · Allianz','Recibo anual cobrado el 5 de mayo de 2026. La renovación toca en mayo de 2027. En julio pediste a la correduría que gestione esta póliza (cambio de agente).'],
