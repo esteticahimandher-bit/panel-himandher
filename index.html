@@ -144,6 +144,8 @@ body{line-height:1.6}
 .tabs button.alert.on{box-shadow:0 0 0 3px var(--crit-soft)}
 .tabs button .cnt{display:inline-block;min-width:20px;padding:0 6px;margin-left:6px;border-radius:999px;background:#fff;color:var(--alert);font-size:12px;line-height:20px;text-align:center}
 .avbanner{flex-direction:row;align-items:center;gap:10px;background:var(--alert);border-color:var(--alert);color:#fff;text-decoration:none;font-weight:600;padding:12px 16px}
+.avbanner.chipb{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--alert);border-radius:999px;padding:4px 12px;font-size:inherit}
+.avbanner.chipb[hidden]{display:none}
 .avbanner b{background:#fff;color:var(--alert);border-radius:999px;padding:0 9px;font-family:var(--font-num)}
 .avg{display:flex;flex-direction:column;gap:6px}
 .avg h3{font-size:16px;display:flex;align-items:center;gap:8px;margin-top:6px}
@@ -223,12 +225,12 @@ body{line-height:1.6}
     <div class="chips" aria-label="Origen de los datos">
       <span class="chip real"><i></i>Dato real · flowww, banco, Drive y CGI</span>
       <span class="chip prev"><i></i>Previsión oct–dic</span>
+      <a class="avbanner chipb" id="avBanner" href="#avisos" hidden></a>
     </div>
   </header>
   <nav class="tabs" id="tabs" aria-label="Áreas del panel"><button type="button" data-t="resumen" aria-selected="false">Resumen</button><button type="button" data-t="tesoreria" aria-selected="false">Tesorería</button><button type="button" data-t="facturacion" aria-selected="false">Facturación</button><button type="button" data-t="bonus" aria-selected="false">Bonus</button><button type="button" data-t="agenda" aria-selected="false">Agenda</button><button type="button" data-t="clientes" aria-selected="false">Clientes</button><button type="button" data-t="equipo" aria-selected="false">Equipo</button><button type="button" data-t="stock" aria-selected="false">Stock</button><button type="button" data-t="banco" aria-selected="false">Banco</button><button type="button" data-t="caja2" aria-selected="false">Caja 2</button><button type="button" data-t="prevision" aria-selected="false">Previsión</button><button type="button" data-t="impuestos" aria-selected="false">Impuestos</button><button type="button" data-t="modulos" aria-selected="false">Módulos</button><button type="button" data-t="gastos" aria-selected="false">Gastos mensuales</button><button type="button" data-t="seguros" aria-selected="false">Seguros</button><button type="button" data-t="proveedores" aria-selected="false">Proveedores</button><button type="button" data-t="avisos" aria-selected="false">Avisos</button></nav>
 
   <section class="grid" aria-label="Resumen" data-tab="resumen">
-    <a class="card c12 avbanner" id="avBanner" href="#avisos" hidden></a>
     <div class="card kpi c3"><span class="label">Facturado en octubre</span><span class="val" id="k1"></span><span class="delta" id="k1d"></span></div>
     <div class="card kpi c3"><span class="label">Saldo en el banco</span><span class="val" id="k2"></span><span class="delta" id="k2d"></span></div>
     <div class="card kpi c3"><span class="label">Facturado en 2026</span><span class="val" id="k3"></span><span class="delta" id="k3d"></span></div>
