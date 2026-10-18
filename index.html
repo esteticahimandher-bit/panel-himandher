@@ -297,6 +297,8 @@ body{line-height:1.6}
 
     <div class="card c12" data-tab="seguros">
       <div class="head"><div><h2>Seguros</h2><p class="sub">Pólizas del centro y seguros que se cobran en la cuenta Negocio</p></div><span class="badge real">Real · Gmail y banco</span></div>
+      <div class="head"><div><h3>Documentos en Drive</h3><p class="sub">Carpeta SEGUROS, con copias de las pólizas</p></div></div>
+      <div class="ctcb" id="segDrive"></div>
       <div class="head"><div><h3>Contactos</h3><p class="sub">Para llamar o escribir</p></div></div>
       <div class="ctc" id="segCtc"></div>
       <div class="head"><div><h3>Del negocio</h3></div></div>
@@ -808,6 +810,7 @@ const BK={ini:101964,sal:40966,tpv:124778};
 
 /* Seguros */
 (function(){
+  $('segDrive').innerHTML=[['Abrir carpeta SEGUROS','16OO2ywuPUAOpSXlvGQqO4ZIuUeyJMw6c',0],['Negocio (local)','15xJ65ENDii4x3-Nf9P3ot784Biz0uZOH',1],['Vida y ahorro','1NjO1Q4tvJl9yKwwbFc3lQqGZgf3ZKr6q',1],['Hogar','1j0KGGe60L8sWvZMJVBktJ7AkU-Jad2zg',1]].map(f=>'<a class=\"callb'+(f[2]?' alt':'')+'\" target=\"_blank\" rel=\"noopener\" href=\"https://drive.google.com/drive/folders/'+f[1]+'\">'+(f[2]?'':'&#128193; ')+f[0]+'</a>').join('');
   const C=[
    ['Correduría de seguros (Intersal y Sernuman)','Rosa · gestiona el seguro del local y los presupuestos','C/ Cristóbal Bordiú 35, planta 1ª, oficina 109 · 28003 Madrid','correduriadeseguros@sernuman.com',[['Llamar a la oficina','913295461'],['Llamar al móvil de Rosa','619640073']]],
    ['CaixaBank · Fernando Garrudo','Gestor de Negocios · seguro de vida y baja','C/ Cartagena 127 · 28002 Madrid · oficina 02124','fgarrudo@caixabank.com',[['Llamar a la oficina','914404550'],['Llamar al móvil de Fernando','616791585']]]
