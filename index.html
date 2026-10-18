@@ -697,7 +697,7 @@ $('k4d').innerHTML='<span style="color:var(--gold)">Previsión del CGI con oct�
   $('avSub').textContent='Revisado el '+REV+' · correo, banco y flowww';
   $('avBadge').textContent=urg+' que requieren acción';
   const btn=document.querySelector('#tabs button[data-t="avisos"]');
-  btn.classList.add('alert');btn.parentNode.insertBefore(btn,btn.parentNode.children[1]);btn.innerHTML='Avisos <span class="cnt">'+urg+'</span>';
+  btn.hidden=true;btn.style.display='none';
   const bn=$('avBanner');bn.hidden=false;
   bn.innerHTML='<b>'+urg+'</b><span>Avisos pendientes: '+A.filter(a=>a[0]==='u').length+' urgentes esta semana</span>';
   bn.addEventListener('click',e=>{e.preventDefault();btn.click();window.scrollTo({top:0})});
