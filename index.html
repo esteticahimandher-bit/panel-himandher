@@ -573,7 +573,7 @@ $('k4d').innerHTML='<span style="color:var(--gold)">Previsión del CGI con oct�
 
 /* Avisos (revisión de correo, banco, flowww y CGI) */
 (function(){
-  const TODAY=new Date(2026,9,17),REV='17 oct 2026, 12:00';
+  const TODAY=new Date(2026,9,18),REV='18 oct 2026, 10:40';
   const days=d=>Math.round((new Date(d+'T00:00:00')-TODAY)/864e5);
   const G={u:['Urgente · esta semana','var(--alert)'],p:['Próximos 30 días','var(--warn)'],r:['Por revisar','var(--accent)'],e:['Equipo','var(--gold)'],i:['Informativo','var(--muted)']};
   /* [grupo, fecha ISO o '', etiqueta, título, detalle, origen] */
@@ -597,6 +597,7 @@ $('k4d').innerHTML='<span style="color:var(--gold)">Previsión del CGI con oct�
    ['e','','Vacaciones','Vacaciones de 2026: Yanira las completa, a Estefanía le quedan 7 días','Yanira (25 días desde el 2 de marzo) agota todas con la semana del 16 al 22 de noviembre y los cierres del 24 y 31 de diciembre. Estefanía cogerá en enero de 2027 (semana de Reyes) los 7 días que le quedan.','Equipo'],
    ['e','','Reunión','Reunión con el equipo sobre vacaciones','Quieres proponer cerrar tres semanas en agosto. La gestoría (13 oct) dice que se fijan de común acuerdo: si las trabajadoras aceptan, no hay problema. El calendario debe fijarse a primeros de año y comunicarse con dos meses de antelación.','Correo · Gestoría'],
    ['e','','Formación','La formación corre por cuenta de la empresa','Según el convenio (gestoría, 9 oct): si cuesta algo lo paga el centro, y es obligatoria si se hace dentro de la jornada.','Correo · Gestoría'],
+   ['i','','Fuentes','Esta noche no se pudieron leer flowww ni el banco','Flowww pedía iniciar sesión y el banco no cargó: las cajas (hasta el 15 oct), el saldo y el Bonus siguen con los datos del 17 de octubre. Abre sesión en flowww y en el banco para la próxima revisión.','Revisión automática'],
    ['i','','Festivos','Festivos 2027 de la Comunidad de Madrid','La gestoría (laboral) envió el calendario el 6 de octubre.','Correo · Gestoría'],
    ['i','','Datos','Primer trimestre en el cuadro de comisiones','Muestra 8.467 € como facturación real y es solo enero: el trimestre real suma 30.416 €.','CGI'],
    ['i','','Datos','Totales distintos entre hojas del CGI','181.405 € en Ingresos y 180.661 € en Balance (744 € de diferencia).','CGI'],
