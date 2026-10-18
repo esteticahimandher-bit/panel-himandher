@@ -814,12 +814,12 @@ const BK={ini:101964,sal:40966,tpv:124778};
   ];
   const fm=t=>t.replace(/(\d{3})(\d{2})(\d{2})(\d{2})/,'$1 $2 $3 $4').replace(/^(\d{3})(\d{3})(\d{3})$/,'$1 $2 $3');
   $('segCtc').innerHTML=C.map(c=>'<div class="ctcc"><b>'+c[0]+'</b><small>'+c[1]+'<br>'+c[2]+'<br>'+c[3]+'</small><div class="ctcb">'+c[4].map((t,i)=>'<a class="callb'+(i?' alt':'')+'" href="tel:+34'+t[1]+'">&#9742; '+t[0]+' · '+fm(t[1])+'</a>').join('')+'</div></div>').join('');
-  const li=(p,t,d)=>'<li><span class="pill" style="min-width:104px;text-align:center;white-space:nowrap;flex:none">'+p+'</span><span>'+t+'<small>'+d+'</small></span></li>';
+  const li=(p,t,d,x)=>'<li><span class="pill" style="min-width:104px;text-align:center;white-space:nowrap;flex:none">'+p+'</span><span>'+t+'<small>'+d+'</small>'+(x?'<span class="ctcb">'+x.map(l=>'<a class="callb alt" target="_blank" rel="noopener" href="'+l[1]+'">'+l[0]+'</a>').join('')+'</span>':'')+'</span></li>';
   $('segNeg').innerHTML=[
-   ['591,78 €','Seguro del local · Allianz','Recibo anual cobrado el 5 de mayo de 2026. La renovación toca en mayo de 2027. En julio pediste a la correduría que gestione esta póliza (cambio de agente).'],
-   ['503,23 € al año','Alternativa: comercio · Generali','Presupuesto de la correduría del 2 de julio: maquinaria 117.000 €, mobiliario 7.000 € y existencias 7.000 €. Serían unos 88 € menos al año que el recibo de Allianz. La correduría lo calculó como si fueras propietaria del local y comenta que ahora lo tienes asegurado al revés (inquilina o propietaria).'],
+   ['591,78 €','Seguro del local · Allianz (multirriesgo comercio)','Póliza 045540445. Recibo anual cobrado el 5 de mayo de 2026 (en 2024 fueron 568,53 €). La renovación toca en mayo de 2027. En julio pediste a la correduría que gestione esta póliza (cambio de agente). En Drive solo está el recibo de 2024; las condiciones completas de la póliza no están.',[['Abrir recibo en Drive','https://drive.google.com/file/d/1w5l61GeywCWA_1x6YIxcIXtKc2InfKqq/view']]],
+   ['503,23 € al año','Alternativa: comercio · Generali','Presupuesto de la correduría del 2 de julio: maquinaria 117.000 €, mobiliario 7.000 € y existencias 7.000 €. Serían unos 88 € menos al año que el recibo de Allianz. La correduría lo calculó como si fueras propietaria del local y comenta que ahora lo tienes asegurado al revés (inquilina o propietaria).',[['Abrir correo con el presupuesto','https://mail.google.com/mail/u/0/#all/19f2282b6371ecc7']]],
    ['31 €/mes','Alarma · Securitas','No es un seguro, pero protege el local. Cargo el día 6.']
-  ].map(a=>li(a[0],a[1],a[2])).join('');
+  ].map(a=>li(a[0],a[1],a[2],a[3])).join('');
   $('segPer').innerHTML=[
    ['31,26 €/mes','Seguro de vida · VidaCaixa (MyBox Vida)','Póliza RIMT0300742815. Cobertura de 50.000 €, contratado el 18/05/2022. No está ligado al préstamo que cancelaste. Se cobra el día 1.'],
    ['135,30 €/mes','Plan de ahorro y jubilación · VidaCaixa (CABK Destino 2040)','Seguro de vida de ahorro: de cada recibo, 15,52 € son prima de vida y el resto va al plan. Se cobra el día 1.']
