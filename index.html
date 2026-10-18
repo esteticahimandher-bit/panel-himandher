@@ -256,6 +256,12 @@ body{line-height:1.6}
       <p class="note">Cajas del día de flowww, con IVA incluido.</p>
     </div>
 
+    <div class="card c12" data-tab="resumen" id="bnfCard">
+      <div class="head"><div><h2>Beneficio del año</h2><p class="sub">Lo que queda tras pagar todos los gastos del negocio, con tu sueldo y los impuestos ya pagados</p></div><span class="badge real">Real · banco</span></div>
+      <div class="grid" style="gap:12px" id="bnfGrid"></div>
+      <p class="note" id="bnfNote"></p>
+    </div>
+
     <div class="card c5" data-tab="resumen">
       <div class="head"><div><h2>Próxima agenda</h2><p class="sub">Lunes 19 de octubre · hoy no se abre</p></div><span class="badge real">Real · flowww</span></div>
       <ul class="agenda" id="agenda"></ul>
@@ -950,5 +956,19 @@ $('invList').innerHTML=[['30 oct','Skeyndor · VN/584407','984 € en 3 giros de
   let t=(location.hash||'').slice(1);
   if(!t){try{t=localStorage.getItem('hh-tab')||''}catch(e){}}
   show(t||'resumen');
+})();
+
+/* Beneficio del año */
+(function(){
+  const ING=[10469, 11169, 13817, 16132, 14759, 18257, 14580, 4411, 17000, 9417],OPS=[13511, 11967, 11322, 11893, 10934, 12534, 17630, 9845, 7145, 8767],mi=13500,mo=11600,f=14/31+2;
+  const sum=a=>a.reduce((x,y)=>x+y,0);
+  const i1=sum(ING),o1=sum(OPS),b1=i1-o1,p1=b1/i1*100;
+  const i2=i1+f*mi,o2=o1+f*mo,b2=i2-o2,p2=b2/i2*100;
+  const pc=v=>v.toLocaleString('es-ES',{minimumFractionDigits:1,maximumFractionDigits:1})+' %';
+  const box=(l,v,s,c)=>'<div class="kpi c6" style="display:flex;flex-direction:column;gap:6px"><span class="label">'+l+'</span><span class="val" style="color:'+c+'">'+eur(v)+'</span><span class="delta">'+s+'</span></div>';
+  $('bnfGrid').innerHTML=
+   box('Beneficio hasta el 17 de octubre',b1,pc(p1)+' de lo ingresado ('+eur(i1)+' ingresado, '+eur(o1)+' gastado)',b1>=0?'var(--inc)':'var(--alert)')+
+   box('Beneficio estimado al cierre de 2026',b2,pc(p2)+' de lo ingresado ('+eur(i2)+' ingresado, '+eur(o2)+' gastado)',b2>=0?'var(--inc)':'var(--alert)');
+  $('bnfNote').textContent='Cifras con IVA, de la cuenta Negocio, de enero al 17 de octubre. La estimación suma lo que queda de octubre, noviembre y diciembre con los mismos supuestos de Previsión (ingresos de '+eur(mi)+' y gastos de '+eur(mo)+' al mes). Incluye tu sueldo de 2.000 € mensuales, las nóminas, el alquiler y los impuestos pagados; no incluye retiradas personales.';
 })();
 </script><script>if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));</script>
