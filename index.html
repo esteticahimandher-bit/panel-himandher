@@ -225,7 +225,7 @@ body{line-height:1.6}
       <span class="chip prev"><i></i>Previsión oct–dic</span>
     </div>
   </header>
-  <nav class="tabs" id="tabs" aria-label="Áreas del panel"><button type="button" data-t="resumen" aria-selected="false">Resumen</button><button type="button" data-t="tesoreria" aria-selected="false">Tesorería</button><button type="button" data-t="facturacion" aria-selected="false">Facturación</button><button type="button" data-t="bonus" aria-selected="false">Bonus</button><button type="button" data-t="agenda" aria-selected="false">Agenda</button><button type="button" data-t="clientes" aria-selected="false">Clientes</button><button type="button" data-t="equipo" aria-selected="false">Equipo</button><button type="button" data-t="stock" aria-selected="false">Stock</button><button type="button" data-t="banco" aria-selected="false">Banco</button><button type="button" data-t="prevision" aria-selected="false">Previsión</button><button type="button" data-t="impuestos" aria-selected="false">Impuestos</button><button type="button" data-t="modulos" aria-selected="false">Módulos</button><button type="button" data-t="gastos" aria-selected="false">Gastos mensuales</button><button type="button" data-t="seguros" aria-selected="false">Seguros</button><button type="button" data-t="proveedores" aria-selected="false">Proveedores</button><button type="button" data-t="avisos" aria-selected="false">Avisos</button></nav>
+  <nav class="tabs" id="tabs" aria-label="Áreas del panel"><button type="button" data-t="resumen" aria-selected="false">Resumen</button><button type="button" data-t="tesoreria" aria-selected="false">Tesorería</button><button type="button" data-t="facturacion" aria-selected="false">Facturación</button><button type="button" data-t="bonus" aria-selected="false">Bonus</button><button type="button" data-t="agenda" aria-selected="false">Agenda</button><button type="button" data-t="clientes" aria-selected="false">Clientes</button><button type="button" data-t="equipo" aria-selected="false">Equipo</button><button type="button" data-t="stock" aria-selected="false">Stock</button><button type="button" data-t="banco" aria-selected="false">Banco</button><button type="button" data-t="caja2" aria-selected="false">Caja 2</button><button type="button" data-t="prevision" aria-selected="false">Previsión</button><button type="button" data-t="impuestos" aria-selected="false">Impuestos</button><button type="button" data-t="modulos" aria-selected="false">Módulos</button><button type="button" data-t="gastos" aria-selected="false">Gastos mensuales</button><button type="button" data-t="seguros" aria-selected="false">Seguros</button><button type="button" data-t="proveedores" aria-selected="false">Proveedores</button><button type="button" data-t="avisos" aria-selected="false">Avisos</button></nav>
 
   <section class="grid" aria-label="Resumen" data-tab="resumen">
     <a class="card c12 avbanner" id="avBanner" href="#avisos" hidden></a>
@@ -504,6 +504,16 @@ body{line-height:1.6}
       <p class="note" id="stNote"></p>
     </div>
 
+    <div class="card c12" id="caja2" data-tab="caja2">
+      <div class="head"><div><h2>Caja 2</h2><p class="sub" id="c2Sub"></p></div><span class="badge real">Efectivo · no pasa por el banco</span></div>
+      <div class="grid" style="gap:12px">
+        <div class="kpi c4"><span class="label">Caja 2 en 2026</span><span class="val" id="c21"></span><span class="delta" id="c21d"></span></div>
+        <div class="kpi c4"><span class="label">Caja 2 en octubre</span><span class="val" id="c22"></span><span class="delta" id="c22d"></span></div>
+        <div class="kpi c4"><span class="label">Facturación total con Caja 2</span><span class="val" id="c23"></span><span class="delta" id="c23d"></span></div>
+      </div>
+      <div class="sched" style="overflow-x:auto;margin-top:12px"><table id="c2Tab"></table></div>
+      <p class="note" id="c2Note"></p>
+    </div>
     <div class="card c12" id="banco" data-tab="banco">
       <div class="head"><div><h2>Contabilidad del banco</h2><p class="sub">Cuenta Negocio · 1 ene – 17 oct 2026 · solo lectura</p></div><span class="badge real">Real · CaixaBank</span></div>
       <div class="grid" style="gap:12px">
@@ -721,7 +731,23 @@ $('k4d').innerHTML='<span style="color:var(--gold)">Previsión del CGI con oct�
 /* ===== Datos reales flowww y banco ===== */
 const CAJ='05/01|1032;07/01|83.95;08/01|446;09/01|519.39;12/01|231.25;13/01|992.95;14/01|993.35;15/01|1182.85;16/01|1044.95;19/01|589;20/01|199.72;21/01|512.1;22/01|210.63;23/01|613.57;26/01|769.82;27/01|458.6;28/01|619.2;29/01|81.1;30/01|674.95;02/02|433.9;03/02|573.71;04/02|501.9;05/02|649.9;06/02|670.5;09/02|315;10/02|490.3;11/02|532.6;12/02|405.5;13/02|202.95;16/02|640;17/02|1084.75;18/02|583.67;19/02|405.85;20/02|1191.5;23/02|266;24/02|494.8;25/02|956.95;26/02|240.1;27/02|804;02/03|447.05;03/03|681.4;04/03|955.65;05/03|1325.65;06/03|516.75;09/03|311.3;10/03|855.55;11/03|1568.6;12/03|486.91;13/03|621.05;16/03|459.55;17/03|404.95;18/03|869.15;19/03|544.2;20/03|714.9;23/03|1836.8;25/03|477.01;26/03|474.5;27/03|1338.15;30/03|507.95;31/03|1869.25;06/04|749;07/04|284.25;08/04|1035.25;09/04|1367.55;10/04|1086.5;13/04|506.6;14/04|432.65;15/04|2088.96;16/04|1170.15;17/04|444.75;20/04|389.85;21/04|920.5;22/04|700.65;23/04|25;24/04|940.35;27/04|895.9;28/04|462.4;29/04|1657.08;30/04|405.5;04/05|722.15;05/05|25;06/05|780.9;07/05|396.55;08/05|1368.05;11/05|393.24;12/05|1706.55;13/05|1142.8;14/05|147.95;18/05|1785.5;19/05|539.65;20/05|1877;21/05|1271.65;22/05|231.95;25/05|298.6;26/05|779.5;27/05|1261.75;28/05|590.9;29/05|459.4;01/06|1688.57;02/06|607.5;03/06|1039.45;04/06|763.4;05/06|931.7;08/06|370.75;09/06|1389.4;10/06|794.8;11/06|240.75;12/06|652.35;15/06|1011.4;16/06|2090.65;17/06|1341.65;18/06|420.45;19/06|824.95;22/06|168.45;23/06|1006.9;24/06|594.33;25/06|321.65;26/06|387.9;29/06|399.65;30/06|615.2;01/07|1185;02/07|1672.1;03/07|1017.5;06/07|514.35;07/07|1913.1;08/07|312.1;09/07|303.19;10/07|602.05;13/07|514.95;14/07|124;15/07|2398.36;16/07|189.4;17/07|701.75;20/07|43;21/07|555.6;22/07|624.35;23/07|272.1;24/07|246.7;27/07|487.35;28/07|238.95;29/07|890.65;30/07|688.2;31/07|471.6;03/08|152;04/08|909.79;05/08|430.5;06/08|127;07/08|90.8;10/08|350;11/08|716.35;12/08|106.8;13/08|1027.05;14/08|74;31/08|411.6;01/09|438;02/09|524.3;03/09|219;04/09|1500.2;07/09|538.3;08/09|889.25;09/09|1413.4;10/09|730.3;11/09|223;14/09|875.15;15/09|222;16/09|467.85;17/09|450.5;18/09|1603.85;21/09|845.6;22/09|269.75;23/09|2297.89;24/09|1754.6;25/09|818.95;28/09|397.9;29/09|1014;30/09|689.08;01/10|924.05;02/10|407.95;05/10|798.85;06/10|522;07/10|1431.45;08/10|358.5;09/10|523.95;13/10|754;14/10|2520.7;15/10|714.07'.split(';').map(s=>{const[a,b]=s.split('|');return{d:a,m:+a.slice(3)-1,v:+b}});
 const fdate=d=>{const[x,m]=d.split('/');return +x+' '+M[+m-1].toLowerCase()};
+/* Caja 2: dinero en efectivo que se queda Vicky. Formato 'dd/mm|importe;…' (con IVA). Suma a la facturación del negocio, pero NO está en el banco. */
+const CAJ2=''.split(';').filter(Boolean).map(s=>{const[a,b]=s.split('|');return{d:a,m:+a.slice(3)-1,v:+b}});
+const CAJ_F=CAJ.slice();
+CAJ2.forEach(c=>{const e=CAJ.find(x=>x.d===c.d);if(e)e.v=Math.round((e.v+c.v)*100)/100;else CAJ.push({d:c.d,m:c.m,v:c.v})});
+CAJ.sort((a,b)=>a.m-b.m||+a.d.slice(0,2)-+b.d.slice(0,2));
 const BK={sal:40966,tpv:124778};
+
+/* ===== Caja 2 ===== */
+(function(){
+  const t=sum(CAJ2.map(c=>c.v)),oct=sum(CAJ2.filter(c=>c.m===9).map(c=>c.v)),fl=sum(CAJ_F.map(c=>c.v));
+  if(!CAJ2.length){$('c2Sub').textContent='Pendiente de cargar: falta el Excel de la Caja 2';$('c21').textContent='—';$('c21d').innerHTML='<span style="color:var(--muted)">sin datos todavía</span>';$('c22').textContent='—';$('c22d').innerHTML='';$('c23').textContent=eur(fl);$('c23d').innerHTML='<span style="color:var(--muted)">solo cajas de flowww por ahora</span>';
+    $('c2Tab').innerHTML='<tr><td>Cuando pases el Excel de la Caja 2, aquí saldrán los importes por día y por mes.</td></tr>';}
+  else{$('c2Sub').textContent=CAJ2.length+' días con Caja 2 · hasta el '+fdate(CAJ2[CAJ2.length-1].d);$('c21').textContent=eur(t);$('c21d').innerHTML='<span style="color:var(--muted)">efectivo en tu poder</span>';$('c22').textContent=eur(oct);$('c22d').innerHTML='';$('c23').textContent=eur(fl+t);$('c23d').innerHTML='<span style="color:var(--muted)">flowww '+eur(fl)+' + Caja 2 '+eur(t)+'</span>';
+    const mm=M.slice(0,12).map((n,i)=>[n,sum(CAJ2.filter(c=>c.m===i).map(c=>c.v)),sum(CAJ_F.filter(c=>c.m===i).map(c=>c.v))]).filter(r=>r[1]||r[2]);
+    $('c2Tab').innerHTML='<tr><th>Mes</th><th>Cajas flowww</th><th>Caja 2</th><th>Total negocio</th></tr>'+mm.map(r=>'<tr><td>'+r[0]+'</td><td>'+eur(r[2])+'</td><td><b>'+eur(r[1])+'</b></td><td>'+eur(r[1]+r[2])+'</td></tr>').join('')+'<tr><th>Días con Caja 2</th><th></th><th></th><th></th></tr>'+CAJ2.map(c=>'<tr><td>'+fdate(c.d)+'</td><td></td><td>'+eur(c.v)+'</td><td></td></tr>').join('');}
+  $('c2Note').textContent='La Caja 2 suma a la facturación y a los cálculos del negocio (resumen, facturación, previsión, módulos), pero el dinero se queda en efectivo contigo: no entra en el saldo del banco ni en Tesorería.';
+})();
 
 /* KPIs reales */
 (function(){
@@ -966,20 +992,32 @@ $('invList').innerHTML=[['30 oct','Skeyndor · VN/584407','984 € en 3 giros de
   function showSt(k){$('clPend').hidden=k!=='pend';$('clReact').hidden=k!=='react';$('clBono').hidden=k!=='bono';stb.forEach(b=>{const on=b.dataset.st===k;b.style.background=on?'var(--accent)':'transparent';b.style.color=on?'#fff':'var(--fg,inherit)'})}
   stb.forEach(b=>b.addEventListener('click',()=>showSt(b.dataset.st)));showSt('pend');
   const R=CLI.react;
-  const fl=[['all','Todas',()=>true],['hab','Habituales (3+ visitas)',r=>r[2]>=3],['a','3–6 meses',r=>r[4]<6],['b','6–12 meses',r=>r[4]>=6&&r[4]<12],['c','Más de 12 meses',r=>r[4]>=12],['ct','Contactadas',r=>!!CT[r[1]]],['nc','Sin contactar (habituales)',r=>r[2]>=3&&!CT[r[1]]]];
+  const fl=[['all','Todas',()=>true],['hab','Habituales (3+ visitas)',r=>r[2]>=3],['a','3–6 meses',r=>r[4]<6],['b','6–12 meses',r=>r[4]>=6&&r[4]<12],['c','Más de 12 meses',r=>r[4]>=12],['ct','En seguimiento',r=>!!CT[r[1]]&&st(r).k==='act'],['nc','Sin contactar (habituales)',r=>r[2]>=3&&!CT[r[1]]],['tk','Toca contactar hoy',r=>st(r).due],['rs','Respondieron / con cita',r=>['resp','cita'].includes(st(r).k)],['ce','Cerradas',r=>st(r).k==='cer']];
   const CT={};(CLI.contact||[]).forEach(c=>CT[c[0]]=c);
-  const ct=r=>{const c=CT[r[1]];return c?'<td style="white-space:nowrap">'+fd(c[1])+'</td><td>'+c[2]+'</td>':'<td style="color:var(--muted)">—</td><td style="color:var(--muted)">Sin contactar</td>'};
+  /* contact = [nº cliente, fecha último contacto ISO, acción, nº contactos 1-3, estado act|resp|cita|cer] ; 2º contacto a +5 días, 3º a +7 días, tras el 3º se cierra */
+  const DAY=864e5,addD=(iso,n)=>{const d=new Date(iso+'T12:00:00');d.setDate(d.getDate()+n);return d.toISOString().slice(0,10)};
+  const today=new Date().toISOString().slice(0,10);
+  function st(r){const c=CT[r[1]];if(!c)return {k:'sin',txt:'Sin contactar',nx:'1º contacto',due:false,n:0};
+    const n=c[3]||1,e=c[4]||'act';
+    if(e==='resp')return {k:'resp',txt:'Respondió',nx:'Atender su respuesta',due:false,n};
+    if(e==='cita')return {k:'cita',txt:'Con cita',nx:'—',due:false,n};
+    if(e==='cer'||n>=3)return {k:'cer',txt:'Cerrada (sin respuesta tras 3 contactos)',nx:'—',due:false,n};
+    const d=addD(c[1],n===1?5:7),due=today>=d;
+    return {k:'act',txt:n+'º contacto enviado',nx:(n+1)+'º contacto (desde el '+fd(d)+')',due,n}}
+  window.__st=st;
+  const ct=r=>{const c=CT[r[1]],s=st(r);const col={sin:'var(--muted)',act:'var(--warn)',resp:'var(--inc)',cita:'var(--inc)',cer:'var(--muted)'}[s.k];
+    return (c?'<td style="white-space:nowrap">'+fd(c[1])+'</td><td>'+c[2]+'</td>':'<td style="color:var(--muted)">—</td><td style="color:var(--muted)">—</td>')+'<td style="color:'+col+'">'+s.txt+'</td><td'+(s.due?' style="color:var(--crit);font-weight:600"':'')+'>'+(s.due?'⚠ Toca hoy · ':'')+s.nx+'</td>'};
   let cur='hab';
   const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
   const fd=iso=>{const m=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];const a=iso.split('-');return +a[2]+' '+m[+a[1]-1]+' '+a[0]};
   function drawReact(){
-    const f=fl.find(x=>x[0]===cur)[2],L=R.filter(f);
+    const f=fl.find(x=>x[0]===cur)[2],L=R.filter(r=>f(r)&&(cur==='ce'||st(r).k!=='cer'));
     $('rcSub').textContent=R.length?R.length+' clientas sin venir desde hace más de 3 meses · '+R.filter(r=>r[2]>=3).length+' habituales · datos de la agenda de flowww a '+CLI.reactFecha+' (desde may 2023) · sin contar cejas, cera, manicura ni pedicura':'Todavía sin datos';
-    $('rcTab').innerHTML='<tr><td colspan="8" style="padding:0 0 10px"><div style="display:flex;gap:6px;flex-wrap:wrap">'+fl.map(x=>'<button type="button" data-f="'+x[0]+'" class="pill" style="cursor:pointer;border:1px solid var(--line);padding:5px 10px;font:inherit;'+(x[0]===cur?'background:var(--accent);color:#fff':'background:transparent;color:var(--fg,inherit)')+'">'+x[1]+' ('+R.filter(x[2]).length+')</button>').join('')+'</div></td></tr><tr><th>Clienta</th><th>Nº flowww</th><th>Visitas</th><th>Última visita</th><th>Meses</th><th>Último tratamiento</th><th>Contactada</th><th>Acción</th></tr>'+L.map(r=>'<tr><td><b>'+r[0]+'</b>'+(r[6]?' <span title="Sigue viniendo a cejas, cera, manicura o pedicura" style="color:var(--warn)">●</span>':'')+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td style="white-space:nowrap">'+fd(r[3])+'</td><td><b>'+r[4]+'</b></td><td>'+cap(r[5])+'</td>'+ct(r)+'</tr>').join('');
+    $('rcTab').innerHTML='<tr><td colspan="10" style="padding:0 0 10px"><div style="display:flex;gap:6px;flex-wrap:wrap">'+fl.map(x=>'<button type="button" data-f="'+x[0]+'" class="pill" style="cursor:pointer;border:1px solid var(--line);padding:5px 10px;font:inherit;'+(x[0]===cur?'background:var(--accent);color:#fff':'background:transparent;color:var(--fg,inherit)')+'">'+x[1]+' ('+R.filter(x[2]).length+')</button>').join('')+'</div></td></tr><tr><th>Clienta</th><th>Nº flowww</th><th>Visitas</th><th>Última visita</th><th>Meses</th><th>Último tratamiento</th><th>Último contacto</th><th>Acción</th><th>Fase</th><th>Siguiente paso</th></tr>'+L.map(r=>'<tr><td><b>'+r[0]+'</b>'+(r[6]?' <span title="Sigue viniendo a cejas, cera, manicura o pedicura" style="color:var(--warn)">●</span>':'')+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td style="white-space:nowrap">'+fd(r[3])+'</td><td><b>'+r[4]+'</b></td><td>'+cap(r[5])+'</td>'+ct(r)+'</tr>').join('');
     $('rcTab').querySelectorAll('button[data-f]').forEach(b=>b.onclick=()=>{cur=b.dataset.f;drawReact()});
   }
   drawReact();
-  $('rcNote').textContent='Se descartan las clientas que solo han hecho cejas, cera, manicura o pedicura; las columnas Contactada y Acción se rellenan cada noche con lo que se ha escrito por WhatsApp (mensaje enviado, respuesta, cita); el punto ● marca a quien sigue viniendo a esos servicios. Solo nombres de pila: busca por el nº en flowww. La agenda de flowww empieza en mayo de 2023 y las visitas son citas pasadas no marcadas como no presentadas. Las clientas con cita futura no aparecen.';
+  $('rcNote').textContent='Se descartan las clientas que solo han hecho cejas, cera, manicura o pedicura. Seguimiento por WhatsApp: hasta 3 contactos; si en 5 días no contesta, 2º mensaje con otra estrategia; si pasa otra semana sin respuesta, 3º mensaje de cierre amable y se da por cerrada (sale del listado, se ve en «Cerradas»). Las columnas se rellenan cada noche con lo escrito por WhatsApp; el punto ● marca a quien sigue viniendo a esos servicios. Solo nombres de pila: busca por el nº en flowww. La agenda de flowww empieza en mayo de 2023 y las visitas son citas pasadas no marcadas como no presentadas. Las clientas con cita futura no aparecen.';
 
   /* ---- Propuestas de reactivación ---- */
   (function(){
@@ -987,7 +1025,12 @@ $('invList').innerHTML=[['30 oct','Skeyndor · VN/584407','984 € en 3 giros de
     const fd=iso=>{const m=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];const a=iso.split('-');return +a[2]+' '+m[+a[1]-1]};
     const cat=t=>/ipl|fotodep/i.test(t)?'dep':/body|corporal|madero|roll|crioback|masaje|aquaterm|envoltura|manual/i.test(t)?'cor':'fac';
     const nice=t=>{t=t.replace(/\s*(sin bono|con h|,.*)$/i,'').trim();return t.charAt(0).toLowerCase()+t.slice(1)};
-    const msgs=(r)=>{const n=r[0],c=cat(r[5]),t=nice(r[5]);
+    const msgs=(r,stg)=>{const n=r[0],c=cat(r[5]),t=nice(r[5]);
+      if(stg===2)return [
+        ['2º contacto · valoración','Hola '+n+', soy Vicky, de Him and Her. Te escribí hace unos días y no quería agobiarte. Si te apetece, te hago una valoración gratuita de 15 min para ver cómo está tu piel/cuerpo y proponerte lo que mejor te venga, sin compromiso. ¿Te guardo un hueco?'],
+        ['2º contacto · novedad','Hola '+n+', te cuento que hemos incorporado novedades en cabina desde la última vez que viniste y creo que te encantarían. Si quieres que te explique cuál va mejor contigo, dime y te busco un hueco esta semana. Un abrazo, Vicky']];
+      if(stg===3)return [
+        ['3º contacto · cierre amable','Hola '+n+', no quiero insistir más 😊. Solo quería decirte que en Him and Her tienes siempre tu sitio y tu historial guardado; cuando te apetezca retomar tu cuidado, escríbeme y te busco hueco. ¡Que tengas muy buen día! Vicky']];
       const z=c==='cor'?['¿Qué tal tu cuerpo?','una sesión corporal','tu tratamiento corporal']:c==='dep'?['¿Qué tal la depilación?','una sesión','tu depilación']:['¿Qué tal tu piel?','una puesta a punto facial','tu cuidado facial'];
       return [
         ['Cercano','Hola '+n+', ¡cuánto tiempo! Hace unos meses que no te vemos por Him and Her y te echamos de menos. '+z[0]+' Si te apetece retomar '+z[2]+', te guardo un hueco esta semana o la próxima. ¿Qué día te viene mejor? Un abrazo, Him and Her'],
@@ -995,10 +1038,12 @@ $('invList').innerHTML=[['30 oct','Skeyndor · VN/584407','984 € en 3 giros de
         ['Con detalle','Hola '+n+', te echamos de menos en Him and Her. Este mes, a las clientas que vuelven les regalamos un pequeño extra en su cita (un detalle para tu cuidado). Si reservas '+z[1]+' antes de fin de mes, es para ti. ¿Te busco hueco? Un abrazo, Vicky']
       ]};
     const R=CLI.react.filter(r=>r[2]>=3&&r[4]<=6&&!r[6]).sort((a,b)=>b[2]-a[2]).slice(0,15);
+    const st=window.__st;
+    const msgsF=r=>{const c=CT[r[1]];const n=c?(c[3]||1):0;if(c&&(c[4]==='resp'||c[4]==='cita'))return [];return n>=3?[]:msgs(r,n+1)};
     $('rpSub').textContent=R.length?'Las 15 clientas habituales (3+ visitas) que dejaron de venir hace 3–6 meses: son las que mejor responden. 3 opciones de mensaje para cada una (cercano, con valoración y con detalle): nunca se envían solos.':'';
     $('rpOffers').innerHTML='<div class="sched" style="padding:12px 14px;margin:6px 0 12px"><b>Ideas de oferta (para que elijas):</b><ul style="margin:8px 0 0 18px;padding:0;line-height:1.5"><li><b>Sin descuento:</b> diagnóstico de piel o valoración corporal de cortesía al volver, y mensaje personal tuyo.</li><li><b>Habituales de facial:</b> un extra en la cita de regreso (mascarilla o masaje facial de 10 min) si reservan antes de fin de mes.</li><li><b>Más de 6 meses:</b> «Te guardo tu hueco» + un pequeño regalo de producto en la primera visita.</li><li><b>Bono de 4 sesiones:</b> primera sesión de reencuentro al precio habitual y un detalle en la 4.ª.</li></ul></div>';
-    $('rpList').innerHTML=R.map((r,i)=>'<div class="sched" style="padding:12px 14px;margin:0 0 10px"><b>'+r[0]+' <span style="color:var(--muted);font-weight:400">· nº '+r[1]+' · '+r[2]+' visitas · hace '+r[4]+' meses · '+nice(r[5])+'</span> '+(CT[r[1]]?'<span style="color:var(--inc)">· contactada el '+fd(CT[r[1]][1])+': '+CT[r[1]][2]+'</span>':'<span style="color:var(--muted)">· sin contactar</span>')+'</b>'+msgs(r).map((m,j)=>'<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--line)"><div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><span style="font-weight:600">Opción '+(j+1)+' · '+m[0]+'</span><button type="button" class="pill" data-cp="'+i+'-'+j+'" style="cursor:pointer;border:1px solid var(--line);padding:4px 10px;font:inherit;background:transparent;color:var(--fg,inherit)">Copiar</button></div><div style="margin-top:4px;color:var(--muted)">'+m[1]+'</div></div>').join('')+'</div>').join('');
-    $('rpList').querySelectorAll('button[data-cp]').forEach(b=>b.onclick=()=>{const k=b.dataset.cp.split('-');const t=msgs(R[+k[0]])[+k[1]][1];try{navigator.clipboard.writeText(t).then(()=>{b.textContent='Copiado'},()=>{b.textContent='Selecciona el texto'})}catch(e){b.textContent='Selecciona el texto'}});
+    $('rpList').innerHTML=R.map((r,i)=>'<div class="sched" style="padding:12px 14px;margin:0 0 10px"><b>'+r[0]+' <span style="color:var(--muted);font-weight:400">· nº '+r[1]+' · '+r[2]+' visitas · hace '+r[4]+' meses · '+nice(r[5])+'</span> '+(CT[r[1]]?'<span style="color:var(--inc)">· contactada el '+fd(CT[r[1]][1])+': '+CT[r[1]][2]+'</span>':'<span style="color:var(--muted)">· sin contactar</span>')+'</b>'+(CT[r[1]]?'<div style="margin-top:6px;color:var(--muted)">Fase: '+st(r).txt+' · '+st(r).nx+'</div>':'')+msgsF(r).map((m,j)=>'<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--line)"><div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><span style="font-weight:600">Opción '+(j+1)+' · '+m[0]+'</span><button type="button" class="pill" data-cp="'+i+'-'+j+'" style="cursor:pointer;border:1px solid var(--line);padding:4px 10px;font:inherit;background:transparent;color:var(--fg,inherit)">Copiar</button></div><div style="margin-top:4px;color:var(--muted)">'+m[1]+'</div></div>').join('')+'</div>').join('');
+    $('rpList').querySelectorAll('button[data-cp]').forEach(b=>b.onclick=()=>{const k=b.dataset.cp.split('-');const t=msgsF(R[+k[0]])[+k[1]][1];try{navigator.clipboard.writeText(t).then(()=>{b.textContent='Copiado'},()=>{b.textContent='Selecciona el texto'})}catch(e){b.textContent='Selecciona el texto'}});
   })();
   /* ---- Bonos pendientes ---- */
   (function(){
