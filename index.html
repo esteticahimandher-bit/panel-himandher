@@ -508,7 +508,7 @@ body{line-height:1.6}
       <div class="head"><div><h2>Caja 2</h2><p class="sub" id="c2Sub"></p></div><span class="badge real">Efectivo · no pasa por el banco</span></div>
       <div class="grid" style="gap:12px">
         <div class="kpi c4"><span class="label">Caja 2 en 2026</span><span class="val" id="c21"></span><span class="delta" id="c21d"></span></div>
-        <div class="kpi c4"><span class="label">Caja 2 en octubre</span><span class="val" id="c22"></span><span class="delta" id="c22d"></span></div>
+        <div class="kpi c4"><span class="label">Media mensual Caja 2</span><span class="val" id="c22"></span><span class="delta" id="c22d"></span></div>
         <div class="kpi c4"><span class="label">Facturación total con Caja 2</span><span class="val" id="c23"></span><span class="delta" id="c23d"></span></div>
       </div>
       <div class="sched" style="overflow-x:auto;margin-top:12px"><table id="c2Tab"></table></div>
@@ -535,7 +535,9 @@ body{line-height:1.6}
 
 <script>
 const M=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
-const ING=[11901,11443,17265,15562,15779,17661,15966,4400,18183,17500,17500,17500];
+/* Caja 2 (efectivo que se queda Vicky), por mes, con IVA. Fuente: fila CAJA 2 de INGRESOS en el CGI-2026. Suma a ingresos del negocio, no está en el banco. */
+const C2M=[268.9,1746,1251,355,1208,620,1037.85,255,219,0,0,0];
+const ING=[11901,11443,17265,15562,15779,17661,15966,4400,18183,17500,17500,17500].map((v,i)=>Math.round((v+C2M[i])*100)/100);
 const GAS=[14998,12210,12756,12552,11297,12356,14791,7680,9942,12501,10779,10792];
 const REAL=9;
 const FAM={'Facial':[4176,6629,9221,6728,7104,7997,6107,2142,9122],'Ventas de productos':[3435,2857,3902,4898,2490,4081,4209,594,2526],'Corporal':[1655,910,2205,1849,5059,3098,3473,391,3458],'Limpiezas':[1020,655,422,785,783,824,932,622,1557],'Depilación':[255,59,411,285,390,747,613,382,465],'IPL':[634,155,844,408,188,92,33,38,604],'Tarjeta regalo':[630,146,70,352,162,382,155,0,232],'Uñas':[97,33,137,257,229,329,444,232,220],'Pestañas':[0,0,53,0,118,111,0,0,0]};
@@ -731,22 +733,20 @@ $('k4d').innerHTML='<span style="color:var(--gold)">Previsión del CGI con oct�
 /* ===== Datos reales flowww y banco ===== */
 const CAJ='05/01|1032;07/01|83.95;08/01|446;09/01|519.39;12/01|231.25;13/01|992.95;14/01|993.35;15/01|1182.85;16/01|1044.95;19/01|589;20/01|199.72;21/01|512.1;22/01|210.63;23/01|613.57;26/01|769.82;27/01|458.6;28/01|619.2;29/01|81.1;30/01|674.95;02/02|433.9;03/02|573.71;04/02|501.9;05/02|649.9;06/02|670.5;09/02|315;10/02|490.3;11/02|532.6;12/02|405.5;13/02|202.95;16/02|640;17/02|1084.75;18/02|583.67;19/02|405.85;20/02|1191.5;23/02|266;24/02|494.8;25/02|956.95;26/02|240.1;27/02|804;02/03|447.05;03/03|681.4;04/03|955.65;05/03|1325.65;06/03|516.75;09/03|311.3;10/03|855.55;11/03|1568.6;12/03|486.91;13/03|621.05;16/03|459.55;17/03|404.95;18/03|869.15;19/03|544.2;20/03|714.9;23/03|1836.8;25/03|477.01;26/03|474.5;27/03|1338.15;30/03|507.95;31/03|1869.25;06/04|749;07/04|284.25;08/04|1035.25;09/04|1367.55;10/04|1086.5;13/04|506.6;14/04|432.65;15/04|2088.96;16/04|1170.15;17/04|444.75;20/04|389.85;21/04|920.5;22/04|700.65;23/04|25;24/04|940.35;27/04|895.9;28/04|462.4;29/04|1657.08;30/04|405.5;04/05|722.15;05/05|25;06/05|780.9;07/05|396.55;08/05|1368.05;11/05|393.24;12/05|1706.55;13/05|1142.8;14/05|147.95;18/05|1785.5;19/05|539.65;20/05|1877;21/05|1271.65;22/05|231.95;25/05|298.6;26/05|779.5;27/05|1261.75;28/05|590.9;29/05|459.4;01/06|1688.57;02/06|607.5;03/06|1039.45;04/06|763.4;05/06|931.7;08/06|370.75;09/06|1389.4;10/06|794.8;11/06|240.75;12/06|652.35;15/06|1011.4;16/06|2090.65;17/06|1341.65;18/06|420.45;19/06|824.95;22/06|168.45;23/06|1006.9;24/06|594.33;25/06|321.65;26/06|387.9;29/06|399.65;30/06|615.2;01/07|1185;02/07|1672.1;03/07|1017.5;06/07|514.35;07/07|1913.1;08/07|312.1;09/07|303.19;10/07|602.05;13/07|514.95;14/07|124;15/07|2398.36;16/07|189.4;17/07|701.75;20/07|43;21/07|555.6;22/07|624.35;23/07|272.1;24/07|246.7;27/07|487.35;28/07|238.95;29/07|890.65;30/07|688.2;31/07|471.6;03/08|152;04/08|909.79;05/08|430.5;06/08|127;07/08|90.8;10/08|350;11/08|716.35;12/08|106.8;13/08|1027.05;14/08|74;31/08|411.6;01/09|438;02/09|524.3;03/09|219;04/09|1500.2;07/09|538.3;08/09|889.25;09/09|1413.4;10/09|730.3;11/09|223;14/09|875.15;15/09|222;16/09|467.85;17/09|450.5;18/09|1603.85;21/09|845.6;22/09|269.75;23/09|2297.89;24/09|1754.6;25/09|818.95;28/09|397.9;29/09|1014;30/09|689.08;01/10|924.05;02/10|407.95;05/10|798.85;06/10|522;07/10|1431.45;08/10|358.5;09/10|523.95;13/10|754;14/10|2520.7;15/10|714.07'.split(';').map(s=>{const[a,b]=s.split('|');return{d:a,m:+a.slice(3)-1,v:+b}});
 const fdate=d=>{const[x,m]=d.split('/');return +x+' '+M[+m-1].toLowerCase()};
-/* Caja 2: dinero en efectivo que se queda Vicky. Formato 'dd/mm|importe;…' (con IVA). Suma a la facturación del negocio, pero NO está en el banco. */
-const CAJ2=''.split(';').filter(Boolean).map(s=>{const[a,b]=s.split('|');return{d:a,m:+a.slice(3)-1,v:+b}});
 const CAJ_F=CAJ.slice();
-CAJ2.forEach(c=>{const e=CAJ.find(x=>x.d===c.d);if(e)e.v=Math.round((e.v+c.v)*100)/100;else CAJ.push({d:c.d,m:c.m,v:c.v})});
-CAJ.sort((a,b)=>a.m-b.m||+a.d.slice(0,2)-+b.d.slice(0,2));
 const BK={sal:40966,tpv:124778};
 
 /* ===== Caja 2 ===== */
 (function(){
-  const t=sum(CAJ2.map(c=>c.v)),oct=sum(CAJ2.filter(c=>c.m===9).map(c=>c.v)),fl=sum(CAJ_F.map(c=>c.v));
-  if(!CAJ2.length){$('c2Sub').textContent='Pendiente de cargar: falta el Excel de la Caja 2';$('c21').textContent='—';$('c21d').innerHTML='<span style="color:var(--muted)">sin datos todavía</span>';$('c22').textContent='—';$('c22d').innerHTML='';$('c23').textContent=eur(fl);$('c23d').innerHTML='<span style="color:var(--muted)">solo cajas de flowww por ahora</span>';
-    $('c2Tab').innerHTML='<tr><td>Cuando pases el Excel de la Caja 2, aquí saldrán los importes por día y por mes.</td></tr>';}
-  else{$('c2Sub').textContent=CAJ2.length+' días con Caja 2 · hasta el '+fdate(CAJ2[CAJ2.length-1].d);$('c21').textContent=eur(t);$('c21d').innerHTML='<span style="color:var(--muted)">efectivo en tu poder</span>';$('c22').textContent=eur(oct);$('c22d').innerHTML='';$('c23').textContent=eur(fl+t);$('c23d').innerHTML='<span style="color:var(--muted)">flowww '+eur(fl)+' + Caja 2 '+eur(t)+'</span>';
-    const mm=M.slice(0,12).map((n,i)=>[n,sum(CAJ2.filter(c=>c.m===i).map(c=>c.v)),sum(CAJ_F.filter(c=>c.m===i).map(c=>c.v))]).filter(r=>r[1]||r[2]);
-    $('c2Tab').innerHTML='<tr><th>Mes</th><th>Cajas flowww</th><th>Caja 2</th><th>Total negocio</th></tr>'+mm.map(r=>'<tr><td>'+r[0]+'</td><td>'+eur(r[2])+'</td><td><b>'+eur(r[1])+'</b></td><td>'+eur(r[1]+r[2])+'</td></tr>').join('')+'<tr><th>Días con Caja 2</th><th></th><th></th><th></th></tr>'+CAJ2.map(c=>'<tr><td>'+fdate(c.d)+'</td><td></td><td>'+eur(c.v)+'</td><td></td></tr>').join('');}
-  $('c2Note').textContent='La Caja 2 suma a la facturación y a los cálculos del negocio (resumen, facturación, previsión, módulos), pero el dinero se queda en efectivo contigo: no entra en el saldo del banco ni en Tesorería.';
+  const t=sum(C2M),n=C2M.filter(v=>v>0).length,last=C2M.map((v,i)=>v>0?i:-1).filter(i=>i>=0).pop();
+  const fm=i=>sum(CAJ_F.filter(c=>c.m===i).map(c=>c.v));
+  const fl=sum(CAJ_F.map(c=>c.v));
+  $('c2Sub').textContent='Efectivo cobrado fuera de flowww · '+n+' meses con datos (ene–'+M[last].toLowerCase()+') · fuente: fila CAJA 2 del CGI-2026';
+  $('c21').textContent=eur(t);$('c21d').innerHTML='<span style="color:var(--muted)">efectivo en tu poder, no en el banco</span>';
+  $('c22').textContent=eur(t/n);$('c22d').innerHTML='<span style="color:var(--muted)">media mensual · '+(100*t/(fl+t)).toFixed(1).replace('.',',')+' % de la facturación total</span>';
+  $('c23').textContent=eur(fl+t);$('c23d').innerHTML='<span style="color:var(--muted)">cajas flowww '+eur(fl)+' + Caja 2 '+eur(t)+'</span>';
+  $('c2Tab').innerHTML='<tr><th>Mes</th><th>Cajas flowww</th><th>Caja 2</th><th>Total negocio</th></tr>'+C2M.map((v,i)=>[i,v,fm(i)]).filter(r=>r[1]||r[2]).map(r=>'<tr><td>'+M[r[0]]+'</td><td>'+eur(r[2])+'</td><td><b>'+eur(r[1])+'</b></td><td>'+eur(r[1]+r[2])+'</td></tr>').join('')+'<tr><th>Total</th><th>'+eur(fl)+'</th><th>'+eur(t)+'</th><th>'+eur(fl+t)+'</th></tr>';
+  $('c2Note').textContent='La Caja 2 suma a los ingresos del negocio (resumen, balance, previsión y límite de módulos), pero el dinero se queda en efectivo contigo: no entra en el saldo del banco ni en Tesorería. Falta octubre: pásame su importe cuando lo tengas. Pendiente de aclarar con la asesoría cómo se declara.';
 })();
 
 /* KPIs reales */
@@ -1147,14 +1147,14 @@ $('invList').innerHTML=[['30 oct','Skeyndor · VN/584407','984 € en 3 giros de
 /* Módulos */
 (function(){
   const IVA=1.21,L150=150000,L250=250000;
-  const real=sum(CAJ.filter(c=>c.m<9).map(c=>c.v)),oct=sum(CAJ.filter(c=>c.m===9).map(c=>c.v));
+  const real=sum(CAJ.filter(c=>c.m<9).map(c=>c.v))+sum(C2M.slice(0,9)),oct=sum(CAJ.filter(c=>c.m===9).map(c=>c.v))+C2M[9];
   const ytd=real+oct,ytdN=ytd/IVA;
   const proy=real+3*17500,proyN=proy/IVA;
   const cgi=181405/IVA;
   const pc=v=>(v*100).toLocaleString('es-ES',{minimumFractionDigits:1,maximumFractionDigits:1})+' %';
   const col=v=>v>.97?'var(--alert)':v>.85?'var(--warn)':'var(--inc)';
   const kp=(l,v,d)=>'<div class="kpi c4" style="display:flex;flex-direction:column;gap:6px"><span class="label">'+l+'</span><span class="val">'+v+'</span><span class="delta">'+d+'</span></div>';
-  $('mdKpi').innerHTML=kp('Facturado hasta el '+fdate(CAJ[CAJ.length-1].d)+' (sin IVA)',eur(ytdN),eur(ytd)+' con IVA · cajas de flowww')+
+  $('mdKpi').innerHTML=kp('Facturado hasta el '+fdate(CAJ[CAJ.length-1].d)+' (sin IVA)',eur(ytdN),eur(ytd)+' con IVA · cajas de flowww + Caja 2 ('+eur(sum(C2M))+')')+
     kp('Previsión de cierre 2026 (sin IVA)',eur(proyN),'flowww hasta septiembre y 17.500 € al mes hasta diciembre')+
     kp('Previsión del CGI (sin IVA)',eur(cgi),'181.405 € con IVA (servicios y producto)');
   const bar=(t,v,lim)=>{const r=v/lim;return '<div><div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-weight:600"><span>'+t+'</span><span>'+eur(v)+' de '+eur(lim)+' · '+pc(r)+'</span></div><div style="margin-top:6px;height:12px;border-radius:99px;background:var(--line);overflow:hidden"><div class="fill" style="height:100%;width:'+Math.min(100,r*100)+'%;background:'+col(r)+';border-radius:99px"></div></div><small style="color:var(--muted)">'+(lim>v?'Quedan '+eur(lim-v):'Superado por '+eur(v-lim))+'</small></div>'};
