@@ -468,9 +468,8 @@ body{line-height:1.6}
     <div class="card c12" data-tab="clientes">
       <div class="head"><div><h2>Clientes: conversaciones pendientes</h2><p class="sub" id="clSub"></p></div><span class="badge real">Real · WhatsApp Business</span></div>
       <div class="grid" style="gap:12px">
-        <div class="kpi c4" style="display:flex;flex-direction:column;gap:6px"><span class="label">Esperan tu respuesta</span><span class="val" id="cl1"></span><span class="delta" id="cl1d"></span></div>
-        <div class="kpi c4" style="display:flex;flex-direction:column;gap:6px"><span class="label">Esperando a la clienta</span><span class="val" id="cl2"></span><span class="delta" id="cl2d"></span></div>
-        <div class="kpi c4" style="display:flex;flex-direction:column;gap:6px"><span class="label">Citas sin confirmar</span><span class="val" id="cl3"></span><span class="delta" id="cl3d"></span></div>
+        <div class="kpi c6" style="display:flex;flex-direction:column;gap:6px"><span class="label">Esperan tu respuesta</span><span class="val" id="cl1"></span><span class="delta" id="cl1d"></span></div>
+        <div class="kpi c6" style="display:flex;flex-direction:column;gap:6px"><span class="label">Esperando a la clienta</span><span class="val" id="cl2"></span><span class="delta" id="cl2d"></span></div>
       </div>
       <div id="clList"></div>
       <p class="note" id="clNote"></p>
@@ -523,16 +522,7 @@ const CLI={fecha:'18 oct 2026, 11:30',items:[
 ['r','María H.','viernes 13:54','Se le dijo que la llamaríais cuando pudiera y contesta «Ahora podría». Sin respuesta desde entonces.','Llamarla (higiene o exfoliación antes de decidir tratamiento)'],
 ['r','Alejandro','jueves 18:42','Último mensaje suyo sin texto (foto, audio o similar). Mañana tenía cita a las 10:00.','Abrir el chat y ver qué mandó'],
 ['w','Número sin guardar','viernes 15:02','Pidió cita después de las 16:30. Se le ofreció a las 16:00 o a las 19:00 y se le pidió nombre y apellido.','Si no contesta, no hace falta nada más'],
-['w','Marina','jueves 14:08','Le escribisteis «cómo vas?» y no ha contestado.','Sin prisa'],
-['c','Iván','lunes 19, 19:00','Recordatorio enviado el jueves, sin respuesta.','Confirmar mañana'],
-['c','Victoria','lunes 19','Recordatorio enviado el jueves, sin respuesta.','Confirmar mañana'],
-['c','Socorro','lunes 19','Recordatorio enviado el jueves, sin respuesta.','Confirmar mañana'],
-['c','Carlos','lunes 19','Recordatorio enviado el jueves, sin respuesta.','Confirmar mañana'],
-['c','Belén','lunes 19','Recordatorio enviado el jueves, sin respuesta.','Confirmar mañana'],
-['c','Rocío','lunes 19','Recordatorio enviado el jueves, sin respuesta.','Confirmar mañana'],
-['c','Nehad','martes 20, 12:00','Recordatorio enviado el viernes, sin respuesta.','Confirmar el lunes'],
-['c','Salomé','martes 20, 17:00','Recordatorio enviado el viernes, sin respuesta.','Confirmar el lunes'],
-['c','María José','martes 20 tarde','Recordatorio enviado el viernes, sin respuesta.','Confirmar el lunes']
+['w','Marina','jueves 14:08','Le escribisteis «cómo vas?» y no ha contestado.','Sin prisa']
 ]};
 const STK={fecha:'18 oct 2026',desde:'1 oct 2024',refs:176,bajo:57,neg:3,top:[["Skeyndor","Leche limpiadora Expert",86,2808,4,1],["Skeyndor","Concentrado de agua termal 100 ml",77,1374,3,1],["Skeyndor","SOS Recovering concentrate 7 x 2 ml",60,1754,5,1],["Casmara","Mascarillas Casmara imanes",53,364,-34,1],["Skeyndor","Intensive Hydrating concentrate 7 x 2 ml",50,1471,4,1],["Casmara","Retinol 0.15",46,2346,3,1],["Skeyndor","Esencia reequilibrante Expert",44,1441,1,1],["Casmara","Remodeling caps",41,1278,5,1],["Casmara","Cleanser 3 en 1 Deep Cleansing 150 ml",40,676,3,1],["Skeyndor","Booster corporal Slim Drone",38,1685,0,1],["Skeyndor","City Pollution gel-crema +O2",37,2317,2,1],["Skeyndor","Booster hidratante 30 ml",35,1742,5,1],["Skeyndor","Gel crema doble Drone remodelante 150 ml",35,1644,3,0],["Skeyndor","SOS bálsamo instantáneo Aquatherm",34,1657,2,1],["Fr. Haut","Exosomes serum 30 ml",32,2298,0,0],["Skeyndor","Crema Aquatherm piel normal a grasa",30,1227,2,1],["Casmara","Retinol 0.30",28,1484,2,1],["Skeyndor","Aceite micelar Expert 200 ml",26,848,2,1],["Skeyndor","Cofre crema Timeless Prodigy",25,4023,0,1],["Skeyndor","Gel Expert",25,835,5,1],["Skeyndor","Contorno de labios Corrective",24,1417,21,1],["Skeyndor","Crema revitalizante antiedad 50 ml Aquatherm",24,1118,5,1],["Casmara","Three action peel",23,982,4,1],["Skeyndor","Cofre Corrective crema",22,2639,3,2],["Skeyndor","DD cream 02",22,732,0,1],["Skeyndor","Emulsión protectora textura invisible FPS 50",20,889,2,0],["Skeyndor","Cofre serum Timeless Prodigy",19,3339,3,1],["Fr. Haut","Exosomes cream 50 ml",19,1485,2,0],["Casmara","Eye contour antibolsas y ojeras 15 ml",19,565,3,1],["Fr. Haut","Regen le active (sérum noche)",18,1212,4,0]]};
 const OPER=[8467,8586,13363,10664,14033,13580,11757,3807,15657,13500,13500,13500];
@@ -944,15 +934,14 @@ $('invList').innerHTML=[['30 oct','Skeyndor · VN/584407','984 € en 3 giros de
 
 /* ===== Clientes ===== */
 (function(){
-  const I=CLI.items,G=[['r','Esperan tu respuesta','var(--crit)'],['w','Esperando a la clienta','var(--warn)'],['c','Citas sin confirmar','var(--accent)']];
+  const I=CLI.items,G=[['r','Esperan tu respuesta','var(--crit)'],['w','Esperando a la clienta','var(--warn)']];
   const n=g=>I.filter(x=>x[0]===g).length;
   $('clSub').textContent='Revisado el '+CLI.fecha+' en tu WhatsApp Business · solo nombres de pila';
   $('cl1').textContent=n('r');$('cl1d').innerHTML='<span class="down">hay que contestar o llamar</span>';
   $('cl2').textContent=n('w');$('cl2d').innerHTML='<span style="color:var(--muted)">ya les escribisteis vosotras</span>';
-  $('cl3').textContent=n('c');$('cl3d').innerHTML='<span style="color:var(--muted)">recordatorio enviado, sin respuesta</span>';
-  $('clList').innerHTML=G.map(g=>{const L=I.filter(x=>x[0]===g[0]);if(!L.length)return '';
+    $('clList').innerHTML=G.map(g=>{const L=I.filter(x=>x[0]===g[0]);if(!L.length)return '';
     return '<div class="head"><div><h3>'+g[1]+' ('+L.length+')</h3></div></div><ul class="list" style="list-style:none;margin:0;padding:0;display:grid;gap:8px">'+L.map(x=>'<li style="display:grid;gap:2px;padding:10px 12px;border:1px solid var(--line);border-left:4px solid '+g[2]+';border-radius:8px"><span><b>'+x[1]+'</b> <span style="color:var(--muted)">· '+x[2]+'</span></span><span>'+x[3]+'</span><span style="color:var(--muted)">→ '+x[4]+'</span></li>').join('')+'</ul>'}).join('');
-  $('clNote').textContent='Se leen solo los chats de clientas de los últimos días (la última frase de cada conversación decide si falta respuesta). Se excluyen proveedores, grupos y mensajes de marketing. Al abrir un chat para leerlo, WhatsApp lo marca como leído.';
+  $('clNote').textContent='Se leen solo los chats de clientas de los últimos días (la última frase de cada conversación decide si falta respuesta). Se excluyen proveedores, grupos y mensajes de marketing. Los recordatorios de cita no se anotan: basta con haberlos enviado. Al abrir un chat para leerlo, WhatsApp lo marca como leído.';
 })();
 
 /* ===== Stock ===== */
