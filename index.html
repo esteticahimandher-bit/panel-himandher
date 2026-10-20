@@ -682,16 +682,17 @@ $('k4d').innerHTML='<span style="color:var(--gold)">Previsión del CGI con oct�
 
 /* Avisos (revisión de correo, banco, flowww y CGI) */
 (function(){
-  const TODAY=new Date(2026,9,18),REV='18 oct 2026, 10:40';
+  const TODAY=new Date();TODAY.setHours(0,0,0,0);const REV='20 oct 2026, 17:30';
   const days=d=>Math.round((new Date(d+'T00:00:00')-TODAY)/864e5);
   const G={u:['Urgente · esta semana','var(--alert)'],p:['Próximos 30 días','var(--warn)'],r:['Por revisar','var(--accent)'],e:['Equipo','var(--gold)'],n:['Nuevos clientes · escribirles al día siguiente','var(--inc)'],i:['Informativo','var(--muted)']};
   /* [grupo, fecha ISO o '', etiqueta, título, detalle, origen] */
   const A=[
    ['i','2026-10-20','20 oct','Impuestos del 3T cobrados hoy: 1.697 €','Modelo 111: 194,39 € · 115: 548,22 € · 131: 471,70 € · 303 (IVA): 483,12 €. Estrella corrigió el IVA, que en su primer correo ponía 415,64 €. Ya cargados hoy en la cuenta Negocio (confirmado en el banco). Saldo tras los cargos: 39.553 €.','Correo · Gestoría'],
+   ['r','2026-10-22','Contratación','Si contratas a una esteticista, avisa a la gestoría con 5 días de antelación','Estrella (gestoría, 19 oct): con cada contratación de más de 4 semanas hay que entregar a la persona, antes de empezar, un documento con las condiciones esenciales (modelo del SEPE adjunto en su correo y circular del 17 sept). Por eso hay que decirles la contratación con al menos 5 días para que lo preparen. Relacionado con las entrevistas del 22 y 23 oct.','Correo · Gestoría'],
    ['u','2026-10-22','22 oct · 20:15','Entrevista con candidata a esteticista (Paula)','Entrevista de trabajo el jueves a las 20:15, en el centro (Canillas 4).','WhatsApp · Equipo'],
    ['u','2026-10-23','23 oct · 12:30','Entrevista con candidata a esteticista (Mar Torres)','Confirmada por las dos partes. Puesto de 40 horas, lunes a viernes de 11 a 20 h, en el centro (Canillas 4).','Correo · Equipo'],
    ['p','2026-10-29','29 oct','Amparo: retomar su tratamiento','Anuló la cita del martes 20 oct. Si no ha escrito en 10 días, volver a escribirle y ofrecerle hueco.','WhatsApp'],
-   ['u','','Octubre','Faltan 3.545 € para cubrir los gastos de octubre','Llevas 8.956 € facturados hasta el 15 de 12.501 € de equilibrio. Quedan 10 días de apertura: unos 355 € al día.','Flowww · CGI'],
+   ['u','','Octubre','Faltan 2.202 € para cubrir los gastos de octubre','Llevas 10.299 € facturados hasta el 19 de 12.501 € de equilibrio. Quedan 9 días de apertura: unos 245 € al día.','Flowww · CGI'],
    ['r','','Módulos','Preguntar a César por el límite de módulos para 2027','Si los topes vuelven a 150.000 €, tu facturación sin IVA de 2026 (unos 150.000 €) está en el borde. Pregunta qué cuenta como ingreso y si conviene prepararse para estimación directa. Mira la pestaña Módulos.','Módulos · AEAT'],
    ['p','2027-02-22','22 feb 2027','Revisión anual de extintores (marzo)','Fire Business llama en marzo para fijar la visita. En 2026 costó 125,69 € por el retimbrado de los dos extintores; lo normal es bastante menos. Contacto: Alicia Reyes, 938 60 08 18.','Gmail · Banco'],
    ['p','2027-02-26','26 feb 2027','Seguro de vida: ir a la oficina antes de marzo','Vence el 30 de abril de 2027. Fernando (CaixaBank) indica que hay que firmar la no renovación en la oficina un par de meses antes. Son 31,26 € al mes.','Gmail · Banco'],
@@ -700,7 +701,7 @@ $('k4d').innerHTML='<span style="color:var(--gold)">Previsión del CGI con oct�
    ['p','2026-10-31','31 oct','Nóminas del equipo: ≈ 2.040 €','Estefanía y Yanira (coste de empresa de septiembre: 2.886 €).','Banco'],
    ['p','2026-11-01','1 nov','Futuro Estética, factura A 4266: 164,97 €','Vence a unos 30 días.','Drive'],
    ['p','2026-11-05','5 nov','Alquiler del local: 981 €','Cargo del día 5. Coincide con la renta menos la retención del modelo 115. Octubre ya está pagado.','Banco'],
-   ['r','','Bonus','Bonus de octubre: faltan 8.044 € para el primer escalón','Hay que llegar a 17.000 € (bolsa de 100 €): unos 804 € al día durante los 10 días que quedan. Vas 56 € por encima del ritmo previsto. Informa a las chicas cada semana desde la pestaña Bonus.','Flowww · Drive'],
+   ['r','','Bonus','Bonus de octubre: faltan 6.701 € para el primer escalón','Hay que llegar a 17.000 € (bolsa de 100 €): unos 745 € al día durante los 9 días de apertura que quedan (facturado hasta el 19: 10.299 €). Informa a las chicas cada semana desde la pestaña Bonus.','Flowww · Drive'],
    ['r','','Factura','Cosbell: factura de la mercancía del 6 de octubre','Llegó adjunta al correo. Revisa importe y vencimiento, y pásala a la gestoría.','Correo · Proveedor'],
    ['r','','Facturas','Casmara: facturas de 2026','Las envió Noemi el 5 de octubre tras la llamada. Comprueba que están en la gestoría.','Correo · Proveedor'],
    ['r','','Alquiler','Recibo de octubre y subida del próximo','El propietario envió el recibo de octubre el 30 de septiembre y avisa de que el siguiente subirá por la tasa de basuras (TRUA) del local.','Correo · Alquiler'],
