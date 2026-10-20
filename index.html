@@ -579,7 +579,7 @@ function bindTip(root){root.querySelectorAll('[data-tip]').forEach(el=>{
 
 function pintaHoy(){const d=new Date(),D=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'],M=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];const s=D[d.getDay()]+' '+d.getDate()+' de '+M[d.getMonth()]+' de '+d.getFullYear()+' · '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');$('fecha').textContent=s.charAt(0).toUpperCase()+s.slice(1)}
 pintaHoy();setInterval(pintaHoy,30000);
-$('upd').textContent='Actualizado el 20 oct 2026 a las 9:30 · Fuentes: flowww, CaixaBank y Drive';
+$('upd').textContent='Actualizado el 20 oct 2026 a las 17:15 · Fuentes: flowww, CaixaBank, Drive y WhatsApp';
 
 /* KPIs */
 const ytdI=sum(ING.slice(0,REAL)), ytdG=sum(GAS.slice(0,REAL)), ytdB=ytdI-ytdG;
@@ -740,7 +740,7 @@ $('k4d').innerHTML='<span style="color:var(--gold)">Previsión del CGI con oct�
 
 /* Recordatorios de clientas (programados con Claude; solo nombres de pila) */
 (function(){
-  const R=[["2026-10-20T09:30","Belén","Próxima sesión y cómo funciona el tratamiento · borrador listo, pendiente de tu OK"],["2026-10-21T09:30","Almuderma","Contactar con el proveedor"],["2026-10-22T09:00","Yaqueline","Ver si contestó al bono Skin (válido hasta el 23 oct)"],["2026-10-23T09:00","José Luis","Preguntar por la carta certificada de Correos"],["2026-10-23T09:30","Cristina","Tratamiento reafirmante Skin y qué tal las muestras"],["2026-10-26T09:30","Mar","Preguntar cuándo puede venir (sesiones de bono pendientes)"],["2026-11-02T10:00","Mónica","Ver si quiere retomar los faciales"],["2026-11-19T09:30","Victoria","Seguimiento"],["2026-11-19T10:00","Susana","Seguimiento"]];
+  const R=[["2026-10-20T09:30","Belén","Próxima sesión y cómo funciona el tratamiento · borrador listo, pendiente de tu OK"],["2026-10-21T09:30","Almuderma","Contactar con el proveedor"],["2026-10-22T09:00","Yaqueline","Ver si contestó al bono Skin (válido hasta el 23 oct)"],["2026-10-23T09:30","Cristina","Tratamiento reafirmante Skin y qué tal las muestras"],["2026-10-26T09:30","Mar","Preguntar cuándo puede venir (sesiones de bono pendientes)"],["2026-11-02T10:00","Mónica","Ver si quiere retomar los faciales"],["2026-11-19T09:30","Victoria","Seguimiento"]];
   const D=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'],M=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
   const hoy=new Date();hoy.setHours(0,0,0,0);
   const L=R.filter(r=>new Date(r[0])>=hoy);
