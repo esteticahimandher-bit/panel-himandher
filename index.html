@@ -146,6 +146,11 @@ body{line-height:1.6}
 .avbanner{flex-direction:row;align-items:center;gap:10px;background:var(--alert);border-color:var(--alert);color:#fff;text-decoration:none;font-weight:600;padding:12px 16px}
 .avbanner.chipb{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--alert);border-radius:999px;padding:4px 12px;font-size:inherit}
 .avbanner.chipb[hidden]{display:none}
+.avrow{display:flex;flex-wrap:nowrap;gap:8px;margin-top:10px}
+.avrow .avbanner.chipb{flex:1 1 0;min-width:0;justify-content:center;padding:10px 12px;font-size:15px}
+.avrow .avbanner.chipb[hidden]{display:none}
+.avbanner.rebanner{background:var(--accent);border-color:var(--accent)}
+.avbanner.rebanner b{color:var(--accent)}
 .avbanner b{background:#fff;color:var(--alert);border-radius:999px;padding:0 9px;font-family:var(--font-num)}
 .avg{display:flex;flex-direction:column;gap:6px}
 .avg h3{font-size:16px;display:flex;align-items:center;gap:8px;margin-top:6px}
@@ -225,10 +230,10 @@ body{line-height:1.6}
     <div class="chips" aria-label="Origen de los datos">
       <span class="chip real"><i></i>Dato real · flowww, banco, Drive y CGI</span>
       <span class="chip prev"><i></i>Previsión oct–dic</span>
-      <a class="avbanner chipb" id="avBanner" href="#avisos" hidden></a>
     </div>
+    <div class="avrow"><a class="avbanner chipb" id="avBanner" href="#avisos" hidden></a><a class="avbanner chipb rebanner" id="reBanner" href="#recordatorios" hidden></a></div>
   </header>
-  <nav class="tabs" id="tabs" aria-label="Áreas del panel"><button type="button" data-t="resumen" aria-selected="false">Resumen</button><button type="button" data-t="tesoreria" aria-selected="false">Tesorería</button><button type="button" data-t="facturacion" aria-selected="false">Facturación</button><button type="button" data-t="bonus" aria-selected="false">Bonus</button><button type="button" data-t="agenda" aria-selected="false">Agenda</button><button type="button" data-t="clientes" aria-selected="false">Clientes</button><button type="button" data-t="equipo" aria-selected="false">Equipo</button><button type="button" data-t="stock" aria-selected="false">Stock</button><button type="button" data-t="banco" aria-selected="false">Banco</button><button type="button" data-t="caja2" aria-selected="false">Caja 2</button><button type="button" data-t="prevision" aria-selected="false">Previsión</button><button type="button" data-t="impuestos" aria-selected="false">Impuestos</button><button type="button" data-t="modulos" aria-selected="false">Módulos</button><button type="button" data-t="gastos" aria-selected="false">Gastos mensuales</button><button type="button" data-t="seguros" aria-selected="false">Seguros</button><button type="button" data-t="proveedores" aria-selected="false">Proveedores</button><button type="button" data-t="avisos" aria-selected="false">Avisos</button></nav>
+  <nav class="tabs" id="tabs" aria-label="Áreas del panel"><button type="button" data-t="resumen" aria-selected="false">Resumen</button><button type="button" data-t="tesoreria" aria-selected="false">Tesorería</button><button type="button" data-t="facturacion" aria-selected="false">Facturación</button><button type="button" data-t="bonus" aria-selected="false">Bonus</button><button type="button" data-t="agenda" aria-selected="false">Agenda</button><button type="button" data-t="clientes" aria-selected="false">Clientes</button><button type="button" data-t="equipo" aria-selected="false">Equipo</button><button type="button" data-t="stock" aria-selected="false">Stock</button><button type="button" data-t="banco" aria-selected="false">Banco</button><button type="button" data-t="caja2" aria-selected="false">Caja 2</button><button type="button" data-t="prevision" aria-selected="false">Previsión</button><button type="button" data-t="impuestos" aria-selected="false">Impuestos</button><button type="button" data-t="modulos" aria-selected="false">Módulos</button><button type="button" data-t="gastos" aria-selected="false">Gastos mensuales</button><button type="button" data-t="seguros" aria-selected="false">Seguros</button><button type="button" data-t="proveedores" aria-selected="false">Proveedores</button><button type="button" data-t="avisos" aria-selected="false">Avisos</button><button type="button" data-t="recordatorios" aria-selected="false" hidden style="display:none">Recordatorios</button></nav>
 
   <section class="grid" aria-label="Resumen" data-tab="resumen">
     <div class="card kpi c3"><span class="label">Facturado en octubre</span><span class="val" id="k1"></span><span class="delta" id="k1d"></span></div>
@@ -343,6 +348,11 @@ body{line-height:1.6}
       <p class="note">Objetivo y escalones tomados del documento "Objetivo de octubre" de Drive. La facturación son las cajas del día de flowww (con IVA); confirma si el objetivo también cuenta con IVA. Hasta el 15 de octubre: la caja del 16 aún no consta en flowww, y el lunes 12 fue festivo.</p>
     </div>
 
+    <div class="card c12" data-tab="recordatorios" id="reCard">
+      <div class="head"><div><h2>Recordatorios</h2><p class="sub" id="reSub"></p></div><span class="badge" id="reBadge"></span></div>
+      <ul class="list" id="reBody"></ul>
+      <p class="note">Son avisos que Claude te da en su día para escribir a clientas. Nunca se envía nada sin tu OK: te enseño antes el mensaje. Solo nombres de pila y motivo general.</p>
+    </div>
     <div class="card c12" data-tab="avisos" id="avCard">
       <div class="head"><div><h2>Avisos pendientes</h2><p class="sub" id="avSub"></p></div><span class="badge" id="avBadge" style="background:var(--alert);color:#fff"></span></div>
       <div id="avBody"></div>
@@ -724,8 +734,22 @@ $('k4d').innerHTML='<span style="color:var(--gold)">Previsión del CGI con oct�
   const btn=document.querySelector('#tabs button[data-t="avisos"]');
   btn.hidden=true;btn.style.display='none';
   const bn=$('avBanner');bn.hidden=false;
-  bn.innerHTML='<b>'+urg+'</b><span>Avisos pendientes: '+A.filter(a=>a[0]==='u').length+' urgentes esta semana</span>';
+  bn.innerHTML='<b>'+urg+'</b><span>Avisos</span>';
   bn.addEventListener('click',e=>{e.preventDefault();btn.click();window.scrollTo({top:0})});
+})();
+
+/* Recordatorios de clientas (programados con Claude; solo nombres de pila) */
+(function(){
+  const R=[["2026-10-20T09:30","Belén","Próxima sesión y cómo funciona el tratamiento · borrador listo, pendiente de tu OK"],["2026-10-21T09:30","Almuderma","Contactar con el proveedor"],["2026-10-22T09:00","Yaqueline","Ver si contestó al bono Skin (válido hasta el 23 oct)"],["2026-10-23T09:00","José Luis","Preguntar por la carta certificada de Correos"],["2026-10-23T09:30","Cristina","Tratamiento reafirmante Skin y qué tal las muestras"],["2026-10-26T09:30","Mar","Preguntar cuándo puede venir (sesiones de bono pendientes)"],["2026-11-02T10:00","Mónica","Ver si quiere retomar los faciales"],["2026-11-19T09:30","Victoria","Seguimiento"],["2026-11-19T10:00","Susana","Seguimiento"]];
+  const D=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'],M=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+  const hoy=new Date();hoy.setHours(0,0,0,0);
+  const L=R.filter(r=>new Date(r[0])>=hoy);
+  $('reBody').innerHTML=L.map(r=>{const d=new Date(r[0]);return '<li><span class="pill">'+D[d.getDay()].slice(0,3)+' '+d.getDate()+' '+M[d.getMonth()]+' · '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')+'</span><span>'+r[1]+'<small>'+r[2]+'</small></span></li>'}).join('')||'<li><span>No hay recordatorios pendientes</span></li>';
+  $('reSub').textContent=L.length+' pendientes';
+  $('reBadge').textContent=L.length;
+  const btn=document.querySelector('#tabs button[data-t="recordatorios"]');
+  const rb=$('reBanner');rb.hidden=false;rb.innerHTML='<b>'+L.length+'</b><span>Recordatorios</span>';
+  rb.addEventListener('click',e=>{e.preventDefault();btn.click();window.scrollTo({top:0})});
 })();
 
 /* Banco */
