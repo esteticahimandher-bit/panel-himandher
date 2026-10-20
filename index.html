@@ -567,7 +567,8 @@ function bindTip(root){root.querySelectorAll('[data-tip]').forEach(el=>{
   el.addEventListener('mouseleave',()=>{tip.style.opacity=0});
 });}
 
-$('fecha').textContent='Martes 20 de octubre de 2026';
+function pintaHoy(){const d=new Date(),D=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'],M=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];const s=D[d.getDay()]+' '+d.getDate()+' de '+M[d.getMonth()]+' de '+d.getFullYear()+' · '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');$('fecha').textContent=s.charAt(0).toUpperCase()+s.slice(1)}
+pintaHoy();setInterval(pintaHoy,30000);
 $('upd').textContent='Actualizado el 20 oct 2026 a las 9:30 · Fuentes: flowww, CaixaBank y Drive';
 
 /* KPIs */
