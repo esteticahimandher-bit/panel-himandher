@@ -281,7 +281,7 @@ body{line-height:1.6}
       <div class="sched" id="eqNow" style="padding:12px 14px"></div>
       <div class="empsel"></div>
       <div class="team" id="team"></div>
-      <p class="note">Nóminas de septiembre 2026 de la gestoría: bruto = devengado con la prorrata de pagas; líquido = lo que cobran; coste de empresa = bruto + Seguridad Social de la empresa (2.886 € entre las dos). Ni Estefanía ni Yanira tienen retención de IRPF. Las comisiones van aparte. El producto vendido sale de flowww («ventas de productos por vendedor», con IVA) hasta el 18 de octubre.</p>
+      <p class="note">Nóminas de octubre 2026 de la gestoría (se pagan el último día laborable del mes: viernes 30 de octubre): bruto = devengado con la prorrata de pagas; líquido = lo que cobran; coste de empresa = bruto + Seguridad Social de la empresa (2.886 € entre las dos). Ni Estefanía ni Yanira tienen retención de IRPF. Las comisiones van aparte. El producto vendido sale de flowww («ventas de productos por vendedor», con IVA) hasta el 18 de octubre.</p>
       <div class="head" style="margin-top:4px"><div><h3>Horarios de la semana</h3></div><span class="badge real">Real · flowww</span></div>
       <div class="sched"><table id="sched"></table></div>
       <p class="note">Franjas en las que cada una atiende según la agenda de flowww. El centro abre de 10 a 20 h de lunes a viernes.</p>
@@ -621,7 +621,7 @@ $('k4d').innerHTML='<span style="color:var(--gold)">Previsión del CGI con oct�
   const spark=(arr,label)=>{const W=160,H=40,m=Math.max(...arr)||1;
     const pts=arr.map((v,i)=>[6+i*(W-12)/(arr.length-1),H-6-(H-12)*v/m]);
     return '<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+label+'"><polyline fill="none" stroke="var(--accent)" stroke-width="2" points="'+pts.map(p=>p.join(',')).join(' ')+'"/><circle cx="'+pts[pts.length-1][0]+'" cy="'+pts[pts.length-1][1]+'" r="4" fill="var(--accent)" stroke="var(--surface)" stroke-width="2"/></svg>'};
-  /* Nóminas de septiembre 2026 (gestoría). SS trabajadora = cotizaciones del empleado; sin retención de IRPF en ninguna de las dos. */
+  /* Nóminas de octubre 2026 (gestoría; iguales a septiembre). SS trabajadora = cotizaciones del empleado; sin retención de IRPF en ninguna de las dos. */
   const E=[
     {n:'Estefanía',bruto:1002.60,ssT:65.16,liq:937.44,coste:1324.95,com:240,vp:[1011.25,845.70,1222.05,1482.70,831.50,1796.18,1403.25,235.75,777.44,1287.67]},
     {n:'Yanira',bruto:1181.24,ssT:76.78,liq:1104.46,coste:1561.01,com:152,vp:[0,0,55.95,735.65,522.25,422.35,910.45,145.20,396.55,1421.15]},
@@ -698,7 +698,7 @@ $('k4d').innerHTML='<span style="color:var(--gold)">Previsión del CGI con oct�
    ['p','2027-02-26','26 feb 2027','Seguro de vida: ir a la oficina antes de marzo','Vence el 30 de abril de 2027. Fernando (CaixaBank) indica que hay que firmar la no renovación en la oficina un par de meses antes. Son 31,26 € al mes.','Gmail · Banco'],
    ['p','2026-10-30','30 oct','Seguridad Social: 1.210 €','Cargo mensual habitual.','Banco'],
    ['p','2026-10-30','30 oct','Skeyndor, giro 1 de 3: 328,05 €','Factura VN/584407, de 984,15 € en tres giros (30 oct, 30 nov y 30 dic).','Drive · Banco'],
-   ['p','2026-10-31','31 oct','Nóminas del equipo: ≈ 2.040 €','Estefanía y Yanira (coste de empresa de septiembre: 2.886 €).','Banco'],
+   ['p','2026-10-30','30 oct','Nóminas del equipo: 2.042 €','Estefanía 937,44 € y Yanira 1.104,46 € (líquido). Se pagan el último día laborable del mes: el 31 cae en sábado. Coste de empresa: 2.886 €.','Banco · Nómina de octubre'],
    ['p','2026-11-01','1 nov','Skeyndor, factura de los cofres: 974,64 €','Vence el 1 de noviembre (cofres de septiembre). Comprueba que hay saldo.','Drive · Factura'],
    ['p','2026-11-05','5 nov','Cosbell, factura del 6 de octubre: 532,34 €','Vence el 5 de noviembre. Ya está en Drive; pásala a la gestoría.','Drive · Factura'],
    ['p','2026-11-01','1 nov','Futuro Estética, factura A 4266: 164,97 €','Vence a unos 30 días.','Drive'],
@@ -867,7 +867,7 @@ const BK={sal:40310.24,tpv:125220};
     A.forEach((p,i)=>{s+='<circle data-tip="'+lab[i]+': '+eur(p[k])+(i?' (previsión)':'')+'" cx="'+x(i)+'" cy="'+y(p[k])+'" r="5" fill="'+c+'" stroke="var(--surface)" stroke-width="2"/>'})});
   lab.forEach((l,i)=>{s+='<text class="axis" x="'+x(i)+'" y="'+(H-8)+'" text-anchor="middle">'+l+'</text>'});
   s+='</svg>';$('prevChart').innerHTML=s;bindTip($('prevChart'));
-  const P=[['2026-10-20','Impuestos del 3T (modelos 111, 115, 131 y 303)','1.697 €','importe confirmado por la gestoría'],['2026-10-30','Seguridad Social','≈ 1.210 €','cargo mensual habitual'],['2026-10-30','Skeyndor, giro 1 de 3','328 €','factura VN/584407'],['2026-10-31','Nóminas del equipo','≈ 2.040 €','Estefanía y Yanira'],['2026-11-01','Futuro Estética, factura A 4266','165 €','vence a 30 días'],['2026-11-30','Skeyndor, giro 2 de 3','328 €','factura VN/584407'],['2026-12-30','Skeyndor, giro 3 de 3','328 €','factura VN/584407']];
+  const P=[['2026-10-20','Impuestos del 3T (modelos 111, 115, 131 y 303)','1.697 €','importe confirmado por la gestoría'],['2026-10-30','Seguridad Social','≈ 1.210 €','cargo mensual habitual'],['2026-10-30','Skeyndor, giro 1 de 3','328 €','factura VN/584407'],['2026-10-30','Nóminas del equipo','2.042 €','Estefanía y Yanira'],['2026-11-01','Futuro Estética, factura A 4266','165 €','vence a 30 días'],['2026-11-30','Skeyndor, giro 2 de 3','328 €','factura VN/584407'],['2026-12-30','Skeyndor, giro 3 de 3','328 €','factura VN/584407']];
   $('prevList').innerHTML=P.map(p=>{const d=new Date(p[0]+'T12:00:00'),n=Math.round((d-today)/864e5);return '<li><span class="pill">'+d.getDate()+' '+M[d.getMonth()].toLowerCase()+'</span><span>'+p[1]+' <b>'+p[2]+'</b><small>'+p[3]+' · en '+n+' días</small></span></li>'}).join('');
   $('prevNote').textContent='Supuestos: ingresos de '+eur(ing)+' al mes (media de cobros 2026) y gasto operativo de '+eur(ops)+' (incluye el alquiler del local). Solo cuenta Negocio: no incluye retiradas ni traspasos personales. Es una estimación, no un dato.';
 })();
@@ -1021,7 +1021,7 @@ $('invList').innerHTML=[['30 oct','Skeyndor · VN/584407','984 € en 3 giros de
 /* ===== Tesorería ===== */
 (function(){
   const today=new Date(2026,9,17),lim=new Date(2026,10,16);
-  const P=[['2026-10-20','Impuestos del 3T',1697,0],['2026-10-30','Seguridad Social',1210,1],['2026-10-30','Skeyndor, giro 1 de 3',328,0],['2026-10-31','Nóminas del equipo',2040,1],['2026-11-01','Futuro Estética A 4266',165,0],['2026-11-01','Redes sociales (Alba)',378,1],['2026-11-01','Nómina Vicky (propietaria)',2000,1],['2026-11-01','Luz',57,1],['2026-11-04','Flowww',62,0],['2026-11-05','Alquiler del local',981,1],['2026-11-05','Alarma',31,1],['2026-11-08','Teléfono',83,1],['2026-11-10','Gestoría',166,1]];
+  const P=[['2026-10-20','Impuestos del 3T',1697,0],['2026-10-30','Seguridad Social',1210,1],['2026-10-30','Skeyndor, giro 1 de 3',328,0],['2026-10-30','Nóminas del equipo',2042,1],['2026-11-01','Futuro Estética A 4266',165,0],['2026-11-01','Redes sociales (Alba)',378,1],['2026-11-01','Nómina Vicky (propietaria)',2000,1],['2026-11-01','Luz',57,1],['2026-11-04','Flowww',62,0],['2026-11-05','Alquiler del local',981,1],['2026-11-05','Alarma',31,1],['2026-11-08','Teléfono',83,1],['2026-11-10','Gestoría',166,1]];
   const tot=sum(P.map(p=>p[2])),t30=sum(CAJ.slice(-20).map(c=>c.v));
   $('t1').textContent=eur(40965.67);$('t1d').innerHTML='<span class="up">Saldo contable al 17 oct</span>';
   $('t2').textContent=eur(tot);$('t2d').innerHTML='<span class="down">'+P.length+' pagos previstos</span>';
