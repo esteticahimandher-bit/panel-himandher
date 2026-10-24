@@ -579,7 +579,7 @@ function bindTip(root){root.querySelectorAll('[data-tip]').forEach(el=>{
 
 function pintaHoy(){const d=new Date(),D=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'],M=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];const s=D[d.getDay()]+' '+d.getDate()+' de '+M[d.getMonth()]+' de '+d.getFullYear()+' · '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');$('fecha').textContent=s.charAt(0).toUpperCase()+s.slice(1)}
 pintaHoy();setInterval(pintaHoy,30000);
-$('upd').textContent='Actualizado el 23 oct 2026 a las 20:30 · Fuentes: flowww, Gmail y WhatsApp (banco y Drive, a 20 oct)';
+$('upd').textContent='Actualizado el 24 oct 2026 a las 10:00 · Fuentes: flowww, CaixaBank, Gmail y WhatsApp (Drive, a 20 oct)';
 
 /* KPIs */
 const ytdI=sum(ING.slice(0,REAL)), ytdG=sum(GAS.slice(0,REAL)), ytdB=ytdI-ytdG;
@@ -682,7 +682,7 @@ $('k4d').innerHTML='<span style="color:var(--gold)">Previsión del CGI con oct�
 
 /* Avisos (revisión de correo, banco, flowww y CGI) */
 (function(){
-  const TODAY=new Date();TODAY.setHours(0,0,0,0);const REV='23 oct 2026, 20:30';
+  const TODAY=new Date();TODAY.setHours(0,0,0,0);const REV='24 oct 2026, 10:00';
   const days=d=>Math.round((new Date(d+'T00:00:00')-TODAY)/864e5);
   const G={u:['Urgente · esta semana','var(--alert)'],p:['Próximos 30 días','var(--warn)'],r:['Por revisar','var(--accent)'],e:['Equipo','var(--gold)'],n:['Nuevos clientes · escribirles al día siguiente','var(--inc)'],i:['Informativo','var(--muted)']};
   /* [grupo, fecha ISO o '', etiqueta, título, detalle, origen] */
@@ -760,7 +760,7 @@ $('k4d').innerHTML='<span style="color:var(--gold)">Previsión del CGI con oct�
 
 /* Banco */
 (function(){
-  const B={"ing":[10469,11169,13817,16132,14759,18257,14580,4411,17000,9859],"ops":[13511, 11967, 11322, 11893, 10934, 12534, 17630, 9845, 7145, 8924],"sal":[0,0,0,0,0,0,0,0,0,39553],"exp":{"Comisiones y TPV": 536, "Proveedores de producto": 34852, "Gestoría": 1699, "Otros gastos": 1062, "Local y suministros": 11462, "Software, marketing y formación": 9252, "Nóminas y Seguridad Social": 45464, "Préstamo del negocio": 5759, "Impuestos": 6726, "Seguros": 592},"tpv":125220};
+  const B={"ing":[10469,11169,13817,16132,14759,18257,14580,4411,17000,9859],"ops":[13511, 11967, 11322, 11893, 10934, 12534, 17630, 9845, 7145, 8924],"sal":[0,0,0,0,0,0,0,0,0,41701.88],"exp":{"Comisiones y TPV": 536, "Proveedores de producto": 34852, "Gestoría": 1699, "Otros gastos": 1062, "Local y suministros": 11462, "Software, marketing y formación": 9252, "Nóminas y Seguridad Social": 45464, "Préstamo del negocio": 5759, "Impuestos": 6726, "Seguros": 592},"tpv":125220};
   const MB=M.slice(0,10),n=10;
   $('b1').textContent=eur(B.sal[9]);
   $('b1d').innerHTML='<span class="up">Cuenta del negocio</span>';
@@ -793,7 +793,7 @@ $('k4d').innerHTML='<span style="color:var(--gold)">Previsión del CGI con oct�
 const CAJ='05/01|1032;07/01|83.95;08/01|446;09/01|519.39;12/01|231.25;13/01|992.95;14/01|993.35;15/01|1182.85;16/01|1044.95;19/01|589;20/01|199.72;21/01|512.1;22/01|210.63;23/01|613.57;26/01|769.82;27/01|458.6;28/01|619.2;29/01|81.1;30/01|674.95;02/02|433.9;03/02|573.71;04/02|501.9;05/02|649.9;06/02|670.5;09/02|315;10/02|490.3;11/02|532.6;12/02|405.5;13/02|202.95;16/02|640;17/02|1084.75;18/02|583.67;19/02|405.85;20/02|1191.5;23/02|266;24/02|494.8;25/02|956.95;26/02|240.1;27/02|804;02/03|447.05;03/03|681.4;04/03|955.65;05/03|1325.65;06/03|516.75;09/03|311.3;10/03|855.55;11/03|1568.6;12/03|486.91;13/03|621.05;16/03|459.55;17/03|404.95;18/03|869.15;19/03|544.2;20/03|714.9;23/03|1836.8;25/03|477.01;26/03|474.5;27/03|1338.15;30/03|507.95;31/03|1869.25;06/04|749;07/04|284.25;08/04|1035.25;09/04|1367.55;10/04|1086.5;13/04|506.6;14/04|432.65;15/04|2088.96;16/04|1170.15;17/04|444.75;20/04|389.85;21/04|920.5;22/04|700.65;23/04|25;24/04|940.35;27/04|895.9;28/04|462.4;29/04|1657.08;30/04|405.5;04/05|722.15;05/05|25;06/05|780.9;07/05|396.55;08/05|1368.05;11/05|393.24;12/05|1706.55;13/05|1142.8;14/05|147.95;18/05|1785.5;19/05|539.65;20/05|1877;21/05|1271.65;22/05|231.95;25/05|298.6;26/05|779.5;27/05|1261.75;28/05|590.9;29/05|459.4;01/06|1688.57;02/06|607.5;03/06|1039.45;04/06|763.4;05/06|931.7;08/06|370.75;09/06|1389.4;10/06|794.8;11/06|240.75;12/06|652.35;15/06|1011.4;16/06|2090.65;17/06|1341.65;18/06|420.45;19/06|824.95;22/06|168.45;23/06|1006.9;24/06|594.33;25/06|321.65;26/06|387.9;29/06|399.65;30/06|615.2;01/07|1185;02/07|1672.1;03/07|1017.5;06/07|514.35;07/07|1913.1;08/07|312.1;09/07|303.19;10/07|602.05;13/07|514.95;14/07|124;15/07|2398.36;16/07|189.4;17/07|701.75;20/07|43;21/07|555.6;22/07|624.35;23/07|272.1;24/07|246.7;27/07|487.35;28/07|238.95;29/07|890.65;30/07|688.2;31/07|471.6;03/08|152;04/08|909.79;05/08|430.5;06/08|127;07/08|90.8;10/08|350;11/08|716.35;12/08|106.8;13/08|1027.05;14/08|74;31/08|411.6;01/09|438;02/09|524.3;03/09|219;04/09|1500.2;07/09|538.3;08/09|889.25;09/09|1413.4;10/09|730.3;11/09|223;14/09|875.15;15/09|222;16/09|467.85;17/09|450.5;18/09|1603.85;21/09|845.6;22/09|269.75;23/09|2297.89;24/09|1754.6;25/09|818.95;28/09|397.9;29/09|1014;30/09|689.08;01/10|924.05;02/10|407.95;05/10|798.85;06/10|522;07/10|1431.45;08/10|358.5;09/10|523.95;13/10|754;14/10|2520.7;15/10|714.07;16/10|809.75;19/10|533.9;20/10|759.8;21/10|944.7;22/10|380.99;23/10|150.75'.split(';').map(s=>{const[a,b]=s.split('|');return{d:a,m:+a.slice(3)-1,v:+b}});
 const fdate=d=>{const[x,m]=d.split('/');return +x+' '+M[+m-1].toLowerCase()};
 const CAJ_F=CAJ.slice();
-const BK={sal:40310.24,tpv:125220};
+const BK={sal:41701.88,tpv:125220};
 
 /* ===== Caja 2 ===== */
 (function(){
@@ -859,8 +859,8 @@ const BK={sal:40310.24,tpv:125220};
 /* Previsión de caja */
 (function(){
   const ing=13500,ops=11600;
-  const today=new Date(2026,9,17),end=[new Date(2026,9,31),new Date(2026,10,30),new Date(2026,11,31)];
-  const frac=[14/31,1,1];
+  const today=new Date(2026,9,24),end=[new Date(2026,9,31),new Date(2026,10,30),new Date(2026,11,31)];
+  const frac=[7/31,1,1];
   let a=BK.sal;const A=[[BK.sal]];const lab=['Hoy','Fin oct','Fin nov','Fin dic'];
   frac.forEach(f=>{a+=f*(ing-ops);A.push([a])});
   const W=720,H=250,pl=48,pr=24,pt=14,pb=30,mn=0,mx=60000,y=v=>pt+(H-pt-pb)*(1-(v-mn)/(mx-mn)),x=i=>pl+i*(W-pl-pr)/3;
@@ -870,7 +870,7 @@ const BK={sal:40310.24,tpv:125220};
     A.forEach((p,i)=>{s+='<circle data-tip="'+lab[i]+': '+eur(p[k])+(i?' (previsión)':'')+'" cx="'+x(i)+'" cy="'+y(p[k])+'" r="5" fill="'+c+'" stroke="var(--surface)" stroke-width="2"/>'})});
   lab.forEach((l,i)=>{s+='<text class="axis" x="'+x(i)+'" y="'+(H-8)+'" text-anchor="middle">'+l+'</text>'});
   s+='</svg>';$('prevChart').innerHTML=s;bindTip($('prevChart'));
-  const P=[['2026-10-20','Impuestos del 3T (modelos 111, 115, 131 y 303)','1.697 €','importe confirmado por la gestoría'],['2026-10-30','Seguridad Social','≈ 1.210 €','cargo mensual habitual'],['2026-10-30','Skeyndor, giro 1 de 3','328 €','factura VN/584407'],['2026-10-30','Nóminas del equipo','2.042 €','Estefanía y Yanira'],['2026-11-01','Futuro Estética, factura A 4266','165 €','vence a 30 días'],['2026-11-30','Skeyndor, giro 2 de 3','328 €','factura VN/584407'],['2026-12-30','Skeyndor, giro 3 de 3','328 €','factura VN/584407']];
+  const P=[['2026-10-30','Seguridad Social','≈ 1.210 €','cargo mensual habitual'],['2026-10-30','Skeyndor, giro 1 de 3','328 €','factura VN/584407'],['2026-10-30','Nóminas del equipo','2.042 €','Estefanía y Yanira'],['2026-11-01','Futuro Estética, factura A 4266','165 €','vence a 30 días'],['2026-11-30','Skeyndor, giro 2 de 3','328 €','factura VN/584407'],['2026-12-30','Skeyndor, giro 3 de 3','328 €','factura VN/584407']];
   $('prevList').innerHTML=P.map(p=>{const d=new Date(p[0]+'T12:00:00'),n=Math.round((d-today)/864e5);return '<li><span class="pill">'+d.getDate()+' '+M[d.getMonth()].toLowerCase()+'</span><span>'+p[1]+' <b>'+p[2]+'</b><small>'+p[3]+' · en '+n+' días</small></span></li>'}).join('');
   $('prevNote').textContent='Supuestos: ingresos de '+eur(ing)+' al mes (media de cobros 2026) y gasto operativo de '+eur(ops)+' (incluye el alquiler del local). Solo cuenta Negocio: no incluye retiradas ni traspasos personales. Es una estimación, no un dato.';
 })();
@@ -1032,7 +1032,7 @@ $('invList').innerHTML=[['30 oct','Skeyndor · VN/584407','984 € en 3 giros de
   $('t4').textContent=eur(18705);$('t4d').innerHTML='<span class="up">Media de 2026: 13.500 € al mes</span>';
   $('tPay').innerHTML=P.map(p=>{const d=new Date(p[0]+'T12:00:00'),n=Math.round((d-today)/864e5);return '<li><span class="pill">'+d.getDate()+' '+M[d.getMonth()].toLowerCase()+'</span><span>'+p[1]+' <b>'+(p[3]?'≈ ':'')+eur(p[2])+'</b><small>en '+n+' días</small></span></li>'}).join('');
   $('tLoan').innerHTML=[['Cancelado','Préstamo de 322 € al mes','Cancelado el 30 de julio con un pago de 3.505 €']].map(a=>'<li><span class="pill">'+a[0]+'</span><span>'+a[1]+'<small>'+a[2]+'</small></span></li>').join('');
-  $('tMov').innerHTML=[['20 oct','Cobros con tarjeta',441.61],['20 oct','Impuestos 3T (111, 115, 131 y 303)',-1697.43],['19 oct','Casmara',-157.12],['17 oct','Cobros con tarjeta',704.84],['16 oct','Cobros con tarjeta',534.98],['16 oct','Cosméticos y belleza (proveedor)',-395.73],['15 oct','Cobros con tarjeta',2413.18],['15 oct','Skeyndor',-560.17],['14 oct','Cobros con tarjeta',751.73],['12 oct','Cosméticos y belleza (proveedor)',-314.60],['12 oct','Gestoría',-165.89],['10 oct','Cobros con tarjeta',452.58],['9 oct','Skeyndor',-550.55],['8 oct','Vodafone',-82.87],['5 oct','Alquiler del local',-981.03]].map(a=>'<li><span class="pill">'+a[0]+'</span><span>'+a[1]+' <b style="color:'+(a[2]>0?'var(--good)':'var(--crit)')+'">'+(a[2]>0?'+':'−')+eur(Math.abs(a[2]))+'</b></span></li>').join('');
+  $('tMov').innerHTML=[['24 oct','Cobros con tarjeta',150.75],['23 oct','Cobros con tarjeta',380.99],['22 oct','Cobros con tarjeta',944.70],['22 oct','Comisión bancaria',-10.91],['22 oct','RC Madrid Plenilunio (recibo)',-71.80],['21 oct','Cobros con tarjeta',759.80],['20 oct','Cobros con tarjeta',441.61],['20 oct','Impuestos 3T (111, 115, 131 y 303)',-1697.43],['19 oct','Casmara',-157.12],['17 oct','Cobros con tarjeta',704.84],['16 oct','Cobros con tarjeta',534.98],['16 oct','Cosméticos y belleza (proveedor)',-395.73],['15 oct','Cobros con tarjeta',2413.18],['15 oct','Skeyndor',-560.17],['14 oct','Cobros con tarjeta',751.73],['12 oct','Cosméticos y belleza (proveedor)',-314.60],['12 oct','Gestoría',-165.89],['10 oct','Cobros con tarjeta',452.58],['9 oct','Skeyndor',-550.55],['8 oct','Vodafone',-82.87],['5 oct','Alquiler del local',-981.03]].map(a=>'<li><span class="pill">'+a[0]+'</span><span>'+a[1]+' <b style="color:'+(a[2]>0?'var(--good)':'var(--crit)')+'">'+(a[2]>0?'+':'−')+eur(Math.abs(a[2]))+'</b></span></li>').join('');
 })();
 
 /* ===== Clientes ===== */
