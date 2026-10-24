@@ -579,7 +579,7 @@ function bindTip(root){root.querySelectorAll('[data-tip]').forEach(el=>{
 
 function pintaHoy(){const d=new Date(),D=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'],M=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];const s=D[d.getDay()]+' '+d.getDate()+' de '+M[d.getMonth()]+' de '+d.getFullYear()+' · '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');$('fecha').textContent=s.charAt(0).toUpperCase()+s.slice(1)}
 pintaHoy();setInterval(pintaHoy,30000);
-$('upd').textContent='Actualizado el 24 oct 2026 a las 10:00 · Fuentes: flowww, CaixaBank, Gmail y WhatsApp (Drive, a 20 oct)';
+$('upd').textContent='Actualizado el 24 oct 2026 a las 10:15 · Fuentes: flowww, CaixaBank, Gmail y WhatsApp (Drive, a 20 oct)';
 
 /* KPIs */
 const ytdI=sum(ING.slice(0,REAL)), ytdG=sum(GAS.slice(0,REAL)), ytdB=ytdI-ytdG;
@@ -682,7 +682,7 @@ $('k4d').innerHTML='<span style="color:var(--gold)">Previsión del CGI con oct�
 
 /* Avisos (revisión de correo, banco, flowww y CGI) */
 (function(){
-  const TODAY=new Date();TODAY.setHours(0,0,0,0);const REV='24 oct 2026, 10:00';
+  const TODAY=new Date();TODAY.setHours(0,0,0,0);const REV='24 oct 2026, 10:15';
   const days=d=>Math.round((new Date(d+'T00:00:00')-TODAY)/864e5);
   const G={u:['Urgente · esta semana','var(--alert)'],p:['Próximos 30 días','var(--warn)'],r:['Por revisar','var(--accent)'],e:['Equipo','var(--gold)'],n:['Nuevos clientes · escribirles al día siguiente','var(--inc)'],i:['Informativo','var(--muted)']};
   /* [grupo, fecha ISO o '', etiqueta, título, detalle, origen] */
@@ -691,8 +691,6 @@ $('k4d').innerHTML='<span style="color:var(--gold)">Previsión del CGI con oct�
    ['r','2026-10-22','Contratación','Si contratas a una esteticista, avisa a la gestoría con 5 días de antelación','Estrella (gestoría, 19 oct): con cada contratación de más de 4 semanas hay que entregar a la persona, antes de empezar, un documento con las condiciones esenciales (modelo del SEPE adjunto en su correo y circular del 17 sept). Por eso hay que decirles la contratación con al menos 5 días para que lo preparen. Relacionado con las entrevistas del 22 y 23 oct.','Correo · Gestoría'],
    ['u','2026-10-23','23 oct','Skeyndor te cobra Experience con CRM: 598,95 €','Factura VN/585773 (22 oct): «Sistema Experience con CRM» 495 € + IVA = 598,95 €, en 4 giros (21 nov, 21 dic, 20 ene y 19 feb: unos 149,74 €). Incluye CRM, programa de gestión y marketing, y tú acordaste solo la parte de formación. El correo de Skeyndor decía que era gratuito. Ya les has escrito el 23 oct y esperas su respuesta.','Correo · Proveedor'],
    ['p','2026-11-21','21 nov','Skeyndor Experience: primer giro de 149,74 €','Pendiente de aclarar con Yolanda si el importe es el acordado (factura VN/585773). Si no se resuelve antes, se cobra el 21 de noviembre.','Correo · Proveedor'],
-   ['r','2026-10-23','Reseñas','Nueva reseña en Google: responder','Una clienta ha escrito una reseña de Him and Her el 23 oct. Respóndela desde Google Business.','Correo · Google'],
-   ['p','','Flowww','Actualizar la tarjeta de pago de flowww','Aviso del 21 oct: la tarjeta con la que pagas flowww caduca pronto. Actualiza el método de pago.','Correo · flowww'],
    ['p','2026-10-28','28 oct','Luz: 96,86 €','Factura ENERGIA501275 de Alumbra (consumo 17 sep – 19 oct), domiciliada. Ya contabilizada en octubre en el CGI.','Correo · Factura'],
    ['p','2026-10-29','29 oct','Amparo: retomar su tratamiento','Anuló la cita del martes 20 oct. Si no ha escrito en 10 días, volver a escribirle y ofrecerle hueco.','WhatsApp'],
    ['i','2026-10-23','23 oct','Octubre cubre los gastos del mes por muy poco','Llevas 12.535 € facturados hasta el 23 y el equilibrio de octubre es 12.527 € (con la luz de 96,86 € ya contabilizada). Sobran unos 8 €; la caja de hoy puede subir. Los 5 días que quedan suman para el bonus.','Flowww · CGI'],
