@@ -444,7 +444,7 @@ body{line-height:1.6}
     <div class="card c6" data-tab="modulos">
       <div class="head"><div><h2>Información fiscal de 2026</h2><p class="sub">Lo que ya has pagado y lo que viene</p></div><span class="badge real">Real · banco y gestoría</span></div>
       <ul class="list" id="mdFis"></ul>
-      <p class="note">Con módulos el IRPF no depende del beneficio real, sino de los parámetros del régimen. Tu sueldo de 2.000 € al mes no es gasto fiscal. Confirma los datos con la gestoría.</p>
+      <p class="note">Con módulos el IRPF no depende del beneficio real, sino de los parámetros del régimen. Tu sueldo (2.000 € hasta octubre, 2.500 € desde noviembre) no es gasto fiscal. Confirma los datos con la gestoría.</p>
     </div>
 
     <div class="card c12" data-tab="modulos">
@@ -539,7 +539,7 @@ body{line-height:1.6}
       <div id="bank"></div>
       <div class="head"><div><h3>En qué se va el dinero</h3><p class="sub">Salidas acumuladas del año por categoría</p></div></div>
       <div class="bars" id="bcat"></div>
-      <p class="note">Los importes salen de los apuntes del banco (TPV y comisiones netos). Solo se cuenta la cuenta Negocio; no se incluyen movimientos personales. La nómina de la propietaria (2.000 € al mes) sí cuenta como gasto del negocio. El IVA e IRPF son los pagados en 2026. Octubre llega hasta el día 17.</p>
+      <p class="note">Los importes salen de los apuntes del banco (TPV y comisiones netos). Solo se cuenta la cuenta Negocio; no se incluyen movimientos personales. La nómina de la propietaria (2.000 € al mes hasta octubre y 2.500 € desde noviembre) sí cuenta como gasto del negocio. El IVA e IRPF son los pagados en 2026. Octubre llega hasta el día 17.</p>
     </div>
 
   </section>
@@ -551,7 +551,7 @@ const M=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'
 /* Caja 2 (efectivo que se queda Vicky), por mes, con IVA. Fuente: fila CAJA 2 de INGRESOS en el CGI-2026. Suma a ingresos del negocio, no está en el banco. */
 const C2M=[268.9,1746,1251,355,1208,620,1037.85,255,219,0,0,0];
 const ING=[11901,11443,17265,15562,15779,17661,15966,4400,18183,17500,17500,17500].map((v,i)=>Math.round((v+C2M[i])*100)/100);
-const GAS=[14998,12210,12756,12552,11297,12356,14791,7680,9942,12501,10779,10792];
+const GAS=[14998,12210,12756,12552,11297,12356,14791,7680,9942,12501,11279,11292];
 const REAL=9;
 const FAM={'Facial':[4176,6629,9221,6728,7104,7997,6107,2142,9122],'Ventas de productos':[3435,2857,3902,4898,2490,4081,4209,594,2526],'Corporal':[1655,910,2205,1849,5059,3098,3473,391,3458],'Limpiezas':[1020,655,422,785,783,824,932,622,1557],'Depilación':[255,59,411,285,390,747,613,382,465],'IPL':[634,155,844,408,188,92,33,38,604],'Tarjeta regalo':[630,146,70,352,162,382,155,0,232],'Uñas':[97,33,137,257,229,329,444,232,220],'Pestañas':[0,0,53,0,118,111,0,0,0]};
 const PROV={'Skeyndor':[2503,3148,2368,1164,1535,1298,2089,1612,1838],'Fr. Haut':[2232,927,621,1389,915,1447,2066,271,0],'Casmara':[278,278,470,192,191,342,215,215,157],'Nueva Visión':[542,271,293,49,0,101,0,0,96],'Cnd':[0,0,0,0,0,194,0,0,0],'Futuro Estética':[0,0,0,0,121,62,0,0,0]};
@@ -631,7 +631,7 @@ $('k4d').innerHTML='<span style="color:var(--gold)">Previsión del CGI con oct�
   $('team').innerHTML=E.map(e=>{
     const y=tot(e.vp),m=e.vp[9];
     const cost=e.bruto?'<dt>Bruto (septiembre)</dt><dd>'+fx(e.bruto)+'</dd><dt>Líquido</dt><dd>'+fx(e.liq)+'</dd><dt>Seguridad Social del equipo (descontada)</dt><dd>'+fx(e.ssT)+'</dd><dt>Seguridad Social de la empresa</dt><dd>'+fx(e.coste-e.bruto)+'</dd><dt><b>Coste de empresa</b></dt><dd><b>'+fx(e.coste)+'</b></dd><dt>Comisión de septiembre</dt><dd>'+fx(e.com)+'</dd>'
-      :'<dt>Sueldo de autónoma</dt><dd>'+fx(2000)+'</dd><dt>Cuota de autónomos</dt><dd>'+fx(379)+'</dd><dt><b>Coste mensual</b></dt><dd><b>'+fx(2379)+'</b></dd>';
+      :'<dt>Sueldo de autónoma (2.500 € desde noviembre)</dt><dd>'+fx(2000)+'</dd><dt>Cuota de autónomos</dt><dd>'+fx(379)+'</dd><dt><b>Coste mensual (2.879 € desde noviembre)</b></dt><dd><b>'+fx(2379)+'</b></dd>';
     return '<div class="person"><h3>'+e.n+'</h3><dl>'+cost+'<dt>Producto vendido en 2026</dt><dd><b>'+fx(y)+'</b></dd><dt>Producto vendido en octubre (hasta el 23)</dt><dd><b>'+fx(m)+'</b></dd></dl>'+spark(e.vp,'Ventas de producto de '+e.n)+'<span class="note">Ventas de producto por mes, ene–oct</span></div>'}).join('');
   /* ---- Quién está en el local ahora ---- */
   const SCH={'Vicky':['15–20','10–15','10–14 · 16–20','15–20','10–14','—'],'Estefanía':['10–15','15–20','10–15','10–15','15–20','—'],'Yanira':['14–20','14–20','14–20','14–20','14–20','—']};
@@ -860,7 +860,7 @@ const BK={sal:41207.31,tpv:125699};
   const today=new Date(2026,9,27),end=[new Date(2026,9,31),new Date(2026,10,30),new Date(2026,11,31)];
   const frac=[4/31,1,1];
   let a=BK.sal;const A=[[BK.sal]];const lab=['Hoy','Fin oct','Fin nov','Fin dic'];
-  frac.forEach(f=>{a+=f*(ing-ops);A.push([a])});
+  frac.forEach((f,k)=>{a+=f*(ing-ops)-(k>0?500:0);A.push([a])});
   const W=720,H=250,pl=48,pr=24,pt=14,pb=30,mn=0,mx=60000,y=v=>pt+(H-pt-pb)*(1-(v-mn)/(mx-mn)),x=i=>pl+i*(W-pl-pr)/3;
   let s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Previsión del saldo del banco hasta fin de año">';
   [0,20000,40000,60000].forEach(t=>{s+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+y(t)+'" y2="'+y(t)+'" stroke="var(--line)"/><text class="axis" x="'+(pl-8)+'" y="'+(y(t)+4)+'" text-anchor="end">'+(t/1000)+' mil</text>'});
@@ -870,7 +870,7 @@ const BK={sal:41207.31,tpv:125699};
   s+='</svg>';$('prevChart').innerHTML=s;bindTip($('prevChart'));
   const P=[['2026-10-30','Seguridad Social','≈ 1.210 €','cargo mensual habitual'],['2026-10-30','Skeyndor, giro 1 de 3','328 €','factura VN/584407'],['2026-10-30','Nóminas del equipo','2.042 €','Estefanía y Yanira'],['2026-11-01','Futuro Estética, factura A 4266','165 €','vence a 30 días'],['2026-11-30','Skeyndor, giro 2 de 3','328 €','factura VN/584407'],['2026-12-30','Skeyndor, giro 3 de 3','328 €','factura VN/584407']];
   $('prevList').innerHTML=P.map(p=>{const d=new Date(p[0]+'T12:00:00'),n=Math.round((d-today)/864e5);return '<li><span class="pill">'+d.getDate()+' '+M[d.getMonth()].toLowerCase()+'</span><span>'+p[1]+' <b>'+p[2]+'</b><small>'+p[3]+' · en '+n+' días</small></span></li>'}).join('');
-  $('prevNote').textContent='Supuestos: ingresos de '+eur(ing)+' al mes (media de cobros 2026) y gasto operativo de '+eur(ops)+' (incluye el alquiler del local). Solo cuenta Negocio: no incluye retiradas ni traspasos personales. Es una estimación, no un dato.';
+  $('prevNote').textContent='Supuestos: ingresos de '+eur(ing)+' al mes (media de cobros 2026) y gasto operativo de '+eur(ops)+' (incluye el alquiler del local). Solo cuenta Negocio: no incluye retiradas ni traspasos personales. Desde noviembre se restan además 500 € al mes porque tu nómina sube a 2.500 €. Es una estimación, no un dato.';
 })();
 
 /* Calendario fiscal */
@@ -1022,7 +1022,7 @@ $('invList').innerHTML=[['30 oct','Skeyndor · VN/584407','984 € en 3 giros de
 /* ===== Tesorería ===== */
 (function(){
   const today=new Date(2026,9,17),lim=new Date(2026,10,16);
-  const P=[['2026-10-20','Impuestos del 3T',1697,0],['2026-10-30','Seguridad Social',1210,1],['2026-10-30','Skeyndor, giro 1 de 3',328,0],['2026-10-30','Nóminas del equipo',2042,1],['2026-11-01','Futuro Estética A 4266',165,0],['2026-11-01','Redes sociales (Alba)',378,1],['2026-11-01','Nómina Vicky (propietaria)',2000,1],['2026-11-01','Luz',57,1],['2026-11-04','Flowww',62,0],['2026-11-05','Alquiler del local',981,1],['2026-11-05','Alarma',31,1],['2026-11-08','Teléfono',83,1],['2026-11-10','Gestoría',166,1]];
+  const P=[['2026-10-20','Impuestos del 3T',1697,0],['2026-10-30','Seguridad Social',1210,1],['2026-10-30','Skeyndor, giro 1 de 3',328,0],['2026-10-30','Nóminas del equipo',2042,1],['2026-11-01','Futuro Estética A 4266',165,0],['2026-11-01','Redes sociales (Alba)',378,1],['2026-11-01','Nómina Vicky (propietaria)',2500,1],['2026-11-01','Luz',57,1],['2026-11-04','Flowww',62,0],['2026-11-05','Alquiler del local',981,1],['2026-11-05','Alarma',31,1],['2026-11-08','Teléfono',83,1],['2026-11-10','Gestoría',166,1]];
   const tot=sum(P.map(p=>p[2])),t30=sum(CAJ.slice(-20).map(c=>c.v));
   $('t1').textContent=eur(40965.67);$('t1d').innerHTML='<span class="up">Saldo contable al 17 oct</span>';
   $('t2').textContent=eur(tot);$('t2d').innerHTML='<span class="down">'+P.length+' pagos previstos</span>';
@@ -1192,13 +1192,13 @@ $('invList').innerHTML=[['30 oct','Skeyndor · VN/584407','984 € en 3 giros de
   const ING=[10469, 11169, 13817, 16132, 14759, 18257, 14580, 4411, 17000, 9417],OPS=[13511, 11967, 11322, 11893, 10934, 12534, 17630, 9845, 7145, 8767],mi=13500,mo=11600,f=14/31+2;
   const sum=a=>a.reduce((x,y)=>x+y,0);
   const i1=sum(ING),o1=sum(OPS),b1=i1-o1,p1=b1/i1*100;
-  const i2=i1+f*mi,o2=o1+f*mo,b2=i2-o2,p2=b2/i2*100;
+  const i2=i1+f*mi,o2=o1+f*mo+1000,b2=i2-o2,p2=b2/i2*100;
   const pc=v=>v.toLocaleString('es-ES',{minimumFractionDigits:1,maximumFractionDigits:1})+' %';
   const box=(l,v,s,c)=>'<div class="kpi c6" style="display:flex;flex-direction:column;gap:6px"><span class="label">'+l+'</span><span class="val" style="color:'+c+'">'+eur(v)+'</span><span class="delta">'+s+'</span></div>';
   $('bnfGrid').innerHTML=
    box('Beneficio hasta el 17 de octubre',b1,pc(p1)+' de lo ingresado ('+eur(i1)+' ingresado, '+eur(o1)+' gastado)',b1>=0?'var(--inc)':'var(--alert)')+
    box('Beneficio estimado al cierre de 2026',b2,pc(p2)+' de lo ingresado ('+eur(i2)+' ingresado, '+eur(o2)+' gastado)',b2>=0?'var(--inc)':'var(--alert)');
-  $('bnfNote').textContent='Cifras con IVA, de la cuenta Negocio, de enero al 17 de octubre. La estimación suma lo que queda de octubre, noviembre y diciembre con los mismos supuestos de Previsión (ingresos de '+eur(mi)+' y gastos de '+eur(mo)+' al mes). Incluye tu sueldo de 2.000 € mensuales, las nóminas, el alquiler y los impuestos pagados; no incluye retiradas personales.';
+  $('bnfNote').textContent='Cifras con IVA, de la cuenta Negocio, de enero al 17 de octubre. La estimación suma lo que queda de octubre, noviembre y diciembre con los mismos supuestos de Previsión (ingresos de '+eur(mi)+' y gastos de '+eur(mo)+' al mes). Incluye tu sueldo (2.000 € al mes hasta octubre y 2.500 € desde noviembre), las nóminas, el alquiler y los impuestos pagados; no incluye retiradas personales.';
 })();
 
 /* Módulos */
