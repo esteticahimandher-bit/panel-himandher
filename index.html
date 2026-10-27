@@ -281,7 +281,7 @@ body{line-height:1.6}
       <div class="sched" id="eqNow" style="padding:12px 14px"></div>
       <div class="empsel"></div>
       <div class="team" id="team"></div>
-      <p class="note">Nóminas de octubre 2026 de la gestoría (se pagan el último día laborable del mes: viernes 30 de octubre): bruto = devengado con la prorrata de pagas; líquido = lo que cobran; coste de empresa = bruto + Seguridad Social de la empresa (2.886 € entre las dos). Ni Estefanía ni Yanira tienen retención de IRPF. Las comisiones van aparte. El producto vendido sale de flowww («ventas de productos por vendedor», con IVA) hasta el 18 de octubre.</p>
+      <p class="note">Nóminas de octubre 2026 de la gestoría (se pagan el último día laborable del mes: viernes 30 de octubre): bruto = devengado con la prorrata de pagas; líquido = lo que cobran; coste de empresa = bruto + Seguridad Social de la empresa (2.886 € entre las dos). Ni Estefanía ni Yanira tienen retención de IRPF. Las comisiones van aparte. El producto vendido sale de flowww («ventas de productos por vendedor», con IVA) hasta el 27 de octubre.</p>
       <div class="head" style="margin-top:4px"><div><h3>Horarios de la semana</h3></div><span class="badge real">Real · flowww</span></div>
       <div class="sched"><table id="sched"></table></div>
       <p class="note">Franjas en las que cada una atiende según la agenda de flowww. El centro abre de 10 a 20 h de lunes a viernes.</p>
@@ -623,16 +623,16 @@ $('k4d').innerHTML='<span style="color:var(--gold)">Previsión del CGI con oct�
     return '<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+label+'"><polyline fill="none" stroke="var(--accent)" stroke-width="2" points="'+pts.map(p=>p.join(',')).join(' ')+'"/><circle cx="'+pts[pts.length-1][0]+'" cy="'+pts[pts.length-1][1]+'" r="4" fill="var(--accent)" stroke="var(--surface)" stroke-width="2"/></svg>'};
   /* Nóminas de octubre 2026 (gestoría; iguales a septiembre). SS trabajadora = cotizaciones del empleado; sin retención de IRPF en ninguna de las dos. */
   const E=[
-    {n:'Estefanía',bruto:1002.60,ssT:65.16,liq:937.44,coste:1324.95,com:240,vp:[1011.25,845.70,1222.05,1482.70,831.50,1796.18,1403.25,235.75,777.44,1495.46]},
+    {n:'Estefanía',bruto:1002.60,ssT:65.16,liq:937.44,coste:1324.95,com:240,vp:[1011.25,845.70,1222.05,1482.70,831.50,1796.18,1403.25,235.75,777.44,1554.46]},
     {n:'Yanira',bruto:1181.24,ssT:76.78,liq:1104.46,coste:1561.01,com:152,vp:[0,0,55.95,735.65,522.25,422.35,910.45,145.20,396.55,1710.15]},
-    {n:'Vicky',vp:[2423.30,2073.83,2624.17,2679.99,1136.69,1862.82,1946.05,212.94,1468.03,1656.00]}];
+    {n:'Vicky',vp:[2423.30,2073.83,2624.17,2679.99,1136.69,1862.82,1946.05,212.94,1468.03,1712.00]}];
   const fx=v=>v.toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2})+' €';
   const tot=a=>a.reduce((x,y)=>x+y,0);
   $('team').innerHTML=E.map(e=>{
     const y=tot(e.vp),m=e.vp[9];
     const cost=e.bruto?'<dt>Bruto (septiembre)</dt><dd>'+fx(e.bruto)+'</dd><dt>Líquido</dt><dd>'+fx(e.liq)+'</dd><dt>Seguridad Social del equipo (descontada)</dt><dd>'+fx(e.ssT)+'</dd><dt>Seguridad Social de la empresa</dt><dd>'+fx(e.coste-e.bruto)+'</dd><dt><b>Coste de empresa</b></dt><dd><b>'+fx(e.coste)+'</b></dd><dt>Comisión de septiembre</dt><dd>'+fx(e.com)+'</dd>'
       :'<dt>Sueldo de autónoma (2.500 € desde noviembre)</dt><dd>'+fx(2000)+'</dd><dt>Cuota de autónomos</dt><dd>'+fx(379)+'</dd><dt><b>Coste mensual (2.879 € desde noviembre)</b></dt><dd><b>'+fx(2379)+'</b></dd>';
-    return '<div class="person"><h3>'+e.n+'</h3><dl>'+cost+'<dt>Producto vendido en 2026</dt><dd><b>'+fx(y)+'</b></dd><dt>Producto vendido en octubre (hasta el 23)</dt><dd><b>'+fx(m)+'</b></dd></dl>'+spark(e.vp,'Ventas de producto de '+e.n)+'<span class="note">Ventas de producto por mes, ene–oct</span></div>'}).join('');
+    return '<div class="person"><h3>'+e.n+'</h3><dl>'+cost+'<dt>Producto vendido en 2026</dt><dd><b>'+fx(y)+'</b></dd><dt>Producto vendido en octubre (hasta el 27)</dt><dd><b>'+fx(m)+'</b></dd></dl>'+spark(e.vp,'Ventas de producto de '+e.n)+'<span class="note">Ventas de producto por mes, ene–oct</span></div>'}).join('');
   /* ---- Quién está en el local ahora ---- */
   const SCH={'Vicky':['15–20','10–15','10–14 · 16–20','15–20','10–14','—'],'Estefanía':['10–15','15–20','10–15','10–15','15–20','—'],'Yanira':['14–20','14–20','14–20','14–20','14–20','—']};
   const DN=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
